@@ -3,7 +3,7 @@
 /* Libs */
 
 /* Rights */
-const allowedUsers = ["362212397332692994"];
+const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = [];
 const allowedGuilds = [];
@@ -20,7 +20,7 @@ class CMD_TEST
 
 		this._config = {
 			name: command,
-			prefix: ["?"],
+			prefix: ["!"],
 			timeout: 5000
 		};
 	}
@@ -48,8 +48,8 @@ class CMD_TEST
 
 		// command
 		const deleteMessageTime = (30 * 1000);
-    
-    message.channel.send(":white_check_mark: OK").then(msg => msg.delete(deleteMessageTime));
+
+	    message.channel.send(":white_check_mark: OK").then(msg => msg.delete(deleteMessageTime));
 	}
 }
 

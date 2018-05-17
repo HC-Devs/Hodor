@@ -7,9 +7,9 @@ const botOwner = process.env.BOT_OWNER.split(",") || [];
 const botPrefix = process.env.BOT_PREFIX.split(",") || [];
 const botPrefixDev = process.env.BOT_PREFIX_DEV.split(",") || [];
 
-const allowedBots = []; // [409700356445044737];
+const allowedBots = [];
 const allowedGuilds = [
-	"395943085185564673"  // Test
+	"420194593167114250"  // Test
 	];
 
 /* Checks */
@@ -116,7 +116,7 @@ async function main(bot)
 		console.log(`Bot (${client.user.id}) has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
 		console.log(new Date().toUTCString() + "\n" + "-----------------------------");
 		client.user.setActivity(`DEV`);
-		client.user.setUsername("Dev-BOT");
+		client.user.setUsername("Hodor_dev");
 	});
 
 	client.on("message", message =>
