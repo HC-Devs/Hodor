@@ -62,3 +62,9 @@ typings/
 
 # .data
 .data/
+
+# Node
+package-lock.json
+
+# Jetbrains
+.idea/
