@@ -1,20 +1,45 @@
-/*if (command == "reloadclass") {
-    message.delete(5000);
+/* Vars */
 
-    if (botOwner.indexOf(message.author.id) == -1 || args.length != 1) {
-        return;
+/* Libs */
+
+/* Rights */
+
+/* - */
+const command = "reloadclass";
+
+/* Class */
+class CMD_RELOAD_CLASS {
+    constructor(bot) {
+        this.bot = bot;
+
+        this._config = {
+            name: command,
+            prefix: ["!"],
+            timeout: 5000
+        };
     }
 
-    if (["sqlite", "functions", "helpers", "queries"].indexOf(args[0]) != -1) {
-        let classContent = reloadClass(args[0]);
+    async run(message, args) {
+        message.delete(5000);
 
-        if (classContent !== false) {
-            console.log(`class ${args[0]} reloaded !`);
+        if (botOwner.indexOf(message.author.id) === -1 || args.length !== 1) {
+            return;
+        }
 
-            if (args[0] == "sqlite") bot.sql = new classContent(bot);
-            if (args[0] == "helpers") bot.helpers = new classContent(bot);
-            if (args[0] == "queries") bot.queries = new classContent(bot);
-            if (args[0] == "functions") bot.functions = new classContent(bot);
+        if (["sqlite", "functions", "helpers", "queries"].indexOf(args[0]) !== -1) {
+            let classContent = this.bot.reloadClass(args[0]);
+
+            if (classContent !== false) {
+                console.log(`class ${args[0]} reloaded !`);
+
+                if (args[0] === "sqlite") this.bot.sql = new classContent(this.bot);
+                if (args[0] === "helpers") this.bot.helpers = new classContent(this.bot);
+                if (args[0] === "queries") this.bot.queries = new classContent(this.bot);
+                if (args[0] === "functions") this.bot.functions = new classContent(this.bot);
+            }
         }
     }
-}*/
+}
+
+/* Export */
+module.exports = CMD_RELOAD_CLASS;

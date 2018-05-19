@@ -1,5 +1,5 @@
 /* Vars */
-const botOwner = process.env.BOT_OWNER.split(",") || [];
+global.botOwner = process.env.BOT_OWNER.split(",") || [];
 
 /* Libs */
 const fs = require("fs");
@@ -20,12 +20,13 @@ class BOT {
             this.logger.error("No owner set");
             process.exit(1);
         }
-        let prefix = process.env.NODE_ENV !== "dev" ? process.env.BOT_PREFIX : process.env.BOT_PREFIX_DEV
+        let prefix = process.env.NODE_ENV !== "dev" ? process.env.BOT_PREFIX : process.env.BOT_PREFIX_DEV;
         if (prefix === "") {
             this.logger.error("No prefix set");
             process.exit(1);
         }
 
+        /* Database directory */
         const dataDir = "./.data";
         if (!fs.existsSync(dataDir)) {
             this.logger.log(`create '${dataDir}'`);
@@ -53,8 +54,8 @@ class BOT {
             if (path.extname(file) === ".js") {
                 const eventName = path.basename(file, path.extname(file));
                 const event = require(`./${file}`);
-                this.client.on(eventName, event.bind(null, this));
                 this.logger.log(`Loading Event: ${eventName}. 👌`);
+                this.client.on(eventName, event.bind(null, this));
                 delete require.cache[require.resolve(`./${file}`)];
             }
         });
@@ -129,7 +130,7 @@ class BOT {
 
         setInterval(() => {
             let used = process.memoryUsage().heapUsed / 1024 / 1024;
-            console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
+            this.logger.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
         }, 1000 * 60 * 5);
     }
 
@@ -147,7 +148,7 @@ class BOT {
         }
 
         // check prefix
-        let prefix = process.env.NODE_ENV !== "dev" ? process.env.BOT_PREFIX : process.env.BOT_PREFIX_DEV
+        let prefix = process.env.NODE_ENV !== "dev" ? process.env.BOT_PREFIX : process.env.BOT_PREFIX_DEV;
         if (newMessage.content.indexOf(prefix) !== 0) return;
         newMessage.prefix = prefix;
 
@@ -173,6 +174,50 @@ class BOT {
             }
         }
     }
+
+    static reloadClass(className) {
+        const f = "./classes/" + className;
+
+        if (fs.existsSync(f + ".js")) {
+            delete require.cache[require.resolve(f)];
+            return require(f);
+        }
+
+        return false;
+    }
+
+    static reloadCommand(commandName) {
+        const f = "./commands/" + commandName;
+
+        if (fs.existsSync(f + ".js")) {
+            delete require.cache[require.resolve(f)];
+            return require(f);
+        }
+
+        return false;
+    }
+
+    static reloadCron(cronName) {
+        const f = "./crons/" + cronName;
+
+        if (fs.existsSync(f + ".js")) {
+            delete require.cache[require.resolve(f)];
+            return require(f);
+        }
+
+        return false;
+    }
+
+    static reloadEvent(eventName) {
+        const f = "./events/" + eventName;
+
+        if (fs.existsSync(f + ".js")) {
+            delete require.cache[require.resolve(f)];
+            return require(f);
+        }
+
+        return false;
+    }
 }
 
 module.exports = BOT;
@@ -184,48 +229,4 @@ function walkSync(dir, fileList = []) {
             : fileList.concat(path.join(dir, file));
     });
     return fileList;
-}
-
-function reloadClass(className) {
-    const f = "./classes/" + className;
-
-    if (fs.existsSync(f + ".js")) {
-        delete require.cache[require.resolve(f)];
-        return require(f);
-    }
-
-    return false;
-}
-
-function reloadCommand(commandName) {
-    const f = "./commands/" + commandName;
-
-    if (fs.existsSync(f + ".js")) {
-        delete require.cache[require.resolve(f)];
-        return require(f);
-    }
-
-    return false;
-}
-
-function reloadCron(cronName) {
-    const f = "./crons/" + cronName;
-
-    if (fs.existsSync(f + ".js")) {
-        delete require.cache[require.resolve(f)];
-        return require(f);
-    }
-
-    return false;
-}
-
-function reloadEvent(eventName) {
-    const f = "./events/" + eventName;
-
-    if (fs.existsSync(f + ".js")) {
-        delete require.cache[require.resolve(f)];
-        return require(f);
-    }
-
-    return false;
 }
