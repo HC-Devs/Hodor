@@ -98,7 +98,7 @@ class BOT {
         chokidar.watch("classes/", watchOptions).on("change", (event) => {
             let filename = path.basename(event);
             let className = filename.split(".").shift();
-            let classContent = reloadClass(className);
+            let classContent = BOT.reloadClass(className);
 
             if (["functions", "helpers", "sqlite", "queries"].indexOf(className) !== -1) {
                 if (className === "sqlite") this.sql = new classContent(this);
@@ -113,7 +113,7 @@ class BOT {
         chokidar.watch("commands/", watchOptions).on("change", (event) => {
             let filename = path.basename(event);
             let className = filename.split(".").shift();
-            let classContent = reloadCommand(className);
+            let classContent = BOT.reloadCommand(className);
             this.commands[className] = new classContent(this);
 
             this.logger.log(`chokidar: command ${filename} reloaded !`);
@@ -122,10 +122,19 @@ class BOT {
         chokidar.watch("crons/", watchOptions).on("change", (event) => {
             let filename = path.basename(event);
             let className = filename.split(".").shift();
-            let classContent = reloadCron(className);
+            let classContent = BOT.reloadCron(className);
             this.crons[className] = new classContent(this);
 
             this.logger.log(`chokidar: cron ${filename} reloaded !`);
+        });
+
+        chokidar.watch("events/", watchOptions).on("change", (event) => {
+            let filename = path.basename(event);
+            let eventName = filename.split(".").shift();
+            let eventContent = BOT.reloadEvent(eventName);
+            if (eventContent !== false) {
+                this.logger.log(`chokidar: event ${filename} reloaded !`);
+            }
         });
 
         setInterval(() => {
