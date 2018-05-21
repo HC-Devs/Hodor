@@ -5,14 +5,14 @@
 /* Rights */
 const allowedUsers = [];
 const allowedRoles = [];
-const allowedChannels = [];
+const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
 /* - */
-const command = "test";
+const command = "omega";
 
 /* Class */
-class CMD_TEST {
+class CMD_OMEGA {
     constructor(bot) {
         this.bot = bot;
 
@@ -44,11 +44,11 @@ class CMD_TEST {
         const authorID = message.author.id;
 
         // command
-        const deleteMessageTime = (30 * 1000);
+        const deleteMessageTime = (5 * 1000);
 
         message.channel.send(":white_check_mark: OK").then(msg => msg.delete(deleteMessageTime));
     }
 }
 
 /* Export */
-module.exports = CMD_TEST;
+module.exports = CMD_OMEGA;
