@@ -9,10 +9,10 @@ const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
 /* - */
-const command = "canons";
+const command = "batterie";
 
 /* Class */
-class CMD_CANONS {
+class CMD_BATTERIE {
     constructor(bot) {
         this.bot = bot;
 
@@ -50,4 +50,4 @@ class CMD_CANONS {
 }
 
 /* Export */
-module.exports = CMD_CANONS;
+module.exports = CMD_BATTERIE;
