@@ -6,6 +6,13 @@ class FUNCTIONS {
         this.bot = bot;
     }
 
+    isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers) {
+        return (allowedGuilds.length > 0 && allowedGuilds.indexOf(message.guild.id) !== -1) ||
+            (allowedChannels.length > 0 && allowedChannels.indexOf(message.channel.id) !== -1) ||
+            (allowedRoles.length > 0 && message.member.roles.some(r => allowedRoles.includes(r.name))) ||
+            (allowedUsers.length > 0 && allowedUsers.indexOf(message.author.id) !== -1);
+    }
+
     parseArgs(argv, argList) {
         // Removing command name
         // argv = argv.slice(1);
