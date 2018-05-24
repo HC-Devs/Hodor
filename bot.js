@@ -96,9 +96,8 @@ class BOT {
         };
 
         chokidar.watch("classes/", watchOptions).on("change", (event) => {
-            let filename = path.basename(event);
-            let className = filename.split(".").shift();
-            let classContent = BOT.reloadClass(className);
+            let className = path.basename(event, path.extname(event));
+            let classContent = BOT.reloadClass(event);
 
             if (["functions", "helpers", "sqlite", "queries"].indexOf(className) !== -1) {
                 if (className === "sqlite") this.sql = new classContent(this);
@@ -106,34 +105,31 @@ class BOT {
                 if (className === "queries") this.queries = new classContent(this);
                 if (className === "functions") this.functions = new classContent(this);
 
-                this.logger.log(`chokidar: class ${filename} reloaded !`);
+                this.logger.log(`chokidar: class ${className} reloaded !`);
             }
         });
 
         chokidar.watch("commands/", watchOptions).on("change", (event) => {
-            let filename = path.basename(event);
-            let className = filename.split(".").shift();
-            let classContent = BOT.reloadCommand(className);
+            let className = path.basename(event, path.extname(event));
+            let classContent = BOT.reloadCommand(event);
             this.commands[className] = new classContent(this);
 
-            this.logger.log(`chokidar: command ${filename} reloaded !`);
+            this.logger.log(`chokidar: command ${className} reloaded !`);
         });
 
         chokidar.watch("crons/", watchOptions).on("change", (event) => {
-            let filename = path.basename(event);
-            let className = filename.split(".").shift();
-            let classContent = BOT.reloadCron(className);
+            let className = path.basename(event, path.extname(event));
+            let classContent = BOT.reloadCron(event);
             this.crons[className] = new classContent(this);
 
-            this.logger.log(`chokidar: cron ${filename} reloaded !`);
+            this.logger.log(`chokidar: cron ${className} reloaded !`);
         });
 
         chokidar.watch("events/", watchOptions).on("change", (event) => {
-            let filename = path.basename(event);
-            let eventName = filename.split(".").shift();
-            let eventContent = BOT.reloadEvent(eventName);
+            let className = path.basename(event, path.extname(event));
+            let eventContent = BOT.reloadEvent(event);
             if (eventContent !== false) {
-                this.logger.log(`chokidar: event ${filename} reloaded !`);
+                this.logger.log(`chokidar: event ${className} reloaded !`);
             }
         });
 
@@ -185,9 +181,9 @@ class BOT {
     }
 
     static reloadClass(className) {
-        const f = "./classes/" + className;
+        const f = "./" + className;
 
-        if (fs.existsSync(f + ".js")) {
+        if (fs.existsSync(f)) {
             delete require.cache[require.resolve(f)];
             return require(f);
         }
@@ -196,9 +192,9 @@ class BOT {
     }
 
     static reloadCommand(commandName) {
-        const f = "./commands/" + commandName;
+        const f = "./" + commandName;
 
-        if (fs.existsSync(f + ".js")) {
+        if (fs.existsSync(f)) {
             delete require.cache[require.resolve(f)];
             return require(f);
         }
@@ -207,9 +203,9 @@ class BOT {
     }
 
     static reloadCron(cronName) {
-        const f = "./crons/" + cronName;
+        const f = "./" + cronName;
 
-        if (fs.existsSync(f + ".js")) {
+        if (fs.existsSync(f)) {
             delete require.cache[require.resolve(f)];
             return require(f);
         }
@@ -218,9 +214,9 @@ class BOT {
     }
 
     static reloadEvent(eventName) {
-        const f = "./events/" + eventName;
+        const f = "./" + eventName;
 
-        if (fs.existsSync(f + ".js")) {
+        if (fs.existsSync(f)) {
             delete require.cache[require.resolve(f)];
             return require(f);
         }
