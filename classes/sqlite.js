@@ -3,59 +3,52 @@ const sqlite = require("sqlite");
 
 const databaseFile = "./.data/database.db";
 
-class SQLITE
-{
-	constructor (bot)
-	{
-		this.bot = bot;
-    
-    this.init();
-	}
-  
-  async connect()
-  {
-		let dbPromise = sqlite.open(databaseFile, { cached: true, Promise });
-		this.db = await dbPromise;
-    
-    return this.db;
-  }
+class SQLITE {
+    constructor(bot) {
+        this.bot = bot;
 
-	async init()
-	{
-    await this.connect();
-    
-		let query;
+        this.init();
+    }
 
-		console.log("sql : init runs");
-		query = "CREATE TABLE IF NOT EXISTS test (test TEXT NOT NULL)";
-		await this.db.run(query);
+    async connect() {
+        let dbPromise = sqlite.open(databaseFile, {cached: true, Promise});
+        this.db = await dbPromise;
 
-		return true;
-	}
+        return this.db;
+    }
 
-	async get(query, params)
-	{
-		await this.connect();
+    async init() {
+        await this.connect();
 
-		let res = await this.db.get(query, params);
-		return (typeof res === "undefined" ? null : res);
-	}
+        let query;
 
-	async all(query, params)
-	{
-		await this.connect();
+        console.log("sql : init runs");
+        query = "CREATE TABLE IF NOT EXISTS test (test TEXT NOT NULL)";
+        await this.db.run(query);
 
-		let res = await this.db.all(query, params);
-		return res;
-	}
+        return true;
+    }
 
-	async run(query, params)
-	{
-		await this.connect();
+    async get(query, params) {
+        await this.connect();
 
-		let res = await this.db.run(query, params);
-		return res;
-	}
+        let res = await this.db.get(query, params);
+        return (typeof res === "undefined" ? null : res);
+    }
+
+    async all(query, params) {
+        await this.connect();
+
+        let res = await this.db.all(query, params);
+        return res;
+    }
+
+    async run(query, params) {
+        await this.connect();
+
+        let res = await this.db.run(query, params);
+        return res;
+    }
 }
 
 module.exports = SQLITE;

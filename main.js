@@ -13,8 +13,7 @@ process.on("unhandledRejection", (reason, p) => {
 });
 
 require('./hodor.js').init().then(() => {
-    if (process.env.PORT && process.env.PROJECT_DOMAIN) {
-        /* Keep alive */
+    /*if (process.env.PORT && process.env.PROJECT_DOMAIN) {
         const express = require('express');
         const http = require('http');
         const app = express();
@@ -28,5 +27,5 @@ require('./hodor.js').init().then(() => {
         setInterval(() => {
             http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
         }, 240000);
-    }
+    }*/
 });

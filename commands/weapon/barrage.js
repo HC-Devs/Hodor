@@ -9,10 +9,10 @@ const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
 /* - */
-const command = "omega";
+const command = "canons";
 
 /* Class */
-class CMD_OMEGA {
+class CMD_CANONS {
     constructor(bot) {
         this.bot = bot;
 
@@ -50,4 +50,4 @@ class CMD_OMEGA {
 }
 
 /* Export */
-module.exports = CMD_OMEGA;
+module.exports = CMD_CANONS;
