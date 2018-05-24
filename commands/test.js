@@ -16,7 +16,7 @@ class CMD_TEST {
     constructor(bot) {
         this.bot = bot;
 
-        this._config = {
+        this.config = {
             name: command,
             prefix: ["!"],
             timeout: 5000

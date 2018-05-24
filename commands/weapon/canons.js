@@ -16,10 +16,11 @@ class CMD_CANONS {
     constructor(bot) {
         this.bot = bot;
 
-        this._config = {
+        this.config = {
             name: command,
             prefix: ["!"],
-            timeout: 5000
+            timeout: 5000,
+            maxLevel: 10
         };
     }
 
@@ -41,11 +42,11 @@ class CMD_CANONS {
 
         const level = args[0] && !isNaN(parseInt(args[0])) ? parseInt(args[0]) : -1;
         if (level === -1 || !this.bot.functions.between(level, 1, 10)) {
-            message.channel.send(":x: KO").then(msg => msg.delete(this._config.timeout));
+            message.channel.send(":x: KO").then(msg => msg.delete(this.config.timeout));
             return;
         }
 
-        message.channel.send(":white_check_mark: OK").then(msg => msg.delete(this._config.timeout));
+        message.channel.send(":white_check_mark: OK").then(msg => msg.delete(this.config.timeout));
     }
 }
 

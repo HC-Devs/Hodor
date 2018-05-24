@@ -167,19 +167,19 @@ class BOT {
 
         if (typeof this.commands[command] !== "undefined" && typeof this.commands[command].run !== "undefined") {
             let cmd = this.commands[command];
-            if ((process.env.NODE_ENV !== "dev" && cmd._config.prefix.indexOf(newMessage.prefix) !== -1) || (process.env.NODE_ENV === "dev" && global.botOwner.indexOf(newMessage.author.id) !== -1)) {
-                if (cmd._config.timeout > 0) {
-                    newMessage.delete(cmd._config.timeout).catch(reason => {
+            if ((process.env.NODE_ENV !== "dev" && cmd.config.prefix.indexOf(newMessage.prefix) !== -1) || (process.env.NODE_ENV === "dev" && global.botOwner.indexOf(newMessage.author.id) !== -1)) {
+                if (cmd.config.timeout > 0) {
+                    newMessage.delete(cmd.config.timeout).catch(reason => {
                         this.logger.error(reason);
                     });
                 }
-                else if (cmd._config.timeout === -1) {
+                else if (cmd.config.timeout === -1) {
                     newMessage.delete().catch(reason => {
                         this.logger.error(reason);
                     });
                 }
                 cmd.run(newMessage, args);
-                this.logger.cmd(`[CMD] ${newMessage.author.username} (${newMessage.author.id}) ran command ${cmd._config.name}`);
+                this.logger.cmd(`[CMD] ${newMessage.author.username} (${newMessage.author.id}) ran command ${cmd.config.name}`);
             }
         }
     }

@@ -12,7 +12,7 @@ class CMD_RELOAD_EVENT {
     constructor(bot) {
         this.bot = bot;
 
-        this._config = {
+        this.config = {
             name: command,
             prefix: ["!"],
             timeout: 5000
