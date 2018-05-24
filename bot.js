@@ -16,7 +16,7 @@ class BOT {
         this.logger = require('./utils/Logger.js');
 
         /* Checks */
-        if (botOwner.length === 0 || botOwner[0] === "") {
+        if (global.botOwner.length === 0 || global.botOwner[0] === "") {
             this.logger.error("No owner set");
             process.exit(1);
         }
@@ -167,7 +167,7 @@ class BOT {
 
         if (typeof this.commands[command] !== "undefined" && typeof this.commands[command].run !== "undefined") {
             let cmd = this.commands[command];
-            if ((process.env.NODE_ENV !== "dev" && cmd._config.prefix.indexOf(newMessage.prefix) !== -1) || (process.env.NODE_ENV === "dev" && botOwner.indexOf(newMessage.author.id) !== -1)) {
+            if ((process.env.NODE_ENV !== "dev" && cmd._config.prefix.indexOf(newMessage.prefix) !== -1) || (process.env.NODE_ENV === "dev" && global.botOwner.indexOf(newMessage.author.id) !== -1)) {
                 if (cmd._config.timeout > 0) {
                     newMessage.delete(cmd._config.timeout).catch(reason => {
                         this.logger.error(reason);

@@ -3,7 +3,7 @@
 /* Libs */
 
 /* Rights */
-const allowedUsers = botOwner;
+const allowedUsers = global.botOwner;
 const allowedRoles = [];
 const allowedChannels = [];
 const allowedGuilds = [];

@@ -22,7 +22,7 @@ class CMD_RELOAD_CMD {
     async run(message, args) {
         message.delete(5000);
 
-        if (botOwner.indexOf(message.author.id) === -1 || args.length !== 1) {
+        if (global.botOwner.indexOf(message.author.id) === -1 || args.length !== 1) {
             return;
         }
 
