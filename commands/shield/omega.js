@@ -41,6 +41,7 @@ class CMD_OMEGA {
             return;
         }
 
+        let memberId = message.mentions.users.first() ? message.mentions.users.first().id : message.author.id;
         // TODO set command level to DB & show success message
 
         message.channel.send(":white_check_mark: OK").then(msg => msg.delete(this.config.timeout));
