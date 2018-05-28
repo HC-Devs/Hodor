@@ -5,12 +5,13 @@ const discordOptions = {
 };
 const client = new Discord.Client(discordOptions);
 
-exports.init = async () => {
+//exports.init =  async () => {
+     try{
     console.time("startBot");
 
     const BOT = require("./bot.js");
     const bot = new BOT(client);
-    await bot.init();
+    bot.init().then(b => {
 
     if (process.env.NODE_ENV === "dev") {
         bot.watch().then(() => {
@@ -29,7 +30,8 @@ exports.init = async () => {
         });
     }, 60000);
 
-    await client.login(process.env.BOT_TOKEN);
-
-    console.timeEnd("startBot");
-};
+    client.login(process.env.BOT_TOKEN).then( () => console.timeEnd("startBot"));
+});
+} catch (e) {
+    console.log("failed" + e );
+}

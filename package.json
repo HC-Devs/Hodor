@@ -2,10 +2,10 @@
   "name": "discord-dev-bot",
   "version": "0.2.0",
   "description": "Hades !",
-  "main": "main.js",
+  "main": "hodor.js",
   "scripts": {
-    "start": "node main.js",
-    "//start": "node --inspect=localhost:9200 main.js"
+    "build": "tsc",
+    "start": "node hodor.js"
   },
   "engines": {
     "node": "9.x"
@@ -28,8 +28,8 @@
     "dotenv": "^5.0.1",
     "emoji-flags": "^1.2.0",
     "enmap": "^2.1.0",
-    "express": "^4.16.3",
     "json5": "^1.0.1",
+    "markdown-table": "^1.1.2",
     "moment": "^2.22.0",
     "moment-duration-format": "^2.2.2",
     "shortid": "^2.2.8",
