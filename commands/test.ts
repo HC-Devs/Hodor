@@ -55,6 +55,9 @@ class CMD_TEST {
        
         let r = await fi.ListUser(this.bot.sql);
         message.channel.send(r);
+
+        r = await fi.TestUser(this.bot.sql);
+        message.channel.send(r);
     }
 }
 

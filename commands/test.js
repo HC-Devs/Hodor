@@ -52,6 +52,8 @@ class CMD_TEST {
             message.channel.send(":white_check_mark: OK").then(msg => msg.delete(deleteMessageTime));
             let r = yield fi.ListUser(this.bot.sql);
             message.channel.send(r);
+            r = yield fi.TestUser(this.bot.sql);
+            message.channel.send(r);
         });
     }
 }
