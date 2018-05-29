@@ -12,7 +12,7 @@ const allowedGuilds = [];
 const command = "purge";
 
 /* Class */
-class CMD_OMEGA {
+class CMD_PURGE {
     constructor(bot) {
         this.bot = bot;
 
@@ -53,17 +53,4 @@ class CMD_OMEGA {
 }
 
 /* Export */
-module.exports = CMD_OMEGA;
-
-/*const conf = {
-    enabled: true,
-    permLevel: "Bot Admin",
-    name: "purge",
-    category: "System",
-    description: "Delete a defined number of messages",
-    usage: "purge (-option | --option) [number]",
-    options: {
-        "-a, --all": "Delete up to 50 messages at a time (limited by discord)",
-        "-n, --number": "Define a number between 0 and 50"
-    }
-};*/
+module.exports = CMD_PURGE;
