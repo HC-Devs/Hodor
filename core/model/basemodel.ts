@@ -6,7 +6,7 @@
 export abstract class BaseModel {
     id: string;
 
-    constructor(id: string) {
+    protected constructor(id: string) {
         this.id = id;
     }
 
@@ -15,5 +15,4 @@ export abstract class BaseModel {
     * Used for debug purpose
     */
     public abstract getArray(): Array<string>;
-  
 }
