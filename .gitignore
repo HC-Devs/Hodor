@@ -71,5 +71,6 @@ package-lock.json
 
 # VS
 .vs/
+.vscode/
 bin/
 obj/

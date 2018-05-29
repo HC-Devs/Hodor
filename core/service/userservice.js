@@ -8,8 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const user_1 = require("../model/user");
 const userdao_1 = require("../dao/userdao");
 const Table = require('markdown-table');
+function TestUser(sqlConnector) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let userdao = new userdao_1.UserDao(sqlConnector);
+        let users = yield userdao.getAll();
+        let maxId = Math.max.apply(Math, users.map(function (o) { return o.id; }));
+        let newId = (parseInt(maxId) + 1).toString();
+        let newUser = new user_1.User(newId, "aurelien", "Hades corpo");
+        yield userdao.insert(newUser);
+        let newUserFromDb = yield userdao.getById(newId);
+        newUserFromDb.name = "aurélienK";
+        let result = yield userdao.update(newUserFromDb);
+        let tabResult = yield ListUser(sqlConnector);
+        yield userdao.delete(newUserFromDb);
+        return tabResult;
+    });
+}
+exports.TestUser = TestUser;
 function ListUser(sqlConnector) {
     return __awaiter(this, void 0, void 0, function* () {
         let userdao = new userdao_1.UserDao(sqlConnector);

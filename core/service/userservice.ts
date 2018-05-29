@@ -6,6 +6,27 @@ import {SQLITE} from '../../classes/sqlite';
 
 const Table = require('markdown-table');
 
+export async function TestUser(sqlConnector: SQLITE) : Promise<string> {
+    let userdao = new UserDao(sqlConnector);
+    let users = await userdao.getAll();
+    let maxId = Math.max.apply(Math,users.map(function(o){return o.id;}))
+    let newId = (parseInt(maxId) +1).toString();
+    let newUser = new User(newId,"aurelien","Hades corpo");
+
+    await userdao.insert(newUser);
+
+    let newUserFromDb = await userdao.getById(newId);
+
+    newUserFromDb.name = "aurélienK";
+    let result = await userdao.update(newUserFromDb);
+
+    let tabResult = await ListUser(sqlConnector);
+
+    await userdao.delete(newUserFromDb);
+
+    return tabResult;
+}
+
 export async function ListUser(sqlConnector: SQLITE): Promise<string> {
     let userdao = new UserDao(sqlConnector);
     let users = await userdao.getAll();
