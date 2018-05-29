@@ -12,7 +12,7 @@ class CMD_RELOAD_EVENT {
     constructor(bot) {
         this.bot = bot;
 
-        this._config = {
+        this.config = {
             name: command,
             prefix: ["!"],
             timeout: 5000
@@ -22,7 +22,7 @@ class CMD_RELOAD_EVENT {
     async run(message, args) {
         const deleteMessageTime = (5 * 1000);
 
-        if (botOwner.indexOf(message.author.id) === -1 || args.length !== 1) {
+        if (global.botOwner.indexOf(message.author.id) === -1 || args.length !== 1) {
             return;
         }
 

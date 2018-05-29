@@ -14,7 +14,6 @@ process.on("unhandledRejection", (reason, p) => {
 
 require('./hodor.js').init().then(() => {
     if (process.env.PORT && process.env.PROJECT_DOMAIN) {
-        /* Keep alive */
         const express = require('express');
         const http = require('http');
         const app = express();

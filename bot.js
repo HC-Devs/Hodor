@@ -17,7 +17,7 @@ class BOT {
         this.logger = require('./utils/Logger.js');
 
         /* Checks */
-        if (botOwner.length === 0 || botOwner[0] === "") {
+        if (global.botOwner.length === 0 || global.botOwner[0] === "") {
             this.logger.error("No owner set");
             process.exit(1);
         }
@@ -97,9 +97,8 @@ class BOT {
         };
 
         chokidar.watch("classes/", watchOptions).on("change", (event) => {
-            let filename = path.basename(event);
-            let className = filename.split(".").shift();
-            let classContent = BOT.reloadClass(className);
+            let className = path.basename(event, path.extname(event));
+            let classContent = BOT.reloadClass(event);
 
             if (["functions", "helpers", "sqlite", "queries"].indexOf(className) !== -1) {
                 if (className === "sqlite") this.sql = new classContent(this);
@@ -107,34 +106,31 @@ class BOT {
                 if (className === "queries") this.queries = new classContent(this);
                 if (className === "functions") this.functions = new classContent(this);
 
-                this.logger.log(`chokidar: class ${filename} reloaded !`);
+                this.logger.log(`chokidar: class ${className} reloaded !`);
             }
         });
 
         chokidar.watch("commands/", watchOptions).on("change", (event) => {
-            let filename = path.basename(event);
-            let className = filename.split(".").shift();
-            let classContent = BOT.reloadCommand(className);
+            let className = path.basename(event, path.extname(event));
+            let classContent = BOT.reloadCommand(event);
             this.commands[className] = new classContent(this);
 
-            this.logger.log(`chokidar: command ${filename} reloaded !`);
+            this.logger.log(`chokidar: command ${className} reloaded !`);
         });
 
         chokidar.watch("crons/", watchOptions).on("change", (event) => {
-            let filename = path.basename(event);
-            let className = filename.split(".").shift();
-            let classContent = BOT.reloadCron(className);
+            let className = path.basename(event, path.extname(event));
+            let classContent = BOT.reloadCron(event);
             this.crons[className] = new classContent(this);
 
-            this.logger.log(`chokidar: cron ${filename} reloaded !`);
+            this.logger.log(`chokidar: cron ${className} reloaded !`);
         });
 
         chokidar.watch("events/", watchOptions).on("change", (event) => {
-            let filename = path.basename(event);
-            let eventName = filename.split(".").shift();
-            let eventContent = BOT.reloadEvent(eventName);
+            let className = path.basename(event, path.extname(event));
+            let eventContent = BOT.reloadEvent(event);
             if (eventContent !== false) {
-                this.logger.log(`chokidar: event ${filename} reloaded !`);
+                this.logger.log(`chokidar: event ${className} reloaded !`);
             }
         });
 
@@ -168,27 +164,27 @@ class BOT {
 
         if (typeof this.commands[command] !== "undefined" && typeof this.commands[command].run !== "undefined") {
             let cmd = this.commands[command];
-            if ((process.env.NODE_ENV !== "dev" && cmd._config.prefix.indexOf(newMessage.prefix) !== -1) || (process.env.NODE_ENV === "dev" && botOwner.indexOf(newMessage.author.id) !== -1)) {
-                if (cmd._config.timeout > 0) {
-                    newMessage.delete(cmd._config.timeout).catch(reason => {
+            if ((process.env.NODE_ENV !== "dev" && cmd.config.prefix.indexOf(newMessage.prefix) !== -1) || (process.env.NODE_ENV === "dev" && global.botOwner.indexOf(newMessage.author.id) !== -1)) {
+                if (cmd.config.timeout > 0) {
+                    newMessage.delete(cmd.config.timeout).catch(reason => {
                         this.logger.error(reason);
                     });
                 }
-                else if (cmd._config.timeout === -1) {
+                else if (cmd.config.timeout === -1) {
                     newMessage.delete().catch(reason => {
                         this.logger.error(reason);
                     });
                 }
                 cmd.run(newMessage, args);
-                this.logger.cmd(`[CMD] ${newMessage.author.username} (${newMessage.author.id}) ran command ${cmd._config.name}`);
+                this.logger.cmd(`[CMD] ${newMessage.author.username} (${newMessage.author.id}) ran command ${cmd.config.name}`);
             }
         }
     }
 
     static reloadClass(className) {
-        const f = "./classes/" + className;
+        const f = "./" + className;
 
-        if (fs.existsSync(f + ".js")) {
+        if (fs.existsSync(f)) {
             delete require.cache[require.resolve(f)];
             return require(f);
         }
@@ -197,9 +193,9 @@ class BOT {
     }
 
     static reloadCommand(commandName) {
-        const f = "./commands/" + commandName;
+        const f = "./" + commandName;
 
-        if (fs.existsSync(f + ".js")) {
+        if (fs.existsSync(f)) {
             delete require.cache[require.resolve(f)];
             return require(f);
         }
@@ -208,9 +204,9 @@ class BOT {
     }
 
     static reloadCron(cronName) {
-        const f = "./crons/" + cronName;
+        const f = "./" + cronName;
 
-        if (fs.existsSync(f + ".js")) {
+        if (fs.existsSync(f)) {
             delete require.cache[require.resolve(f)];
             return require(f);
         }
@@ -219,9 +215,9 @@ class BOT {
     }
 
     static reloadEvent(eventName) {
-        const f = "./events/" + eventName;
+        const f = "./" + eventName;
 
-        if (fs.existsSync(f + ".js")) {
+        if (fs.existsSync(f)) {
             delete require.cache[require.resolve(f)];
             return require(f);
         }

@@ -3,7 +3,7 @@
 /* Libs */
 
 /* Rights */
-const allowedUsers = botOwner;
+const allowedUsers = global.botOwner;
 const allowedRoles = [];
 const allowedChannels = [];
 const allowedGuilds = [];
@@ -16,7 +16,7 @@ class CMD_OMEGA {
     constructor(bot) {
         this.bot = bot;
 
-        this._config = {
+        this.config = {
             name: command,
             prefix: ["!"],
             timeout: 5000
