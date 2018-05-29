@@ -4,6 +4,7 @@
   "description": "Hades !",
   "main": "main.js",
   "scripts": {
+    "build": "tsc",
     "start": "node main.js",
     "//start": "node --inspect=localhost:9200 main.js"
   },
@@ -30,6 +31,7 @@
     "enmap": "^2.1.0",
     "express": "^4.16.3",
     "json5": "^1.0.1",
+    "markdown-table": "^1.1.2",
     "moment": "^2.22.0",
     "moment-duration-format": "^2.2.2",
     "shortid": "^2.2.8",
@@ -42,5 +44,8 @@
     "express",
     "discord",
     "bot"
-  ]
+  ],
+  "devDependencies": {
+    "@types/node": "^10.1.3"
+  }
 }

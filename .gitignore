@@ -68,3 +68,12 @@ package-lock.json
 
 # Jetbrains
 .idea/
+
+# VS
+.vs/
+.vscode/
+bin/
+obj/
+
+#DB
+*.sqlite3
