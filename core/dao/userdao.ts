@@ -11,8 +11,9 @@ export class UserDao extends BaseDao<User> {
     constructor(sqlConnector: SQLITE) {
         super(userDbTable, userIdField, sqlConnector);
     }
+
     protected getModelFromRow(row: any): User {
         return new User(row[userIdField], row[userNameField], row[userCorpoField]);
     }
-  
+
 }

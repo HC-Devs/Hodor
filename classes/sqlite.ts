@@ -3,11 +3,11 @@ const sqlite = require("sqlite3").verbose();
 
 const databaseFile = "./sql/hc.sqlite3";
 
-
 export class SQLITE {
     public db: any;
     public bot: any;
-    constructor(bot:any) {
+
+    constructor(bot: any) {
 
         this.bot = bot;
 

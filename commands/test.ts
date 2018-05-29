@@ -14,13 +14,13 @@ const command = "test";
 
 /* Class */
 class CMD_TEST {
-    bot : any;
-    _config : any;
+    bot: any;
+    config: any;
 
     constructor(bot) {
         this.bot = bot;
 
-        this._config = {
+        this.config = {
             name: command,
             prefix: ["!"],
             timeout: 5000
@@ -52,7 +52,7 @@ class CMD_TEST {
 
         message.channel.send(":white_check_mark: OK").then(msg => msg.delete(deleteMessageTime));
 
-       
+
         let r = await fi.ListUser(this.bot.sql);
         message.channel.send(r);
     }
