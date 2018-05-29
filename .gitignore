@@ -68,3 +68,8 @@ package-lock.json
 
 # Jetbrains
 .idea/
+
+# VS
+.vs/
+bin/
+obj/
