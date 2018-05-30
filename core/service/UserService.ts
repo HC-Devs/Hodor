@@ -1,6 +1,6 @@
-﻿import {User} from '../model/user';
+﻿import {User} from '../model/User';
 
-import {UserDao} from '../dao/userdao';
+import {UserDao} from '../dao/UserDao';
 
 import {SQLITE} from '../../classes/sqlite';
 

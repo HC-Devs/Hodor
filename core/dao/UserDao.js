@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_1 = require("../model/user");
-const BaseDao_1 = require("../dao/BaseDao");
+const User_1 = require("../model/User");
+const BaseDao_1 = require("./BaseDao");
 const userDbTable = 'user';
 const userNameField = 'user_name';
 const userCorpoField = 'user_corpo';
@@ -17,10 +17,9 @@ class UserDao extends BaseDao_1.BaseDao {
         result.set(userCorpoField, model.corpo);
         return result;
     }
-
     getModelFromRow(row) {
-        return new user_1.User(row[userIdField], row[userNameField], row[userCorpoField]);
+        return new User_1.User(row[userIdField], row[userNameField], row[userCorpoField]);
     }
 }
 exports.UserDao = UserDao;
-//# sourceMappingURL=userdao.js.map
+//# sourceMappingURL=UserDao.js.map

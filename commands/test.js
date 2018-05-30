@@ -25,7 +25,7 @@ class CMD_TEST {
             prefix: ["!"],
             timeout: 5000
         };
-        this.service = require('../core/service/userservice');
+        this.service = require('../core/service/UserService');
     }
     run(message, args) {
         return __awaiter(this, void 0, void 0, function* () {

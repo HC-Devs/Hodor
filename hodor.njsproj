@@ -41,14 +41,14 @@ tBOT_PREFIX_DEV=DEV</Environment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
-    <Content Include="core\dao\userdao.ts" />
+    <Content Include="core\dao\UserDao.ts" />
     <Content Include="package.json" />
     <Content Include="tsconfig.json" />
     <Content Include="watch.json" />
     <Content Include="README.md" />
     <Compile Include="bot.js" />
-    <Compile Include="core\model\user.ts" />
-    <Compile Include="core\service\userservice.ts">
+    <Compile Include="core\model\User.ts" />
+    <Compile Include="core\service\UserService.ts">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="hodor.js" />
@@ -82,7 +82,7 @@ tBOT_PREFIX_DEV=DEV</Environment>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="core\dao\basedao.ts" />
-    <TypeScriptCompile Include="core\model\basemodel.ts">
+    <TypeScriptCompile Include="core\model\BaseModel.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="typings\globals\node\index.d.ts" />

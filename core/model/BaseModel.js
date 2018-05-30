@@ -11,4 +11,4 @@ class BaseModel {
     }
 }
 exports.BaseModel = BaseModel;
-//# sourceMappingURL=basemodel.js.map
+//# sourceMappingURL=BaseModel.js.map

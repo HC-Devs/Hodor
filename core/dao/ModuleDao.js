@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Basedao_1 = require("./Basedao");
-const module_1 = require("../model/module");
+const BaseDao_1 = require("./BaseDao");
+const Module_1 = require("../model/Module");
 const tableName = "module";
 const nameField = "module_name";
 const typeField = "module_type";
 const idField = "module_id";
-class ModuleDao extends Basedao_1.BaseDao {
+class ModuleDao extends BaseDao_1.BaseDao {
     constructor(sqlConnector) {
         super(tableName, idField, sqlConnector);
     }
@@ -18,7 +18,7 @@ class ModuleDao extends Basedao_1.BaseDao {
         return result;
     }
     getModelFromRow(row) {
-        return new module_1.Module(row[idField], row[nameField], row[typeField]);
+        return new Module_1.Module(row[idField], row[nameField], row[typeField]);
     }
 }
 exports.ModuleDao = ModuleDao;

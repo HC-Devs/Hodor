@@ -1,5 +1,5 @@
-import {BaseDao} from "./Basedao";
-import {Module} from "../model/module";
+import {BaseDao} from "./BaseDao";
+import {Module} from "../model/Module";
 import {SQLITE} from "../../classes/sqlite";
 
 const tableName: string = "module";

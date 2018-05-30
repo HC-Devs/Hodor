@@ -1,5 +1,5 @@
 import { SQLITE } from '../../classes/sqlite';
-import { BaseModel } from '../model/basemodel';
+import {BaseModel} from '../model/BaseModel';
 
 
 /*

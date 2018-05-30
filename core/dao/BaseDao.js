@@ -13,7 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 *  Give base methods to manipulate data from database
 *  All dao must override this class
 */
-class Basedao {
+class BaseDao {
     constructor(dbTable, idFieldName, sqlConnector) {
         this.dbTable = dbTable;
         this.idFieldName = idFieldName;

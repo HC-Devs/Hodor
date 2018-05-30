@@ -27,7 +27,7 @@ class CMD_TEST {
             timeout: 5000
         };
 
-        this.service = require('../core/service/userservice')
+        this.service = require('../core/service/UserService')
     }
 
     async run(message, args) {

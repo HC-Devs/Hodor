@@ -1,6 +1,6 @@
-import {User} from '../model/user';
+import {User} from '../model/User';
 import {SQLITE} from '../../classes/sqlite';
-import {BaseDao} from '../dao/BaseDao';
+import {BaseDao} from './BaseDao';
 
 const userDbTable: string = 'user';
 const userNameField: string = 'user_name';
