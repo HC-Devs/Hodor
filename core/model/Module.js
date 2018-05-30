@@ -12,4 +12,4 @@ class Module extends BaseModel_1.BaseModel {
     }
 }
 exports.Module = Module;
-//# sourceMappingURL=module.js.map
+//# sourceMappingURL=Module.js.map

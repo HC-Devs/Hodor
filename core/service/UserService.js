@@ -46,4 +46,5 @@ function generateMarkdownTable(data) {
     var tab = Table(array);
     return header + tab + footer;
 }
-//# sourceMappingURL=userservice.js.map
+
+//# sourceMappingURL=UserService.js.map

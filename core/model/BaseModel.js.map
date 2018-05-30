@@ -1,9 +1,9 @@
 {
   "version": 3,
-  "file": "basemodel.js",
+  "file": "BaseModel.js",
   "sourceRoot": "",
   "sources": [
-    "basemodel.ts"
+    "BaseModel.ts"
   ],
   "names": [],
   "mappings": ";;AAAA;;;;EAIE;AACF;IAGI,YAAsB,EAAU;QAC5B,IAAI,CAAC,EAAE,GAAG,EAAE,CAAC;IACjB,CAAC;CAOJ;AAZD,8BAYC",

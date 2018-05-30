@@ -1,9 +1,9 @@
 {
   "version": 3,
-  "file": "user.js",
+  "file": "User.js",
   "sourceRoot": "",
   "sources": [
-    "user.ts"
+    "User.ts"
   ],
   "names": [],
   "mappings": ";;AAAA,2CAAsC;AAEtC,UAAkB,SAAQ,qBAAS;IAK/B,YAAY,EAAU,EAAE,IAAY,EAAE,KAAa;QAC/C,KAAK,CAAC,EAAE,CAAC,CAAC;QAEV,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,KAAK,GAAG,KAAK,CAAC;IACvB,CAAC;IAEM,QAAQ;QACX,OAAO,KAAK,CAAS,IAAI,CAAC,EAAE,EAAE,IAAI,CAAC,IAAI,EAAE,IAAI,CAAC,KAAK,CAAC,CAAC;IACzD,CAAC;CAEJ;AAhBD,oBAgBC",
