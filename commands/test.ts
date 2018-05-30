@@ -1,4 +1,4 @@
-import fi = require ('../core/service/userservice');
+//import fi = require ('../core/service/userservice');
 /* Vars */
 
 /* Libs */
@@ -14,6 +14,7 @@ const command = "test";
 
 /* Class */
 class CMD_TEST {
+    service = require('../core/service/userservice');
     bot: any;
     config: any;
 
@@ -53,10 +54,10 @@ class CMD_TEST {
         message.channel.send(":white_check_mark: OK").then(msg => msg.delete(deleteMessageTime));
 
 
-        let r = await fi.ListUser(this.bot.sql);
+        let r = await this.service.ListUser(this.bot.sql);
         message.channel.send(r);
 
-        r = await fi.TestUser(this.bot.sql);
+        r = await this.service.TestUser(this.bot.sql);
         message.channel.send(r);
     }
 }

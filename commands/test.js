@@ -1,4 +1,5 @@
-"use strict";
+//import fi = require ('../core/service/userservice');
+/* Vars */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -7,9 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const fi = require("../core/service/userservice");
-/* Vars */
 /* Libs */
 /* Rights */
 const allowedUsers = [];
@@ -21,6 +19,7 @@ const command = "test";
 /* Class */
 class CMD_TEST {
     constructor(bot) {
+        this.service = require('../core/service/userservice');
         this.bot = bot;
         this.config = {
             name: command,
@@ -50,9 +49,9 @@ class CMD_TEST {
             // command
             const deleteMessageTime = (30 * 1000);
             message.channel.send(":white_check_mark: OK").then(msg => msg.delete(deleteMessageTime));
-            let r = yield fi.ListUser(this.bot.sql);
+            let r = yield this.service.ListUser(this.bot.sql);
             message.channel.send(r);
-            r = yield fi.TestUser(this.bot.sql);
+            r = yield this.service.TestUser(this.bot.sql);
             message.channel.send(r);
         });
     }
