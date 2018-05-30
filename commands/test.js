@@ -19,13 +19,13 @@ const command = "test";
 /* Class */
 class CMD_TEST {
     constructor(bot) {
-        this.service = require('../core/service/userservice');
         this.bot = bot;
         this.config = {
             name: command,
             prefix: ["!"],
             timeout: 5000
         };
+        this.service = require('../core/service/userservice');
     }
     run(message, args) {
         return __awaiter(this, void 0, void 0, function* () {

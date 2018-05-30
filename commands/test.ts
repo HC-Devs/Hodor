@@ -14,7 +14,7 @@ const command = "test";
 
 /* Class */
 class CMD_TEST {
-    service = require('../core/service/userservice');
+    service: any;
     bot: any;
     config: any;
 
@@ -26,6 +26,8 @@ class CMD_TEST {
             prefix: ["!"],
             timeout: 5000
         };
+
+        this.service = require('../core/service/userservice')
     }
 
     async run(message, args) {
