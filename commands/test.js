@@ -1,4 +1,3 @@
-//import fi = require ('../core/service/userservice');
 /* Vars */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -25,7 +24,7 @@ class CMD_TEST {
             prefix: ["!"],
             timeout: 5000
         };
-        this.service = require('../core/service/UserService');
+        this.service = require('../core/service/UserService.ts');
     }
     run(message, args) {
         return __awaiter(this, void 0, void 0, function* () {

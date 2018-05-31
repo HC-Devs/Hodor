@@ -1,4 +1,3 @@
-//import fi = require ('../core/service/userservice');
 /* Vars */
 
 /* Libs */
@@ -27,7 +26,7 @@ class CMD_TEST {
             timeout: 5000
         };
 
-        this.service = require('../core/service/UserService')
+        this.service = require('../core/service/UserService.ts')
     }
 
     async run(message, args) {
