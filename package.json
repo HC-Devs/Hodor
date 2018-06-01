@@ -4,7 +4,7 @@
   "description": "Hades !",
   "main": "main.js",
   "scripts": {
-    "build": "",
+    "build": "tsc",
     "start": "tsc && node main.js",
     "//start": "tsc && node --inspect=localhost:9200 main.js"
   },

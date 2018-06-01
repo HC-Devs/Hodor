@@ -11,7 +11,7 @@ const allowedGuilds = [
     "420194593167114250"  // Test
 ];
 
-class BOT {
+class Bot {
     constructor(client) {
         this.client = client;
         this.logger = require('./utils/Logger.js');
@@ -226,7 +226,7 @@ class BOT {
     }
 }
 
-module.exports = BOT;
+module.exports = Bot;
 
 function walkSync(dir, fileList = []) {
     fs.readdirSync(dir).forEach(file => {
