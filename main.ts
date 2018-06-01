@@ -1,4 +1,4 @@
-import {Client} from "discord.js";
+import {Client, ClientOptions} from "discord.js";
 import {BotTS} from "./BotTS";
 
 if (Number(process.version.slice(1).split(".")[0]) < 9) {
@@ -9,17 +9,14 @@ process.on("uncaughtException", (err) => {
     console.error(`Uncaught Exception: ${errorMsg}`);
     process.exit(1);
 });
-
 process.on("unhandledRejection", (reason, p) => {
     console.error("Unhandled Rejection at:", p, "reason:", reason);
 });
 
-const discordOptions = {
+const discordOptions: ClientOptions = {
     disabledEvents: ["TYPING_START", "VOICE_STATE_UPDATE", "VOICE_SERVER_UPDATE"]
 };
-const Discord: any = require('discord.js');
-
-const client: Client = new Discord.Client(discordOptions);
+const client: Client = new Client(discordOptions);
 const bot: BotTS = new BotTS(client);
 
 bot.init().then(async () => {
