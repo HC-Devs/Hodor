@@ -1,4 +1,5 @@
 import {Client} from "discord.js";
+import {BotTS} from "./BotTS";
 
 if (Number(process.version.slice(1).split(".")[0]) < 9) {
     throw new Error("Node 9.0.0 or higher is required. Update Node on your system.");
@@ -20,7 +21,7 @@ const Discord: any = require('discord.js');
 const Bot: any = require('./bot.js');
 
 const client: Client = new Discord.Client(discordOptions);
-const bot: any = new Bot(client);
+const bot: BotTS = new BotTS(client);
 
 bot.init().then(async () => {
     if (process.env.NODE_ENV === "dev") {
