@@ -26,12 +26,12 @@ class CMD_TEST {
             timeout: 5000
         };
 
-        this.service = require('../core/service/UserService.ts')
+        //this.service = require('../core/service/UserService.ts')
     }
 
     async run(message, args) {
         // check guilds
-        if (allowedGuilds.length > 0 && allowedGuilds.indexOf(message.guild.id) === -1) return;
+        /*if (allowedGuilds.length > 0 && allowedGuilds.indexOf(message.guild.id) === -1) return;
 
         // check users
         if (allowedUsers.length > 0 && allowedUsers.indexOf(message.author.id) === -1) return;
@@ -59,7 +59,7 @@ class CMD_TEST {
         message.channel.send(r);
 
         r = await this.service.TestUser(this.bot.sql);
-        message.channel.send(r);
+        message.channel.send(r);*/
     }
 }
 

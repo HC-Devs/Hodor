@@ -1,3 +1,4 @@
+/*
 import {BaseModel} from "./BaseModel";
 
 export class Module extends BaseModel {
@@ -16,3 +17,4 @@ export class Module extends BaseModel {
         return Array<string>(this.id, this.name, String(this.type));
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 import {User} from '../model/User';
 import {SQLITE} from '../../classes/sqlite';
 import {BaseDao} from './BaseDao';
@@ -24,3 +25,4 @@ export class UserDao extends BaseDao<User> {
         return new User(row[userIdField], row[userNameField], row[userCorpoField]);
     }
 }
+*/
