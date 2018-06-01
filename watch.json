@@ -1,7 +1,8 @@
 {
   "install": {
     "include": [
-      "^package\\.json$"
+      "^package\\.json$",
+      "^\\.env$"
     ]
   },
   "restart": {
@@ -11,11 +12,13 @@
       "^commands/",
       "^crons/",
       "^events/",
-      "^classes/"
+      "^classes/",
+      "\\.md$"
     ],
     "include": [
       "\\.js$",
-      "\\.json"
+      "\\.json",
+      "\\.ts"
     ]
   },
   "throttle": 60001
