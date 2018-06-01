@@ -18,7 +18,6 @@ const discordOptions = {
     disabledEvents: ["TYPING_START", "VOICE_STATE_UPDATE", "VOICE_SERVER_UPDATE"]
 };
 const Discord: any = require('discord.js');
-const Bot: any = require('./bot.js');
 
 const client: Client = new Discord.Client(discordOptions);
 const bot: BotTS = new BotTS(client);
