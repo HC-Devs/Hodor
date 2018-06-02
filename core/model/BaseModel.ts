@@ -3,7 +3,6 @@
 *  Give base methods/attributs common to all model
 *  All model must override this class
 */
-/*
 export abstract class BaseModel {
     id: string;
 
@@ -11,11 +10,9 @@ export abstract class BaseModel {
         this.id = id;
     }
 
+    /*
+    * Generate array of model data
+    * Used for debug purpose
+    */
     public abstract getArray(): Array<string>;
 }
-*/
-
-/*
-* Generate array of model data
-* Used for debug purpose
-*/

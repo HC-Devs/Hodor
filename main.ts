@@ -1,7 +1,9 @@
+import * as logger from "./utils/Logger.js";
 import {Client, ClientOptions} from "discord.js";
 import {BotTS} from "./BotTS";
+import {Config} from "./Config";
 
-if (Number(process.version.slice(1).split(".")[0]) < 9) {
+if (Config.nodeVersion < 9) {
     throw new Error("Node 9.0.0 or higher is required. Update Node on your system.");
 }
 process.on("uncaughtException", (err) => {
@@ -20,12 +22,12 @@ const client: Client = new Client(discordOptions);
 const bot: BotTS = new BotTS(client);
 
 bot.init().then(async () => {
-    if (process.env.NODE_ENV === "dev") {
+    if (Config.nodeEnv === "dev") {
         bot.watch().then(() => {
-            bot.logger.log("Chokidar initialized", "success")
+            logger.log("Chokidar initialized", "success")
         });
     }
-    if (!process.env.BOT_TOKEN) {
+    if (!Config.token) {
         throw new Error("Missing 'BOT_TOKEN' environment variable");
     }
     setInterval(() => {
@@ -34,10 +36,10 @@ bot.init().then(async () => {
             cron.run();
         });
     }, 60000);
-    await client.login(process.env.BOT_TOKEN);
+    await client.login(Config.token);
 
 }).then(() => {
-    if (process.env.PORT && process.env.PROJECT_DOMAIN) {
+    if (Config.nodeDomain && Config.nodePort) {
         const express = require('express');
         const http = require('http');
         const app = express();
@@ -47,9 +49,9 @@ bot.init().then(async () => {
             response.write(d.toString());
             response.end();
         });
-        app.listen(process.env.PORT);
+        app.listen(Config.nodePort);
         setInterval(() => {
-            http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+            http.get(`http://${Config.nodeDomain}.glitch.me/`);
         }, 240000);
     }
 });

@@ -1,40 +1,4 @@
-/* Vars */
-global.botOwner = process.env.BOT_OWNER.split(",") || [];
-
-/* Libs */
-const fs = require("fs");
-const path = require("path");
-
-const allowedBots = [];
-const allowedGuilds = [
-    "413390615158718464",
-    "420194593167114250"  // Test
-];
-
 class Bot {
-    constructor(client) {
-        this.client = client;
-        this.logger = require('./utils/Logger.js');
-
-        /* Checks */
-        if (global.botOwner.length === 0 || global.botOwner[0] === "") {
-            this.logger.error("No owner set");
-            process.exit(1);
-        }
-        let prefix = process.env.NODE_ENV !== "dev" ? process.env.BOT_PREFIX : process.env.BOT_PREFIX_DEV;
-        if (prefix === "") {
-            this.logger.error("No prefix set");
-            process.exit(1);
-        }
-
-        /* Database directory */
-        const dataDir = "./.data";
-        if (!fs.existsSync(dataDir)) {
-            this.logger.log(`create '${dataDir}'`);
-            fs.mkdirSync(dataDir)
-        }
-    }
-
     async init() {
         /* Commands */
         this.commands = {};
@@ -43,7 +7,7 @@ class Bot {
             if (path.extname(file) === ".js") {
                 let className = path.basename(file, path.extname(file));
                 let classContent = require(`./${file}`);
-                this.logger.log(`Loading Command: ${className}. 👌`);
+                logger.log(`Loading Command: ${className}. 👌`);
                 this.commands[className] = new classContent(this);
             }
         });
@@ -225,8 +189,6 @@ class Bot {
         return false;
     }
 }
-
-module.exports = Bot;
 
 function walkSync(dir, fileList = []) {
     fs.readdirSync(dir).forEach(file => {
