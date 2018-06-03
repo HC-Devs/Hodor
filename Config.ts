@@ -9,4 +9,9 @@ export class Config {
     static prefix: string = process.env.BOT_PREFIX;
     static prefixDev: string = process.env.BOT_PREFIX_DEV;
     static token: string = process.env.BOT_TOKEN;
+
+    static pathCommandsDirectory: string = "./commands/";
+    static pathEventsDirectory: string = "./events/";
+    static pathClassesDirectory: string = "./classes/";
+    static pathCronssDirectory: string = "./crons/";
 }

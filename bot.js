@@ -1,31 +1,5 @@
 class Bot {
     async init() {
-        /* Commands */
-        this.commands = {};
-        const commands = walkSync('./commands/');
-        commands.forEach(async file => {
-            if (path.extname(file) === ".js") {
-                let className = path.basename(file, path.extname(file));
-                let classContent = require(`./${file}`);
-                logger.log(`Loading Command: ${className}. 👌`);
-                this.commands[className] = new classContent(this);
-            }
-        });
-        this.logger.log(`Loading a total of ${commands.length} commands.`, "success");
-
-        /* Events */
-        const events = walkSync('./events/');
-        events.forEach(async file => {
-            if (path.extname(file) === ".js") {
-                const eventName = path.basename(file, path.extname(file));
-                const event = require(`./${file}`);
-                this.logger.log(`Loading Event: ${eventName}. 👌`);
-                this.client.on(eventName, event.bind(null, this));
-                delete require.cache[require.resolve(`./${file}`)];
-            }
-        });
-        this.logger.log(`Loading a total of ${events.length} events.`, "success");
-
         /* Crons */
         this.crons = {};
 
@@ -52,14 +26,6 @@ class Bot {
     }
 
     async watch() {
-        const chokidar = require("chokidar");
-
-        let watchOptions = {
-            ignored: /(^|[\/\\])\../,
-            alwaysStat: false,
-            awaitWriteFinish: {stabilityThreshold: 2000, pollInterval: 100}
-        };
-
         chokidar.watch("classes/", watchOptions).on("change", (event) => {
             let className = path.basename(event, path.extname(event));
             let classContent = BOT.reloadClass(event);
@@ -97,11 +63,6 @@ class Bot {
                 this.logger.log(`chokidar: event ${className} reloaded !`);
             }
         });
-
-        setInterval(() => {
-            let used = process.memoryUsage().heapUsed / 1024 / 1024;
-            this.logger.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
-        }, 1000 * 60 * 5);
     }
 
     async parseMessage(oldMessage, newMessage) {

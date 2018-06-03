@@ -3,10 +3,11 @@
   "version": "0.2.0",
   "description": "Hades !",
   "main": "main.js",
+  "types": "main.d.ts",
   "scripts": {
-    "build": "tsc",
-    "start": "tsc && node main.js",
-    "//start": "tsc && node --inspect=localhost:9200 main.js"
+    "prestart": "tsc",
+    "start": "node main.js",
+    "//start": "node --inspect=localhost:9200 main.js"
   },
   "engines": {
     "node": "9.x"
@@ -28,7 +29,7 @@
     "chalk": "^2.4.1",
     "chokidar": "^2.0.3",
     "discord.js": "^11.3.2",
-    "dotenv": "^5.0.1",
+    "dotenv": "^6.0.0",
     "emoji-flags": "^1.2.0",
     "enmap": "^2.6.0",
     "express": "^4.16.3",
