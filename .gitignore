@@ -79,5 +79,6 @@ obj/
 *.sqlite3
 
 # Ignores compiled TypeScript files
+*.d.ts
 *.js
 *.js.map
