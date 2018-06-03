@@ -38,7 +38,6 @@
     "moment-duration-format": "^2.2.2",
     "shortid": "^2.2.8",
     "sqlite": "^2.9.2",
-    "typescript": "^2.9.1",
     "uws": "^10.148.0"
   },
   "keywords": [
@@ -47,5 +46,8 @@
     "express",
     "discord",
     "bot"
-  ]
+  ],
+  "devDependencies": {
+    "typescript": "^2.9.1"
+  }
 }

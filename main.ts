@@ -31,10 +31,10 @@ bot.init().then(async () => {
         throw new Error("Missing 'BOT_TOKEN' environment variable");
     }
     setInterval(() => {
-        Object.keys(bot.crons).forEach(function (key) {
+        /*Object.keys(bot.crons).forEach(function (key) {
             let cron = bot.crons[key];
             cron.run();
-        });
+        });*/
     }, 60000);
     await client.login(Config.token);
 
