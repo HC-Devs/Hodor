@@ -15,11 +15,11 @@ const allowedGuilds = [
 
 export class BotTS {
     client: Client;
-    commands: Map<string, Command>;
-    events: Array<any>;
-    crons: Array<any>;
-    functions: Array<any>;
-    helpers: Array<any>;
+    commands: Map<string, Command> = new Map<string, Command>();
+    crons: Array<any> = Array<any>();
+    locks: Array<any> = Array<any>();
+    functions: Array<any> = Array<any>();
+    helpers: Array<any> = Array<any>();
     sql: any;
     queries: any;
 
@@ -55,7 +55,6 @@ export class BotTS {
 
     async init() {
         // Commands
-        this.commands = new Map<string, Command>();
         const commands = walkSync(Config.pathCommandsDirectory);
         commands.forEach(file => {
             if (path.extname(file) === ".ts") {
@@ -84,19 +83,6 @@ export class BotTS {
             }
         });
         logger.log(`Loading a total of ${events.length} events.`, "success");
-
-        /*chokidar.watch(Config.pathCommandsDirectory, this.watchOptions).on("add", event => {
-            if (event.toString().startsWith('commands/mining/bonus')) {
-                import(`./${event}`).then(command => {
-                    this.commands.push(command)
-                }).catch(reason => {
-                    logger.error(reason);
-                });
-            }
-        });
-        chokidar.watch(Config.pathEventsDirectory, this.watchOptions).on("add", event => {
-            logger.log(`add event: ${event}`);
-        });*/
     }
 
     async watch() {

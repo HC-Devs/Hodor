@@ -1,11 +1,5 @@
 class Bot {
     async init() {
-        /* Crons */
-        this.crons = {};
-
-        /* Locks */
-        this.locks = {};
-
         /* Functions */
         const FUNCTIONS = require("./classes/functions.js");
         this.functions = new FUNCTIONS(this);
