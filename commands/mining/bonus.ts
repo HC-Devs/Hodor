@@ -19,12 +19,8 @@ export class Bonus extends Command {
         super(bot, config);
     }
 
-    public test() {
-
-    }
-
-    /*async run(message, args) {
-
+    async run(message, args) {
+        /*
         // check command permissions
         if (!this.bot.functions.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
             return;
@@ -45,8 +41,8 @@ export class Bonus extends Command {
         // TODO set command level to DB & show success message
 
         message.channel.send(":white_check_mark: OK").then(msg => msg.delete(this.config.timeout));
-
-    }*/
+        */
+    }
 }
 
 module.exports = Bonus;
