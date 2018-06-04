@@ -1,4 +1,5 @@
 import {BotTS} from "../BotTS";
+import {Message} from "discord.js";
 
 export abstract class Command {
 
@@ -9,4 +10,6 @@ export abstract class Command {
         this.bot = bot;
         this.config = config;
     }
+
+    abstract async run(message: Message, args: any);
 }

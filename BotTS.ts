@@ -1,6 +1,6 @@
 import * as logger from "./utils/Logger.js";
 import * as chokidar from "chokidar";
-import {Client} from "discord.js";
+import {Client, Message} from "discord.js";
 import {Command} from "./commands/Command";
 import {Config} from "./Config";
 import * as fs from "fs";
@@ -93,22 +93,66 @@ export class BotTS {
             awaitWriteFinish: {stabilityThreshold: 2000, pollInterval: 100}
         };*/
         chokidar.watch(Config.pathClassesDirectory, this.watchOptions).on("change", event => {
-
+            // TODO
         });
         chokidar.watch(Config.pathCommandsDirectory, this.watchOptions).on("change", event => {
-
+            // TODO
         });
         chokidar.watch(Config.pathEventsDirectory, this.watchOptions).on("change", event => {
-
+            // TODO
         });
         chokidar.watch(Config.pathCronssDirectory, this.watchOptions).on("change", event => {
-
+            // TODO
         });
 
         setInterval(() => {
             let used = process.memoryUsage().heapUsed / 1024 / 1024;
             logger.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
         }, 1000 * 60 * 5);
+    }
+
+    async parseMessage(oldMessage: Message, newMessage: Message) {
+        // dm message not allowed
+        if (newMessage.channel.type === "dm") return;
+
+        // message from bot, is bot allowed ?
+        if (newMessage.author.bot && allowedBots.indexOf(newMessage.author.id) === -1) return;
+
+        // guild allowed
+        if (allowedGuilds.indexOf(newMessage.guild.id) === -1) {
+            logger.error("Bot is not allowed in " + newMessage.guild.name + " (" + newMessage.guild.id + ")");
+            return;
+        }
+
+        // check prefix
+        let prefix = process.env.NODE_ENV !== "dev" ? process.env.BOT_PREFIX : process.env.BOT_PREFIX_DEV;
+        if (newMessage.content.indexOf(prefix) !== 0) return;
+        //newMessage.prefix = prefix;
+
+        // retrieve command & args
+        const args = newMessage.content.slice(prefix.length).trim().split(/ +/g);
+        const command = args.shift().toLowerCase();
+
+        if (typeof this.commands.get(command) !== "undefined") {
+            let cmd = this.commands.get(command);
+            if ((process.env.NODE_ENV !== "dev" && cmd.config.prefix.indexOf(prefix) !== -1) || (process.env.NODE_ENV === "dev" && Config.botOwner.indexOf(newMessage.author.id) !== -1)) {
+                if (cmd.config.timeout > 0) {
+                    newMessage.delete(cmd.config.timeout).catch(reason => {
+                        logger.error(reason);
+                    });
+                }
+                else if (cmd.config.timeout === -1) {
+                    newMessage.delete().catch(reason => {
+                        logger.error(reason);
+                    });
+                }
+                cmd.run(newMessage, args).then(() => {
+                    logger.cmd(`[CMD] ${newMessage.author.username} (${newMessage.author.id}) ran command ${cmd.config.name}`);
+                }).catch(reason => {
+                    logger.error(reason);
+                });
+            }
+        }
     }
 }
 

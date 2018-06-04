@@ -144,12 +144,3 @@ class Bot {
         return false;
     }
 }
-
-function walkSync(dir, fileList = []) {
-    fs.readdirSync(dir).forEach(file => {
-        fileList = fs.statSync(path.join(dir, file)).isDirectory()
-            ? walkSync(path.join(dir, file), fileList)
-            : fileList.concat(path.join(dir, file));
-    });
-    return fileList;
-}
