@@ -13,7 +13,7 @@ export class Bonus extends BaseModuleCommand {
         super(bot, "bonus");
     }
 
-    async runCommand(message: Message, level: Number, user: string) {
+    async runCommand(message: Message, level: number, user: string) {
         //TODO 
     }
 }

@@ -14,7 +14,7 @@ export class Test extends BaseModuleCommand {
         super(bot, "test");
     }
 
-    async runCommand(message: Message, level: Number, user: string): Promise<any> {
+    async runCommand(message: Message, level: number, user: string): Promise<any> {
         //TODO
         // 1. get userservice or commandservice
         // 2. check if module exist and update or insert value in UserModule table
