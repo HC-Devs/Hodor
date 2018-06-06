@@ -15,7 +15,9 @@ export class Test extends BaseModuleCommand {
     }
 
     async runCommand(level: Number, user: string): Promise<any> {
-        return undefined;
+        //TODO
+        // 1. get userservice or commandservice
+        // 2. check if module exist and update or insert value in UserModule table
     }
 
     /*async run(message, args) {
