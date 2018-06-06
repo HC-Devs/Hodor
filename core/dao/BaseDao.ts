@@ -1,7 +1,6 @@
 import {SQLITE} from '../../classes/sqlite';
 import {BaseModel} from '../model/BaseModel';
 
-
 /*
 *  Generic abstract class 
 *  Give base methods to manipulate data from database
@@ -9,7 +8,7 @@ import {BaseModel} from '../model/BaseModel';
 */
 export abstract class BaseDao<T extends BaseModel> {
 
-    constructor(protected dbTable: string, protected idFieldName, protected sqlConnector: SQLITE) {
+    protected constructor(protected dbTable: string, protected idFieldName, protected sqlConnector: SQLITE) {
     }
 
     /*

@@ -1,8 +1,5 @@
-﻿/*
-import {User} from '../model/User';
-
+﻿import {User} from '../model/User';
 import {UserDao} from '../dao/UserDao';
-
 import {SQLITE} from '../../classes/sqlite';
 
 const Table = require('markdown-table');
@@ -12,7 +9,7 @@ export async function TestUser(sqlConnector: SQLITE): Promise<string> {
     let users = await userdao.getAll();
     let maxId = Math.max.apply(Math, users.map(function (o) {
         return o.id;
-    }))
+    }));
     let newId = (parseInt(maxId) + 1).toString();
     let newUser = new User(newId, "aurelien", "Hades corpo");
 
@@ -29,8 +26,7 @@ export async function TestUser(sqlConnector: SQLITE): Promise<string> {
 
     return tabResult;
 }
-*/
-/*
+
 export async function ListUser(sqlConnector: SQLITE): Promise<string> {
     let userdao = new UserDao(sqlConnector);
     let users = await userdao.getAll();
@@ -48,4 +44,3 @@ function generateMarkdownTable(data) {
     var tab = Table(array);
     return header + tab + footer;
 }
-*/

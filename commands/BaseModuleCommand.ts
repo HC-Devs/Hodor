@@ -1,6 +1,7 @@
 import * as logger from "../utils/Logger.js";
 import {BaseCommand} from "./BaseCommand";
 import {BotTS} from "../BotTS";
+import {Message} from "discord.js";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -38,7 +39,7 @@ export abstract class BaseModuleCommand extends BaseCommand {
 
         let memberId = message.mentions.users.first() ? message.mentions.users.first().id : message.author.id;
 
-        this.runCommand(level, memberId).then(() => {
+        this.runCommand(message, level, memberId).then(() => {
             message.channel.send(":white_check_mark: OK").then(msg => msg.delete(this.config.timeout));
         }).catch(reason => {
             logger.error(reason);
@@ -53,5 +54,5 @@ export abstract class BaseModuleCommand extends BaseCommand {
     }
 
     // Execute current module update command
-    async abstract runCommand(level: Number, user: string);
+    async abstract runCommand(message: Message, level: Number, user: string);
 }

@@ -1,4 +1,3 @@
-/*
 import {BaseDao} from "./BaseDao";
 import {Module} from "../model/Module";
 import {SQLITE} from "../../classes/sqlite";
@@ -25,4 +24,3 @@ export class ModuleDao extends BaseDao<Module> {
         return new Module(row[idField], row[nameField], row[typeField]);
     }
 }
-*/

@@ -1,4 +1,3 @@
-/*
 import {BaseModel} from './BaseModel';
 
 export class User extends BaseModel {
@@ -13,9 +12,7 @@ export class User extends BaseModel {
         this.corpo = corpo;
     }
 
-    public getArray(): Array<string> {
+    getArray(): Array<string> {
         return Array<string>(this.id, this.name, this.corpo);
     }
-
 }
-*/
