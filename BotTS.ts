@@ -67,7 +67,7 @@ export class BotTS {
                         logger.log(`Loading Command: ${command.config.name}. 👌`);
                     }
                 }).catch(reason => {
-                    logger.error(reason);
+                    //logger.error(reason);
                 });
             }
         }
@@ -96,9 +96,16 @@ export class BotTS {
         };*/
         chokidar.watch(Config.pathClassesDirectory, this.watchOptions).on("change", event => {
             // TODO
+            /*let className = path.basename(event, path.extname(event));
+            if (reloadFile(event)) {
+                logger.log(`chokidar: class ${className} reloaded !`);
+            }*/
         });
         chokidar.watch(Config.pathCommandsDirectory, this.watchOptions).on("change", event => {
-            // TODO
+            let className = path.basename(event, path.extname(event));
+            if (reloadFile(event)) {
+                logger.log(`chokidar: class ${className} reloaded !`);
+            }
         });
         chokidar.watch(Config.pathEventsDirectory, this.watchOptions).on("change", event => {
             // TODO
@@ -129,7 +136,6 @@ export class BotTS {
         // check prefix
         let prefix = process.env.NODE_ENV !== "dev" ? process.env.BOT_PREFIX : process.env.BOT_PREFIX_DEV;
         if (newMessage.content.indexOf(prefix) !== 0) return;
-        //newMessage.prefix = prefix;
 
         // retrieve command & args
         const args = newMessage.content.slice(prefix.length).trim().split(/ +/g);
@@ -169,4 +175,13 @@ function walkSync(dir, fileList = []) {
 
 function isValidFileName(file: string): boolean {
     return file.split('.').length === 2 && path.extname(file) === ".ts";
+}
+
+function reloadFile(file: string): boolean {
+    if (isValidFileName(file) && fs.existsSync(`./${file}`)) {
+        let className = `./${path.dirname(file)}/${path.basename(file, path.extname(file))}`;
+        delete require.cache[require.resolve(className)];
+        return require(className);
+    }
+    return false;
 }
