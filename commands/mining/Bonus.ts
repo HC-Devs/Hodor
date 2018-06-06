@@ -1,5 +1,6 @@
 import {BotTS} from "../../BotTS";
 import {BaseModuleCommand} from "../BaseModuleCommand";
+import {Message} from "discord.js";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -12,7 +13,7 @@ export class Bonus extends BaseModuleCommand {
         super(bot, "bonus");
     }
 
-    async runCommand(level: Number, user: string) {
+    async runCommand(message: Message, level: Number, user: string) {
         //TODO 
         // 1. get userservice or commandservice
         // 2. check if module exist and update or insert value in UserModule table
