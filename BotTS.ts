@@ -56,19 +56,22 @@ export class BotTS {
     async init() {
         // Commands
         const commands = walkSync(Config.pathCommandsDirectory);
-        commands.forEach(file => {
+        for (let i = 0; i < commands.length; i++) {
+            let file = commands[i];
             if (path.extname(file) === ".ts") {
                 let className = path.basename(file, path.extname(file));
-                try {
-                    let req = require(`./${path.dirname(file)}/${path.basename(file, path.extname(file))}`);
-                    if (req !== null) {
-                        this.commands.set(className, new req(this));
-                        logger.log(`Loading Command: ${className}. 👌`);
-                    }
-                } catch (e) {
+                if (className === "Bonus") {
+                    await import(`./${path.dirname(file)}/${path.basename(file, path.extname(file))}`).then(command => {
+                        if (command.config) {
+                            this.commands.set(command.config.name, command);
+                            logger.log(`Loading Command: ${command.config.name}. 👌`);
+                        }
+                    }).catch(reason => {
+                        logger.error(reason);
+                    });
                 }
             }
-        });
+        }
         logger.log(`Loading a total of ${this.commands.size} commands.`, "success");
 
         // Events
