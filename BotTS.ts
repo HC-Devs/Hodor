@@ -110,7 +110,7 @@ export class BotTS {
         chokidar.watch(Config.pathEventsDirectory, this.watchOptions).on("change", event => {
             // TODO
         });
-        chokidar.watch(Config.pathCronssDirectory, this.watchOptions).on("change", event => {
+        chokidar.watch(Config.pathCronsDirectory, this.watchOptions).on("change", event => {
             // TODO
         });
 
@@ -164,7 +164,7 @@ export class BotTS {
     }
 }
 
-function walkSync(dir, fileList = []) {
+function walkSync(dir: string, fileList: string[] = []) {
     fs.readdirSync(dir).forEach(file => {
         fileList = fs.statSync(path.join(dir, file)).isDirectory()
             ? walkSync(path.join(dir, file), fileList)

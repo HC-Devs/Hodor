@@ -1,56 +1,51 @@
-/* Vars */
-
-/* Libs */
-
-/* Rights */
-const allowedUsers = global.botOwner;
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const logger = require("../utils/Logger.js");
+const Config_1 = require("../Config");
+const BaseCommand_1 = require("./BaseCommand");
+const allowedUsers = Config_1.Config.botOwner;
 const allowedRoles = [];
 const allowedChannels = [];
 const allowedGuilds = [];
-
-/* - */
-const command = "purge";
-
-/* Class */
-class CMD_PURGE {
+class Purge extends BaseCommand_1.BaseCommand {
     constructor(bot) {
-        this.bot = bot;
-
-        this.config = {
-            name: command,
-            prefix: ["!"],
+        let config = {
+            name: "purge",
+            prefix: ['!'],
             timeout: 5000
         };
+        super(bot, config);
     }
-
-    async run(message, args) {
-        // check guilds
-        if (allowedGuilds.length > 0 && allowedGuilds.indexOf(message.guild.id) === -1) return;
-
-        // check users
-        if (allowedUsers.length > 0 && allowedUsers.indexOf(message.author.id) === -1) return;
-
-        // check roles
-        if (allowedRoles.length > 0 && !message.member.roles.some(r => allowedRoles.includes(r.name))) return;
-
-        // check channels
-        if (allowedChannels.length > 0 && allowedChannels.indexOf(message.channel.id) === -1) return;
-
-        const limit = (args[0] && !isNaN(parseInt(args[0]))) ? parseInt(args[0]) : -1;
-        const options = limit === -1 ? {} : {limit: limit, before: message.id};
-
-        message.channel.fetchMessages(options).then(messages => {
-            message.channel.bulkDelete(messages);
-        }).catch(reason => {
-            message.reply(`Couldn't delete messages because of: ${reason}`);
-            this.bot.logger.error(reason);
-        }).then(() => {
-            message.delete().catch(reason => {
-                this.bot.logger.error(reason);
+    run(message, args) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // check command permissions
+            if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
+                return;
+            }
+            const limit = (args[0] && !isNaN(parseInt(args[0]))) ? parseInt(args[0]) : -1;
+            const options = limit === -1 ? {} : { limit: limit, before: message.id };
+            message.channel.fetchMessages(options).then(messages => {
+                message.channel.bulkDelete(messages);
+            }).catch(reason => {
+                message.reply(`Couldn't delete messages because of: ${reason}`).then(() => {
+                    logger.error(reason);
+                });
+            }).then(() => {
+                message.delete().catch(reason => {
+                    logger.error(reason);
+                });
             });
         });
     }
 }
-
-/* Export */
-module.exports = CMD_PURGE;
+exports.Purge = Purge;
+module.exports = Purge;
+//# sourceMappingURL=Purge.js.map

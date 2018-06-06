@@ -13,5 +13,5 @@ export class Config {
     static pathCommandsDirectory: string = "./commands/";
     static pathEventsDirectory: string = "./events/";
     static pathClassesDirectory: string = "./classes/";
-    static pathCronssDirectory: string = "./crons/";
+    static pathCronsDirectory: string = "./crons/";
 }
