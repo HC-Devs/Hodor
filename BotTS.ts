@@ -58,19 +58,17 @@ export class BotTS {
         const commands = walkSync(Config.pathCommandsDirectory);
         for (let i = 0; i < commands.length; i++) {
             let file = commands[i];
-            if (path.extname(file) === ".ts") {
+            if (isValidFileName(file)) {
                 let className = path.basename(file, path.extname(file));
-                if (className === "Bonus") {
-                    await import(`./${path.dirname(file)}/${path.basename(file, path.extname(file))}`).then(Command => {
-                        let command = new Command(this);
-                        if (command.config) {
-                            this.commands.set(command.config.name, command);
-                            logger.log(`Loading Command: ${command.config.name}. 👌`);
-                        }
-                    }).catch(reason => {
-                        logger.error(reason);
-                    });
-                }
+                await import(`./${path.dirname(file)}/${className}`).then(Command => {
+                    let command = new Command(this);
+                    if (command.config) {
+                        this.commands.set(command.config.name, command);
+                        logger.log(`Loading Command: ${command.config.name}. 👌`);
+                    }
+                }).catch(reason => {
+                    logger.error(reason);
+                });
             }
         }
         logger.log(`Loading a total of ${this.commands.size} commands.`, "success");
@@ -167,4 +165,8 @@ function walkSync(dir, fileList = []) {
             : fileList.concat(path.join(dir, file));
     });
     return fileList;
+}
+
+function isValidFileName(file: string): boolean {
+    return file.split('.').length === 2 && path.extname(file) === ".ts";
 }

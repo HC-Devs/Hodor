@@ -1,3 +1,4 @@
+import * as logger from "../utils/Logger.js";
 import {BaseCommand} from "./BaseCommand";
 import {BotTS} from "../BotTS";
 
@@ -37,9 +38,11 @@ export abstract class BaseModuleCommand extends BaseCommand {
 
         let memberId = message.mentions.users.first() ? message.mentions.users.first().id : message.author.id;
 
-        this.runCommand(level, memberId);
-
-        message.channel.send(":white_check_mark: OK").then(msg => msg.delete(this.config.timeout));
+        this.runCommand(level, memberId).then(() => {
+            message.channel.send(":white_check_mark: OK").then(msg => msg.delete(this.config.timeout));
+        }).catch(reason => {
+            logger.error(reason);
+        });
     }
 
     // Virtual method that could be overrided
