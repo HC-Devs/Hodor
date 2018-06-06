@@ -1,7 +1,7 @@
-import { BotTS } from "../BotTS";
-import { Message } from "discord.js";
+import {BotTS} from "../BotTS";
+import {Message} from "discord.js";
 
-export abstract class Command {
+export abstract class BaseCommand {
 
     bot: BotTS;
     config: any;

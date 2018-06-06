@@ -1,4 +1,4 @@
-import { Command } from "./Command";
+import {BaseCommand} from "./BaseCommand";
 import { BotTS } from "../BotTS";
 
 const allowedUsers = [];
@@ -6,7 +6,7 @@ const allowedRoles = [];
 const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
-export abstract class BaseModuleCommand extends Command {
+export abstract class BaseModuleCommand extends BaseCommand {
     constructor(bot: BotTS, commandName: string, prefix = ['!'], timeout = 5000, maxLevel = 10 ) {
         let config = {
             name: commandName,

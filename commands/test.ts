@@ -4,7 +4,7 @@
 
 /* Rights */
 import {BotTS} from "../BotTS";
-import {Command} from "./Command";
+import {BaseCommand} from "./BaseCommand";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -15,7 +15,7 @@ const allowedGuilds = [];
 const command = "test";
 
 /* Class */
-export class Test extends Command {
+export class Test extends BaseCommand {
     service: any;
 
     constructor(bot: BotTS) {

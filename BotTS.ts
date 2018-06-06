@@ -1,7 +1,7 @@
 import * as logger from "./utils/Logger.js";
 import * as chokidar from "chokidar";
 import {Client, Message} from "discord.js";
-import {Command} from "./commands/Command";
+import {BaseCommand} from "./commands/BaseCommand";
 import {Config} from "./Config";
 import * as fs from "fs";
 import * as path from "path";
@@ -15,7 +15,7 @@ const allowedGuilds = [
 
 export class BotTS {
     client: Client;
-    commands: Map<string, Command> = new Map<string, Command>();
+    commands: Map<string, BaseCommand> = new Map<string, BaseCommand>();
     crons: Array<any> = Array<any>();
     locks: Array<any> = Array<any>();
     functions: Array<any> = Array<any>();

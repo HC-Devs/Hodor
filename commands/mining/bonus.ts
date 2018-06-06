@@ -1,7 +1,6 @@
 /* Rights */
 import {BotTS} from "../../BotTS";
-import {Command} from "../Command";
-import { BaseModuleCommand } from "../BaseModuleCommand";
+import {BaseModuleCommand} from "../BaseModuleCommand";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -11,13 +10,15 @@ const allowedGuilds = [];
 export class Bonus extends BaseModuleCommand {
 
     constructor(bot: BotTS) {
-        super(bot, "bonus" );
+        super(bot, "bonus");
     }
-    async runCommand(level : Number, user : string){
+
+    async runCommand(level: Number, user: string) {
         //TODO 
         // 1. get userservice or commandservice
         // 2. check if module exist and update or insert value in UserModule table
     }
+
     // async run(message, args) {
     //     /*
     //     // check command permissions
@@ -45,3 +46,11 @@ export class Bonus extends BaseModuleCommand {
 }
 
 module.exports = Bonus;
+
+const config = {
+    name: "bonus",
+    prefix: ['!'],
+    timeout: 5000,
+    maxLevel: 10
+};
+module.exports.config = config;
