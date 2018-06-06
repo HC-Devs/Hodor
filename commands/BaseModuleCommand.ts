@@ -51,5 +51,4 @@ export abstract class BaseModuleCommand extends BaseCommand {
 
     // Execute current module update command
     async abstract runCommand(level: Number, user: string);
-
 }

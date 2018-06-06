@@ -18,7 +18,7 @@ export class Test extends BaseModuleCommand {
         return undefined;
     }
 
-    async run(message, args) {
+    /*async run(message, args) {
         // check guilds
         if (allowedGuilds.length > 0 && allowedGuilds.indexOf(message.guild.id) === -1) return;
 
@@ -36,13 +36,12 @@ export class Test extends BaseModuleCommand {
 
         message.channel.send(":white_check_mark: OK").then(msg => msg.delete(deleteMessageTime));
 
-        /*
-        let r = await this.service.ListUser(this.bot.sql);
-        message.channel.send(r);
+        //let r = await this.service.ListUser(this.bot.sql);
+        //message.channel.send(r);
 
-        r = await this.service.TestUser(this.bot.sql);
-        message.channel.send(r);*/
-    }
+        //r = await this.service.TestUser(this.bot.sql);
+        //message.channel.send(r);
+    }*/
 }
 
 module.exports = Test;
