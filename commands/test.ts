@@ -1,32 +1,21 @@
-/* Vars */
-
-/* Libs */
-
-/* Rights */
 import {BotTS} from "../BotTS";
-import {BaseCommand} from "./BaseCommand";
+import {BaseModuleCommand} from "./BaseModuleCommand";
 
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = [];
 const allowedGuilds = [];
 
-/* - */
-const command = "test";
-
-/* Class */
-export class Test extends BaseCommand {
+export class Test extends BaseModuleCommand {
     service: any;
 
     constructor(bot: BotTS) {
-        let config = {
-            name: "test",
-            prefix: ["!"],
-            timeout: 5000
-        };
-        super(bot, config);
-
+        super(bot, "test");
         //this.service = require('../core/service/UserService.ts')
+    }
+
+    async runCommand(level: Number, user: string): Promise<any> {
+        return undefined;
     }
 
     async run(message, args) {

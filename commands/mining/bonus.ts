@@ -1,4 +1,3 @@
-/* Rights */
 import {BotTS} from "../../BotTS";
 import {BaseModuleCommand} from "../BaseModuleCommand";
 
@@ -46,11 +45,3 @@ export class Bonus extends BaseModuleCommand {
 }
 
 module.exports = Bonus;
-
-const config = {
-    name: "bonus",
-    prefix: ['!'],
-    timeout: 5000,
-    maxLevel: 10
-};
-module.exports.config = config;

@@ -22,7 +22,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                 resolve(result.value);
             }).then(fulfilled, rejected);
         }
-
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -32,12 +31,10 @@ const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
-
 class Bonus extends BaseModuleCommand_1.BaseModuleCommand {
     constructor(bot) {
         super(bot, "bonus");
     }
-
     runCommand(level, user) {
         return __awaiter(this, void 0, void 0, function* () {
             //TODO 
@@ -46,14 +43,6 @@ class Bonus extends BaseModuleCommand_1.BaseModuleCommand {
         });
     }
 }
-
 exports.Bonus = Bonus;
 module.exports = Bonus;
-const config = {
-    name: "bonus",
-    prefix: ['!'],
-    timeout: 5000,
-    maxLevel: 10
-};
-module.exports.config = config;
 //# sourceMappingURL=bonus.js.map

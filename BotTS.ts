@@ -61,7 +61,8 @@ export class BotTS {
             if (path.extname(file) === ".ts") {
                 let className = path.basename(file, path.extname(file));
                 if (className === "Bonus") {
-                    await import(`./${path.dirname(file)}/${path.basename(file, path.extname(file))}`).then(command => {
+                    await import(`./${path.dirname(file)}/${path.basename(file, path.extname(file))}`).then(Command => {
+                        let command = new Command(this);
                         if (command.config) {
                             this.commands.set(command.config.name, command);
                             logger.log(`Loading Command: ${command.config.name}. 👌`);
