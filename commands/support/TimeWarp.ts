@@ -7,10 +7,10 @@ const allowedRoles = [];
 const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
-export class Distortion extends BaseModuleCommand {
+export class TimeWarp extends BaseModuleCommand {
 
     constructor(bot: BotTS) {
-        super(bot, "distortion");
+        super(bot, "timewarp");
     }
 
     async runCommand(message: Message, level: number, user: Snowflake) {
@@ -18,4 +18,4 @@ export class Distortion extends BaseModuleCommand {
     }
 }
 
-module.exports = Distortion;
+module.exports = TimeWarp;

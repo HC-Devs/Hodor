@@ -7,10 +7,10 @@ const allowedRoles = [];
 const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
-export class Destinee extends BaseModuleCommand {
+export class Suppress extends BaseModuleCommand {
 
     constructor(bot: BotTS) {
-        super(bot, "destinee");
+        super(bot, "suppress");
     }
 
     async runCommand(message: Message, level: number, user: Snowflake) {
@@ -18,4 +18,4 @@ export class Destinee extends BaseModuleCommand {
     }
 }
 
-module.exports = Destinee;
+module.exports = Suppress;

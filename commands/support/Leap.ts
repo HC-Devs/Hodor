@@ -7,10 +7,10 @@ const allowedRoles = [];
 const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
-export class Roquette extends BaseModuleCommand {
+export class Leap extends BaseModuleCommand {
 
     constructor(bot: BotTS) {
-        super(bot, "roquette");
+        super(bot, "leap");
     }
 
     async runCommand(message: Message, level: number, user: Snowflake) {
@@ -18,4 +18,4 @@ export class Roquette extends BaseModuleCommand {
     }
 }
 
-module.exports = Roquette;
+module.exports = Leap;
