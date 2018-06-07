@@ -7,10 +7,10 @@ const allowedRoles = [];
 const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
-export class Mirroir extends BaseModuleCommand {
+export class MirrorShield extends BaseModuleCommand {
 
     constructor(bot: BotTS) {
-        super(bot, "mirroir");
+        super(bot, "mirrorshield");
     }
 
     async runCommand(message: Message, level: number, user: Snowflake) {
@@ -18,4 +18,4 @@ export class Mirroir extends BaseModuleCommand {
     }
 }
 
-module.exports = Mirroir;
+module.exports = MirrorShield;

@@ -7,10 +7,10 @@ const allowedRoles = [];
 const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
-export class Passif extends BaseModuleCommand {
+export class AreaShield extends BaseModuleCommand {
 
     constructor(bot: BotTS) {
-        super(bot, "passif");
+        super(bot, "areashield");
     }
 
     async runCommand(message: Message, level: number, user: Snowflake) {
@@ -18,4 +18,4 @@ export class Passif extends BaseModuleCommand {
     }
 }
 
-module.exports = Passif;
+module.exports = AreaShield;

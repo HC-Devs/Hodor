@@ -7,10 +7,10 @@ const allowedRoles = [];
 const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
-export class Omega extends BaseModuleCommand {
+export class DeltaShield extends BaseModuleCommand {
 
     constructor(bot: BotTS) {
-        super(bot, "omega");
+        super(bot, "deltashield");
     }
 
     async runCommand(message: Message, level: number, user: Snowflake) {
@@ -18,4 +18,4 @@ export class Omega extends BaseModuleCommand {
     }
 }
 
-module.exports = Omega;
+module.exports = DeltaShield;
