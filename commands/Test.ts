@@ -1,6 +1,6 @@
 import {BotTS} from "../BotTS";
 import {BaseModuleCommand} from "./BaseModuleCommand";
-import {Message} from "discord.js";
+import {Message, Snowflake} from "discord.js";
 import * as service from "../core/service/UserService";
 
 const allowedUsers = [];
@@ -14,7 +14,7 @@ export class Test extends BaseModuleCommand {
         super(bot, "test");
     }
 
-    async runCommand(message: Message, level: number, user: string): Promise<any> {
+    async runCommand(message: Message, level: number, user: Snowflake): Promise<any> {
         //TODO
         // 1. get userservice or commandservice
         // 2. check if module exist and update or insert value in UserModule table

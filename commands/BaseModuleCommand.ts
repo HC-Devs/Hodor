@@ -1,7 +1,7 @@
 import * as logger from "../utils/Logger.js";
 import {BaseCommand} from "./BaseCommand";
 import {BotTS} from "../BotTS";
-import {Message} from "discord.js";
+import {Message, Snowflake} from "discord.js";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -26,6 +26,8 @@ export abstract class BaseModuleCommand extends BaseCommand {
             return;
         }
 
+        // TODO maybe do a GET if no argument?
+
         // check arguments count
         if (args.length !== 1) return;
 
@@ -41,7 +43,7 @@ export abstract class BaseModuleCommand extends BaseCommand {
             return;
         }
 
-        let memberId = message.mentions.users.first() ? message.mentions.users.first().id : message.author.id;
+        let memberId: Snowflake = message.mentions.users.first() ? message.mentions.users.first().id : message.author.id;
 
         this.runCommand(message, level, memberId).then(() => {
             message.channel.send(":white_check_mark: OK").then((msg: Message) => {
@@ -62,5 +64,5 @@ export abstract class BaseModuleCommand extends BaseCommand {
     }
 
     // Execute current module update command
-    async abstract runCommand(message: Message, level: number, user: string);
+    async abstract runCommand(message: Message, level: number, user: Snowflake);
 }
