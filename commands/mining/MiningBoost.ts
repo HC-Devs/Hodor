@@ -7,10 +7,10 @@ const allowedRoles = [];
 const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
-export class Hydro extends BaseModuleCommand {
+export class MiningBoost extends BaseModuleCommand {
 
     constructor(bot: BotTS) {
-        super(bot, "hydro");
+        super(bot, "miningboost");
     }
 
     async runCommand(message: Message, level: number, user: Snowflake) {
@@ -18,4 +18,4 @@ export class Hydro extends BaseModuleCommand {
     }
 }
 
-module.exports = Hydro;
+module.exports = MiningBoost;

@@ -7,10 +7,10 @@ const allowedRoles = [];
 const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
-export class Enrichissement extends BaseModuleCommand {
+export class RemoteMining extends BaseModuleCommand {
 
     constructor(bot: BotTS) {
-        super(bot, "enrich");
+        super(bot, "remotemining");
     }
 
     async runCommand(message: Message, level: number, user: Snowflake) {
@@ -18,4 +18,4 @@ export class Enrichissement extends BaseModuleCommand {
     }
 }
 
-module.exports = Enrichissement;
+module.exports = RemoteMining;

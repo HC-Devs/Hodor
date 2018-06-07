@@ -7,10 +7,10 @@ const allowedRoles = [];
 const allowedChannels = ["421655362966650880"];
 const allowedGuilds = [];
 
-export class Penurie extends BaseModuleCommand {
+export class MiningUnity extends BaseModuleCommand {
 
     constructor(bot: BotTS) {
-        super(bot, "penurie");
+        super(bot, "miningunity");
     }
 
     async runCommand(message: Message, level: number, user: Snowflake) {
@@ -18,4 +18,4 @@ export class Penurie extends BaseModuleCommand {
     }
 }
 
-module.exports = Penurie;
+module.exports = MiningUnity;
