@@ -46,7 +46,7 @@ tBOT_PREFIX_DEV=DEV</Environment>
     <Content Include="tsconfig.json" />
     <Content Include="watch.json" />
     <Content Include="README.md" />
-    <Compile Include="bot.js" />
+    <Compile Include="botOLD.js" />
     <Compile Include="core\model\User.ts" />
     <Compile Include="core\service\UserService.ts">
       <SubType>Code</SubType>

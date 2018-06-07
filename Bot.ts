@@ -13,7 +13,7 @@ const allowedGuilds = [
     "420194593167114250"  // Test
 ];
 
-export class BotTS {
+export class Bot {
     client: Client;
     commands: Map<string, BaseCommand> = new Map<string, BaseCommand>();
     crons: Array<any> = Array<any>();
@@ -33,7 +33,7 @@ export class BotTS {
     constructor(client: Client) {
         this.client = client;
 
-        // Bot owner
+        // BotOLD owner
         if (Config.botOwner.length === 0 || Config.botOwner.length[0] === "") {
             logger.error("No owner set");
             process.exit(1);
@@ -129,7 +129,7 @@ export class BotTS {
 
         // guild allowed
         if (allowedGuilds.indexOf(newMessage.guild.id) === -1) {
-            logger.error("Bot is not allowed in " + newMessage.guild.name + " (" + newMessage.guild.id + ")");
+            logger.error("BotOLD is not allowed in " + newMessage.guild.name + " (" + newMessage.guild.id + ")");
             return;
         }
 

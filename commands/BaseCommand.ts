@@ -1,12 +1,12 @@
-import {BotTS} from "../BotTS";
+import {Bot} from "../Bot";
 import {Message} from "discord.js";
 
 export abstract class BaseCommand {
 
-    bot: BotTS;
+    bot: Bot;
     config: any;
 
-    protected constructor(bot: BotTS, config: any) {
+    protected constructor(bot: Bot, config: any) {
         this.bot = bot;
         this.config = config;
     }

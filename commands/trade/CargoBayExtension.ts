@@ -1,4 +1,4 @@
-import {BotTS} from "../../BotTS";
+import {Bot} from "../../Bot";
 import {BaseModuleCommand} from "../BaseModuleCommand";
 import {Message, Snowflake} from "discord.js";
 
@@ -9,7 +9,7 @@ const allowedGuilds = [];
 
 export class CargoBayExtension extends BaseModuleCommand {
 
-    constructor(bot: BotTS) {
+    constructor(bot: Bot) {
         super(bot, "cargobayextension");
     }
 

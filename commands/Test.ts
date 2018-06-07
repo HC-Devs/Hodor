@@ -1,4 +1,4 @@
-import {BotTS} from "../BotTS";
+import {Bot} from "../Bot";
 import {BaseModuleCommand} from "./BaseModuleCommand";
 import {Message, Snowflake} from "discord.js";
 import * as service from "../core/service/UserService";
@@ -10,7 +10,7 @@ const allowedGuilds = [];
 
 export class Test extends BaseModuleCommand {
 
-    constructor(bot: BotTS) {
+    constructor(bot: Bot) {
         super(bot, "test");
     }
 

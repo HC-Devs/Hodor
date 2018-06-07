@@ -1,6 +1,6 @@
 import * as logger from "./utils/Logger.js";
 import {Client, ClientOptions} from "discord.js";
-import {BotTS} from "./BotTS";
+import {Bot} from "./Bot";
 import {Config} from "./Config";
 
 if (Config.nodeVersion < 9) {
@@ -19,7 +19,7 @@ const discordOptions: ClientOptions = {
     disabledEvents: ["TYPING_START", "VOICE_STATE_UPDATE", "VOICE_SERVER_UPDATE"]
 };
 const client: Client = new Client(discordOptions);
-const bot: BotTS = new BotTS(client);
+const bot: Bot = new Bot(client);
 
 bot.init().then(async () => {
     if (Config.nodeEnv === "dev") {

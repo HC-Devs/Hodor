@@ -1,6 +1,6 @@
 import * as logger from "../utils/Logger.js";
 import {BaseCommand} from "./BaseCommand";
-import {BotTS} from "../BotTS";
+import {Bot} from "../Bot";
 import {Message, Snowflake} from "discord.js";
 
 const allowedUsers = [];
@@ -10,7 +10,7 @@ const allowedGuilds = [];
 
 export abstract class BaseModuleCommand extends BaseCommand {
 
-    protected constructor(bot: BotTS, commandName: string, prefix = ['!'], timeout = 5000, maxLevel = 10) {
+    protected constructor(bot: Bot, commandName: string, prefix = ['!'], timeout = 5000, maxLevel = 10) {
         let config = {
             name: commandName,
             prefix: prefix,

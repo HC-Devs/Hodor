@@ -1,6 +1,6 @@
 import * as logger from "../utils/Logger.js";
 import {Config} from "../Config";
-import {BotTS} from "../BotTS";
+import {Bot} from "../Bot";
 import {BaseCommand} from "./BaseCommand";
 import {Message} from "discord.js";
 
@@ -11,7 +11,7 @@ const allowedGuilds = [];
 
 export class Purge extends BaseCommand {
 
-    constructor(bot: BotTS) {
+    constructor(bot: Bot) {
         let config = {
             name: "purge",
             prefix: ['!'],

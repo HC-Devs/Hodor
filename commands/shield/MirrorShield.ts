@@ -1,5 +1,5 @@
 import {BaseModuleCommand} from "../BaseModuleCommand";
-import {BotTS} from "../../BotTS";
+import {Bot} from "../../Bot";
 import {Message, Snowflake} from "discord.js";
 
 const allowedUsers = [];
@@ -9,7 +9,7 @@ const allowedGuilds = [];
 
 export class MirrorShield extends BaseModuleCommand {
 
-    constructor(bot: BotTS) {
+    constructor(bot: Bot) {
         super(bot, "mirrorshield");
     }
 
