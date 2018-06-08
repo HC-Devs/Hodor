@@ -1,58 +1,36 @@
-const PromiseB = require("bluebird");
-const sqlite = require("sqlite3").verbose();
+import {Database} from "sqlite3";
 
-const databaseFile = "./sql/hc.sqlite3";
+export class Sqlite {
+    database: Database;
 
-export class SQLITE {
-    public db: any;
-    public bot: any;
-
-    constructor(bot: any) {
-
-        this.bot = bot;
-
+    constructor(filename: string, callback?: (err: Error | null) => void) {
+        const sql = require('sqlite3').verbose();
+        this.database = new sql.Database(filename, callback);
         this.init();
     }
 
-    async connect() {
-        //let dbPromise = sqlite.open(databaseFile, { cached: true, PromiseB });
-        this.db = new sqlite.Database(databaseFile);
-
-        return this.db;
+    async close(callback?: (err: Error | null) => void) {
+        if (this.database) {
+            this.database.close(callback);
+        }
     }
 
-    async init() {
-        await this.connect();
-
-        let query;
-
-        console.log("sql : init runs");
-        query = "CREATE TABLE IF NOT EXISTS test (test TEXT NOT NULL)";
-        await this.db.run(query);
-
-        return true;
+    init() {
+        // TODO create TABLE here?
+        //let query = "CREATE TABLE IF NOT EXISTS test (test TEXT NOT NULL)";
+        //this.database.run(query);
     }
 
     async get(query, params) {
-        await this.connect();
-
-        let res = await this.db.get(query, params);
+        let res = await this.database.get(query, params);
         return (typeof res === "undefined" ? null : res);
     }
 
     async all(query, params) {
-        await this.connect();
-
-        let res = await this.db.all(query, params);
-        return res;
+        return await this.database.all(query, params);
     }
 
     async run(query, params) {
-        await this.connect();
-
-        let res = await this.db.run(query, params);
-        return res;
+        return await this.database.run(query, params);
     }
 }
-
-module.exports = SQLITE;

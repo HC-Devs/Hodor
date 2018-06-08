@@ -13,6 +13,7 @@ const chokidar = require("chokidar");
 const Config_1 = require("./Config");
 const fs = require("fs");
 const path = require("path");
+const Sqlite_1 = require("./classes/Sqlite");
 /* Rights */
 const allowedBots = [];
 const allowedGuilds = [
@@ -49,6 +50,13 @@ class Bot {
             logger.log(`create '${Config_1.Config.dataBaseDir}'`);
             fs.mkdirSync(Config_1.Config.dataBaseDir);
         }
+        // Database creation
+        this.sql = new Sqlite_1.Sqlite(`${Config_1.Config.dataBaseDir}/${Config_1.Config.dataBaseName}`, err => {
+            if (err)
+                logger.error(err);
+            else
+                logger.log(`Connected the the '${Config_1.Config.dataBaseName}' database.`);
+        });
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {

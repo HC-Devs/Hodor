@@ -1,6 +1,6 @@
 import {BaseDao} from "./BaseDao";
 import {UserWsRole} from "../model/UserWsRole";
-import {SQLITE} from "../../classes/sqlite";
+import {Sqlite} from "../../classes/sqlite";
 
 const tableName: string = "user_ws_role";
 
@@ -10,7 +10,7 @@ const roleNameField: string = "user_ws_role_name";
 const idField: string = tableName + "_id"; 
 
 export class ModuleDao extends BaseDao<UserWsRole> {
-    constructor(sqlConnector: SQLITE) {
+    constructor(sqlConnector: Sqlite) {
         super(tableName, idField, sqlConnector);
     }
 

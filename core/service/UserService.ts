@@ -1,15 +1,14 @@
-﻿import { User } from '../model/User';
-import { UserDao } from '../dao/UserDao';
-import { SQLITE } from '../../classes/sqlite';
-import { Module } from '../model/Module';
-import { UserModule } from '../model/UserModule';
-import { UserModuleDao } from '../dao/UserModuleDao';
-import { ModuleDao } from '../dao/ModuleDao';
+﻿import {User} from '../model/User';
+import {UserDao} from '../dao/UserDao';
+import {Sqlite} from '../../classes/sqlite';
+import {UserModule} from '../model/UserModule';
+import {UserModuleDao} from '../dao/UserModuleDao';
+import {ModuleDao} from '../dao/ModuleDao';
 
 const Table = require('markdown-table');
 
 
-export async function AddModuleToUser(sqlConnector: SQLITE, userId: string, moduleName: string, level: number): Promise<boolean> {
+export async function AddModuleToUser(sqlConnector: Sqlite, userId: string, moduleName: string, level: number): Promise<boolean> {
     // 1. Get module id from db from name
     let moduleDao = new ModuleDao(sqlConnector);
     let mod = await moduleDao.getModuleByName(moduleName);
@@ -33,7 +32,7 @@ export async function AddModuleToUser(sqlConnector: SQLITE, userId: string, modu
     }
 }
 
-export async function TestUser(sqlConnector: SQLITE): Promise<string> {
+export async function TestUser(sqlConnector: Sqlite): Promise<string> {
     let userdao = new UserDao(sqlConnector);
     let users = await userdao.getAll();
     let maxId = Math.max.apply(Math, users.map(function (o) {
@@ -56,7 +55,7 @@ export async function TestUser(sqlConnector: SQLITE): Promise<string> {
     return tabResult;
 }
 
-export async function ListUser(sqlConnector: SQLITE): Promise<string> {
+export async function ListUser(sqlConnector: Sqlite): Promise<string> {
     let userdao = new UserDao(sqlConnector);
     let users = await userdao.getAll();
     return generateMarkdownTable(users);

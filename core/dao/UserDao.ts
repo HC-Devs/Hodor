@@ -1,5 +1,5 @@
 import {User} from '../model/User';
-import {SQLITE} from '../../classes/sqlite';
+import {Sqlite} from '../../classes/sqlite';
 import {BaseDao} from './BaseDao';
 
 const userDbTable: string = 'user';
@@ -8,7 +8,7 @@ const userCorpoField: string = 'user_corpo';
 const userIdField: string = 'user_id';
 
 export class UserDao extends BaseDao<User> {
-    constructor(sqlConnector: SQLITE) {
+    constructor(sqlConnector: Sqlite) {
         super(userDbTable, userIdField, sqlConnector);
     }
 

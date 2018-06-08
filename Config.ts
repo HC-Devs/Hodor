@@ -5,6 +5,7 @@ export class Config {
     static nodeEnv: string = process.env.NODE_ENV;
 
     static dataBaseDir: string = "./.data";
+    static dataBaseName: string = "hc.sqlite3";
     static botOwner: string[] = process.env.BOT_OWNER.split(",") || [];
     static prefix: string = process.env.BOT_PREFIX;
     static prefixDev: string = process.env.BOT_PREFIX_DEV;

@@ -1,6 +1,6 @@
 import {BaseDao} from "./BaseDao";
 import {UserWs} from "../model/UserWs";
-import {SQLITE} from "../../classes/sqlite";
+import {Sqlite} from "../../classes/sqlite";
 
 const tableName: string = "user_ws";
 
@@ -10,7 +10,7 @@ const fkWsIdField: string = "fk_ws_id";
 const idField: string = tableName + "_id"; 
 
 export class ModuleDao extends BaseDao<UserWs> {
-    constructor(sqlConnector: SQLITE) {
+    constructor(sqlConnector: Sqlite) {
         super(tableName, idField, sqlConnector);
     }
 

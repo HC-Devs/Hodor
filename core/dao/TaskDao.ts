@@ -1,6 +1,6 @@
 import {BaseDao} from "./BaseDao";
 import {Task} from "../model/Task";
-import {SQLITE} from "../../classes/sqlite";
+import {Sqlite} from "../../classes/sqlite";
 
 const tableName: string = "task";
 
@@ -14,7 +14,7 @@ const typeField: string = "task_type";
 const idField: string = tableName + "_id"; 
 
 export class ModuleDao extends BaseDao<Task> {
-    constructor(sqlConnector: SQLITE) {
+    constructor(sqlConnector: Sqlite) {
         super(tableName, idField, sqlConnector);
     }
 

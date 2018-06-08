@@ -1,4 +1,4 @@
-import {SQLITE} from '../../classes/sqlite';
+import {Sqlite} from '../../classes/sqlite';
 import {BaseModel} from '../model/BaseModel';
 
 /*
@@ -8,7 +8,7 @@ import {BaseModel} from '../model/BaseModel';
 */
 export abstract class BaseDao<T extends BaseModel> {
 
-    protected constructor(protected dbTable: string, protected idFieldName, protected sqlConnector: SQLITE) {
+    protected constructor(protected dbTable: string, protected idFieldName, protected sqlConnector: Sqlite) {
     }
 
     /*

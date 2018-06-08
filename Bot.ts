@@ -5,6 +5,7 @@ import {BaseCommand} from "./commands/BaseCommand";
 import {Config} from "./Config";
 import * as fs from "fs";
 import * as path from "path";
+import {Sqlite} from "./classes/sqlite";
 
 /* Rights */
 const allowedBots = [];
@@ -20,7 +21,7 @@ export class Bot {
     locks: Array<any> = Array<any>();
     functions: Array<any> = Array<any>();
     helpers: Array<any> = Array<any>();
-    sql: any;
+    sql: Sqlite;
 
     watchOptions = {
         recursive: true,
@@ -50,6 +51,12 @@ export class Bot {
             logger.log(`create '${Config.dataBaseDir}'`);
             fs.mkdirSync(Config.dataBaseDir);
         }
+
+        // Database creation
+        this.sql = new Sqlite(`${Config.dataBaseDir}/${Config.dataBaseName}`, err => {
+            if (err) logger.error(err);
+            else logger.log(`Connected the the '${Config.dataBaseName}' database.`);
+        });
     }
 
     async init() {

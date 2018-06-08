@@ -1,6 +1,6 @@
 import {BaseDao} from "./BaseDao";
 import {ShipUserModule} from "../model/ShipUserModule";
-import {SQLITE} from "../../classes/sqlite";
+import {Sqlite} from "../../classes/sqlite";
 
 const tableName: string = "ship_user_module";
 const fkUserModuleIdField: string = "fk_user_module_id";
@@ -9,7 +9,7 @@ const lastActivationDateField: string = "ship_user_module_last_activation_date";
 const idField: string = tableName + "_id"; //"ship_user_module_id";
 
 export class ModuleDao extends BaseDao<ShipUserModule> {
-    constructor(sqlConnector: SQLITE) {
+    constructor(sqlConnector: Sqlite) {
         super(tableName, idField, sqlConnector);
     }
 
