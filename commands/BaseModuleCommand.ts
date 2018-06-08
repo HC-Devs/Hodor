@@ -6,7 +6,7 @@ import * as service from "../core/service/UserService";
 
 const allowedUsers = [];
 const allowedRoles = [];
-const allowedChannels = ["421655362966650880"];
+const allowedChannels = ["421655362966650880", "413390615158718466"];
 const allowedGuilds = [];
 
 export abstract class BaseModuleCommand extends BaseCommand {

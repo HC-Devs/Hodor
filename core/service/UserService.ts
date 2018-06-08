@@ -4,6 +4,7 @@ import {Sqlite} from '../../classes/Sqlite';
 import {UserModule} from '../model/UserModule';
 import {UserModuleDao} from '../dao/UserModuleDao';
 import {ModuleDao} from '../dao/ModuleDao';
+import { UserModuleViewModel } from '../viewModel/UserModuleViewModel';
 
 const Table = require('markdown-table');
 
@@ -31,6 +32,23 @@ export async function AddModuleToUser(sqlConnector: Sqlite, userId: string, modu
         else
             return false;
     }
+}
+
+export async function GetUserModule(sqlConnector: Sqlite, userId: string): Promise<string> {
+    // 1. Get all module ref
+    let moduleDao = new ModuleDao(sqlConnector);
+    let allModules = await moduleDao.getAll();
+
+    // 2. Get all module of user
+    let userModuleDao = new UserModuleDao(sqlConnector);
+    let allUserModules =  (await userModuleDao.getAll()).filter(f => f.userId === userId);
+  
+    // 3. Get list of view model
+    let datas : Array<UserModuleViewModel> = new Array();
+    allUserModules.forEach( elt => datas.push(new UserModuleViewModel(elt,allModules )));
+    
+
+    return generateDebugMarkdownTable(datas);
 }
 
 export async function TestUser(sqlConnector: Sqlite): Promise<string> {
@@ -69,6 +87,25 @@ function generateMarkdownTable(data) {
     let array = [];
     data.forEach(function (d, index) {
         array.push(d.getArray());
+    });
+    var tab = Table(array);
+    return header + tab + footer;
+}
+
+function generateDebugMarkdownTable(data) {
+    const header = '```Markdown\n';
+    const footer = '\n```';
+
+    let array = [];
+    array.push(Object.getOwnPropertyNames(data[0]));
+  
+    data.forEach(function (d, index) {
+        let currentRow = [];
+        Object.getOwnPropertyNames(d).forEach(
+            function(val, idx, array) {
+               currentRow.push(d[val]);
+          });
+        array.push(currentRow);
     });
     var tab = Table(array);
     return header + tab + footer;
