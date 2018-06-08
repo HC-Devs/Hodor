@@ -27,6 +27,7 @@ export abstract class BaseDao<T extends BaseModel> {
     public async getById(id: string): Promise<T> {
         let query = `SELECT * FROM ${this.dbTable} where ${this.idFieldName} = ?`;
         let row = await this.get(query, [id]);
+       
         let m = this.getModelFromRow(row);
 
         return m;
@@ -167,6 +168,9 @@ export abstract class BaseDao<T extends BaseModel> {
             console.log(`Get query: ${query} \n with params: ${params.join(',')}`);
             this.sqlConnector.database.get(query, params, function (err, row) {
                 if (err) reject("Read error: " + err.message)
+                else if(! row){
+                    reject(`No data found`);
+                }
                 else {
                     resolve(row)
                 }
