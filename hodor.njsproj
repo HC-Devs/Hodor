@@ -55,7 +55,6 @@ tBOT_PREFIX_DEV=DEV</Environment>
     <Compile Include="main.js" />
     <Compile Include="classes\functions.js" />
     <Compile Include="classes\helpers.js" />
-    <Compile Include="classes\queries.js" />
     <Compile Include="classes\sqlite.ts" />
     <Compile Include="commands\Test.js" />
   </ItemGroup>

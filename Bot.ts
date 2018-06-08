@@ -21,7 +21,6 @@ export class Bot {
     functions: Array<any> = Array<any>();
     helpers: Array<any> = Array<any>();
     sql: any;
-    queries: any;
 
     watchOptions = {
         recursive: true,
