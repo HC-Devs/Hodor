@@ -122,7 +122,7 @@ export abstract class BaseDao<T extends BaseModel> {
                 params = [];
             }
             console.log(`All query: ${query} \n with params: ${params.join(',')}`);
-            this.sqlConnector.db.all(query, params, function (err, rows) {
+            this.sqlConnector.database.all(query, params, function (err, rows) {
                 if (err) {
                     reject("Read error: " + err.message);
                 }
@@ -148,7 +148,7 @@ export abstract class BaseDao<T extends BaseModel> {
                 params = [];
             }
             console.log(`Run query: ${query} \n with params: ${params.join(',')}`);
-            this.sqlConnector.db.run(query, params, function (err) {
+            this.sqlConnector.database.run(query, params, function (err) {
                 if (err) {
                     reject("Run error: " + err.message);
                 }
@@ -165,7 +165,7 @@ export abstract class BaseDao<T extends BaseModel> {
     protected async get(query, params): Promise<any> {
         return new Promise(function (resolve, reject) {
             console.log(`Get query: ${query} \n with params: ${params.join(',')}`);
-            this.sqlConnector.db.get(query, params, function (err, row) {
+            this.sqlConnector.database.get(query, params, function (err, row) {
                 if (err) reject("Read error: " + err.message)
                 else {
                     resolve(row)

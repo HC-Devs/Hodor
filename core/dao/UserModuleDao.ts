@@ -23,6 +23,6 @@ export class UserModuleDao extends BaseDao<UserModule> {
     }
 
     protected getModelFromRow(row: any): UserModule {
-        return new UserModule(row[idField], row[fkModuleIdField], row[fkUserIdField], row[levelField]);
+        return new UserModule(row[idField],  row[fkUserIdField], row[fkModuleIdField],row[levelField]);
     }
 }

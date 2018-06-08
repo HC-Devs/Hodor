@@ -16,7 +16,8 @@ export async function AddModuleToUser(sqlConnector: Sqlite, userId: string, modu
 
     // 2. Check if new module or update of existing ong
     let userModuleDao = new UserModuleDao(sqlConnector);
-    let existingModule = (await userModuleDao.getAll()).find(m => m.moduleId === Number(mod.id) && m.userId === userId); //Todo specific db query?
+    let allUserModules =  await userModuleDao.getAll();
+    let existingModule = allUserModules.find(m => m.moduleId === Number(mod.id) && m.userId === userId); //Todo specific db query?
     if (existingModule) {
         // 3.a update existing one
         existingModule.level = level;
@@ -24,7 +25,7 @@ export async function AddModuleToUser(sqlConnector: Sqlite, userId: string, modu
     } else {
         // 3.b insert new one
         let userModule = new UserModule(-1, userId, Number(mod.id), level);
-        let newRowId = userModuleDao.insert(userModule);
+        let newRowId = await userModuleDao.insert(userModule);
         if (newRowId)
             return true;
         else
