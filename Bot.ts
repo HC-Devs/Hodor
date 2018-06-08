@@ -5,7 +5,7 @@ import {BaseCommand} from "./commands/BaseCommand";
 import {Config} from "./Config";
 import * as fs from "fs";
 import * as path from "path";
-import {Sqlite} from "./classes/sqlite";
+import {Sqlite} from "./classes/Sqlite";
 
 /* Rights */
 const allowedBots = [];

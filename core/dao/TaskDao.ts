@@ -1,6 +1,6 @@
 import {BaseDao} from "./BaseDao";
 import {Task} from "../model/Task";
-import {Sqlite} from "../../classes/sqlite";
+import {Sqlite} from "../../classes/Sqlite";
 
 const tableName: string = "task";
 

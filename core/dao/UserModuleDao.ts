@@ -1,6 +1,6 @@
 import {BaseDao} from "./BaseDao";
 import {UserModule} from "../model/UserModule";
-import {Sqlite} from "../../classes/sqlite";
+import {Sqlite} from "../../classes/Sqlite";
 
 const tableName: string = "user_module";
 const fkUserIdField: string = "fk_user_id";
