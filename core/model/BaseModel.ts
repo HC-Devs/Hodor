@@ -4,7 +4,7 @@
 *  All model must override this class
 */
 export abstract class BaseModel {
-    id: string;
+    public id: string;
 
     protected constructor(id: string) {
         this.id = id;

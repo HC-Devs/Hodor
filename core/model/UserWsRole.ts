@@ -2,8 +2,8 @@ import {BaseModel} from "./BaseModel";
 
 export class UserWsRole extends BaseModel {
 
-    userWsId: number;
-    roleName: string;
+    public userWsId: number;
+    public roleName: string;
 
     constructor(id: number, userWsId: number, roleName: string) {
         super(id.toString());

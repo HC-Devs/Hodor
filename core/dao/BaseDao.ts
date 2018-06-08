@@ -32,6 +32,8 @@ export abstract class BaseDao<T extends BaseModel> {
         return m;
     }
 
+ 
+
     /*
     *  Get all elements from DB 
     */
@@ -114,7 +116,7 @@ export abstract class BaseDao<T extends BaseModel> {
     /*
     *  Wrapper arround sqlite [all] to fetch all result from query 
     */
-    private async all(query, params = []) {
+    protected async all(query, params = []) {
         return new Promise(function (resolve, reject) {
             if (params == undefined) {
                 params = [];
@@ -160,7 +162,7 @@ export abstract class BaseDao<T extends BaseModel> {
     /*
     *  Wrapper arround sqlite [get] to get one result from query 
     */
-    private async get(query, params): Promise<any> {
+    protected async get(query, params): Promise<any> {
         return new Promise(function (resolve, reject) {
             console.log(`Get query: ${query} \n with params: ${params.join(',')}`);
             this.sqlConnector.db.get(query, params, function (err, row) {

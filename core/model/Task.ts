@@ -2,12 +2,12 @@ import {BaseModel} from "./BaseModel";
 
 export class Task extends BaseModel {
 
-    userId : string;
-    authorId: string;
-    content : string;
-    deadline: Date;
-    ack: number;
-    type: number;
+    public userId : string;
+    public authorId: string;
+    public content : string;
+    public deadline: Date;
+    public  ack: number;
+    public type: number;
 
 
     constructor(id: number, userId: string, authorId: string, content: string, deadline: Date, ack: number, type: number) {

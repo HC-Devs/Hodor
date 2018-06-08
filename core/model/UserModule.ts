@@ -2,9 +2,9 @@ import {BaseModel} from "./BaseModel";
 
 export class UserModule extends BaseModel {
 
-    userId: string;
-    moduleId: number;
-    level: number;
+    public userId: string;
+    public moduleId: number;
+    public level: number;
 
     constructor(id: number, userId: string, moduleId: number, level : number) {
         super(id.toString());

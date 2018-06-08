@@ -20,6 +20,16 @@ export class ModuleDao extends BaseDao<Module> {
         return result;
     }
 
+
+
+    public async getModuleByName(moduleName: string): Promise<Module> {
+        let query = `SELECT * FROM ${this.dbTable} where ${nameField} = ?`;
+        let row = await this.get(query, [moduleName]);
+        let m = this.getModelFromRow(row);
+
+        return m;
+    }
+
     protected getModelFromRow(row: any): Module {
         return new Module(row[idField], row[nameField], row[typeField]);
     }

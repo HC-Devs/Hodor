@@ -3,8 +3,8 @@ import {BaseModel} from "./BaseModel";
 export class Ws extends BaseModel {
 
  
-    startDate: Date;
-    status: string;
+    public startDate: Date;
+    public status: string;
 
     constructor(id: number, startDate: Date, status: string) {
         super(id.toString());

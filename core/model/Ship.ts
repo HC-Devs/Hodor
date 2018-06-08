@@ -2,9 +2,9 @@ import {BaseModel} from "./BaseModel";
 
 export class Ship extends BaseModel {
 
-    name: string;
-    type: number;
-    fkUserId: string;
+    public name: string;
+    public type: number;
+    public fkUserId: string;
 
     constructor(id: string, name: string, type: number, fkUserId: string) {
         super(id);

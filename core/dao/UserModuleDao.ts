@@ -8,7 +8,7 @@ const fkModuleIdField: string = "fk_module_id";
 const levelField: string = "user_module_level";
 const idField: string = tableName + "_id"; 
 
-export class ModuleDao extends BaseDao<UserModule> {
+export class UserModuleDao extends BaseDao<UserModule> {
     constructor(sqlConnector: SQLITE) {
         super(tableName, idField, sqlConnector);
     }

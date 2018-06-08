@@ -2,10 +2,9 @@ import {BaseModel} from "./BaseModel";
 
 export class ShipWs extends BaseModel {
 
-
-    wsId: number;
-    shipId: number;
-    destructDate: Date;
+    public wsId: number;
+    public shipId: number;
+    public destructDate: Date;
 
     constructor(id: string, wsId: number, shipId: number, destructTime: Date) {
         super(id);

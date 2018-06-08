@@ -2,9 +2,9 @@ import {BaseModel} from "./BaseModel";
 
 export class ShipUserModule extends BaseModel {
 
-    shipId: number;
-    userModuleId: number;
-    lastActivationDate: Date;
+    public shipId: number;
+    public userModuleId: number;
+    public lastActivationDate: Date;
 
     constructor(id: number, shipId: number, userModuleId: number, lastActivationDate : Date) {
         super(id.toString());
