@@ -3,8 +3,8 @@ import {Client, ClientOptions} from "discord.js";
 import {Bot} from "./Bot";
 import {Config} from "./Config";
 
-if (Config.nodeVersion < 9) {
-    throw new Error("Node 9.0.0 or higher is required. Update Node on your system.");
+if (Config.nodeVersion < 8) {
+    throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
 }
 process.on("uncaughtException", (err) => {
     const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");
