@@ -2,7 +2,7 @@ import * as logger from "./utils/Logger.js";
 import * as chokidar from "chokidar";
 import {Client, Message} from "discord.js";
 import {BaseCommand} from "./commands/BaseCommand";
-import {Config} from "./Config";
+import {Global} from "./utils/Global";
 import * as fs from "fs";
 import * as path from "path";
 import {Sqlite} from "./classes/Sqlite";
@@ -35,34 +35,34 @@ export class Bot {
         this.client = client;
 
         // BotOLD owner
-        if (Config.botOwner.length === 0 || Config.botOwner.length[0] === "") {
+        if (Global.botOwner.length === 0 || Global.botOwner.length[0] === "") {
             logger.error("No owner set");
             process.exit(1);
         }
 
         // Prefix
-        let prefix = Config.nodeEnv !== "dev" ? Config.prefix : Config.prefixDev;
+        let prefix = Global.nodeEnv !== "dev" ? Global.prefix : Global.prefixDev;
         if (prefix === "") {
             logger.error("No prefix set");
             process.exit(1);
         }
 
         // Database directory
-        if (!fs.existsSync(Config.dataBaseDir)) {
-            logger.log(`create '${Config.dataBaseDir}'`);
-            fs.mkdirSync(Config.dataBaseDir);
+        if (!fs.existsSync(Global.dataBaseDir)) {
+            logger.log(`create '${Global.dataBaseDir}'`);
+            fs.mkdirSync(Global.dataBaseDir);
         }
 
         // Database creation
-        this.sql = new Sqlite(`${Config.dataBaseDir}/${Config.dataBaseName}`, err => {
+        this.sql = new Sqlite(`${Global.dataBaseDir}/${Global.dataBaseName}`, err => {
             if (err) logger.error(err);
-            else logger.log(`Connected the the '${Config.dataBaseName}' database.`);
+            else logger.log(`Connected the the '${Global.dataBaseName}' database.`);
         });
     }
 
     async init() {
         // Commands
-        const commands = walkSync(Config.pathCommandsDirectory);
+        const commands = walkSync(Global.pathCommandsDirectory);
         for (let i = 0; i < commands.length; i++) {
             let file = commands[i];
             if (isValidFileName(file)) {
@@ -86,7 +86,7 @@ export class Bot {
         logger.log(`Loading a total of ${this.commands.size} commands.`, "success");
 
         // Events
-        const events = walkSync(Config.pathEventsDirectory);
+        const events = walkSync(Global.pathEventsDirectory);
         events.forEach(file => {
             if (path.extname(file) === ".js") {
                 const eventName = path.basename(file, path.extname(file));
@@ -106,23 +106,23 @@ export class Bot {
             alwaysStat: false,
             awaitWriteFinish: {stabilityThreshold: 2000, pollInterval: 100}
         };*/
-        chokidar.watch(Config.pathClassesDirectory, this.watchOptions).on("change", event => {
+        chokidar.watch(Global.pathClassesDirectory, this.watchOptions).on("change", event => {
             // TODO
             /*let className = path.basename(event, path.extname(event));
             if (reloadFile(event)) {
                 logger.log(`chokidar: class ${className} reloaded !`);
             }*/
         });
-        chokidar.watch(Config.pathCommandsDirectory, this.watchOptions).on("change", event => {
+        chokidar.watch(Global.pathCommandsDirectory, this.watchOptions).on("change", event => {
             let className = path.basename(event, path.extname(event));
             if (reloadFile(event)) {
                 logger.log(`chokidar: class ${className} reloaded !`);
             }
         });
-        chokidar.watch(Config.pathEventsDirectory, this.watchOptions).on("change", event => {
+        chokidar.watch(Global.pathEventsDirectory, this.watchOptions).on("change", event => {
             // TODO
         });
-        chokidar.watch(Config.pathCronsDirectory, this.watchOptions).on("change", event => {
+        chokidar.watch(Global.pathCronsDirectory, this.watchOptions).on("change", event => {
             // TODO
         });
 
@@ -146,7 +146,7 @@ export class Bot {
         }
 
         // check prefix
-        let prefix = process.env.NODE_ENV !== "dev" ? process.env.BOT_PREFIX : process.env.BOT_PREFIX_DEV;
+        let prefix = Global.nodeEnv !== "dev" ? Global.prefix : Global.prefixDev;
         if (newMessage.content.indexOf(prefix) !== 0) return;
 
         // retrieve command & args
@@ -155,7 +155,7 @@ export class Bot {
 
         const cmd = this.commands.get(command) || this.aliases.get(command);
         if (cmd) {
-            if ((process.env.NODE_ENV !== "dev" && cmd.config.prefix.indexOf(prefix) !== -1) || (process.env.NODE_ENV === "dev" && Config.botOwner.indexOf(newMessage.author.id) !== -1)) {
+            if ((Global.nodeEnv !== "dev" && cmd.config.prefix.indexOf(prefix) !== -1) || (Global.nodeEnv === "dev" && Global.botOwner.indexOf(newMessage.author.id) !== -1)) {
                 if (cmd.config.timeout > 0) {
                     newMessage.delete(cmd.config.timeout).catch(reason => {
                         logger.error(reason);

@@ -1,10 +1,10 @@
 import * as logger from "../../utils/Logger.js";
-import {Config} from "../../Config";
+import {Global} from "../../utils/Global";
 import {Bot} from "../../Bot";
 import {BaseCommand} from "../BaseCommand";
 import {Message} from "discord.js";
 
-const allowedUsers = Config.botOwner;
+const allowedUsers = Global.botOwner;
 const allowedRoles = [];
 const allowedChannels = [];
 const allowedGuilds = [];

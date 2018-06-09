@@ -1,9 +1,9 @@
 import * as logger from "./utils/Logger.js";
 import {Client, ClientOptions} from "discord.js";
 import {Bot} from "./Bot";
-import {Config} from "./Config";
+import {Global} from "./utils/Global";
 
-if (Config.nodeVersion < 8) {
+if (Global.nodeVersion < 8) {
     throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
 }
 process.on("uncaughtException", (err) => {
@@ -22,12 +22,12 @@ const client: Client = new Client(discordOptions);
 const bot: Bot = new Bot(client);
 
 bot.init().then(async () => {
-    if (Config.nodeEnv === "dev") {
+    if (Global.nodeEnv === "dev") {
         bot.watch().then(() => {
             logger.log("Chokidar initialized", "success")
         });
     }
-    if (!Config.token) {
+    if (!Global.token) {
         throw new Error("Missing 'BOT_TOKEN' environment variable");
     }
     setInterval(() => {
@@ -36,10 +36,10 @@ bot.init().then(async () => {
             cron.run();
         });*/
     }, 60000);
-    await client.login(Config.token);
+    await client.login(Global.token);
 
 }).then(() => {
-    if (Config.nodeDomain && Config.nodePort) {
+    if (Global.nodeDomain && Global.nodePort) {
         const express = require('express');
         const http = require('http');
         const app = express();
@@ -49,9 +49,9 @@ bot.init().then(async () => {
             response.write(d.toString());
             response.end();
         });
-        app.listen(Config.nodePort);
+        app.listen(Global.nodePort);
         setInterval(() => {
-            http.get(`http://${Config.nodeDomain}.glitch.me/`);
+            http.get(`http://${Global.nodeDomain}.glitch.me/`);
         }, 240000);
     }
 });

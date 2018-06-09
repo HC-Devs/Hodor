@@ -1,7 +1,6 @@
 import * as logger from "../../utils/Logger.js";
 import {BaseCommand} from "../BaseCommand";
 import {Message, Snowflake} from "discord.js";
-import * as service from "../../core/service/UserService";
 import {Bot} from "../../Bot";
 
 const allowedUsers = [];
@@ -47,7 +46,7 @@ export abstract class BaseModuleCommand extends BaseCommand {
 
         let memberId: Snowflake = message.mentions.users.first() ? message.mentions.users.first().id : message.author.id;
 
-        let success = await service.AddModuleToUser(this.bot.sql, memberId, this.config.name, level);
+        /*let success = await service.AddModuleToUser(this.bot.sql, memberId, this.config.name, level);
         if (success) {
             message.channel.send(":white_check_mark: OK").then((msg: Message) => {
                 msg.delete(this.config.timeout).catch(reason => {
@@ -56,17 +55,16 @@ export abstract class BaseModuleCommand extends BaseCommand {
             });
         } else {
             logger.error("Erreur");
-        }
-        /*
-                this.runCommand(message, level, memberId).then(() => {
-                    message.channel.send(":white_check_mark: OK").then((msg: Message) => {
-                        msg.delete(this.config.timeout).catch(reason => {
-                            logger.error(reason);
-                        });
-                    });
-                }).catch(reason => {
+        }*/
+        this.runCommand(message, level, memberId).then(() => {
+            message.channel.send(":white_check_mark: OK").then((msg: Message) => {
+                msg.delete(this.config.timeout).catch(reason => {
                     logger.error(reason);
-                });*/
+                });
+            });
+        }).catch(reason => {
+            logger.error(reason);
+        });
     }
 
     // Virtual method that could be overrided

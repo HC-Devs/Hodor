@@ -1,4 +1,4 @@
-export class Config {
+export class Global {
     static nodeVersion: number = Number(process.version.slice(1).split(".")[0]);
     static nodeDomain: string = process.env.PROJECT_DOMAIN;
     static nodePort: string = process.env.PORT;
