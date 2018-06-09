@@ -1,4 +1,3 @@
-import * as logger from "./utils/Logger.js";
 import * as chokidar from "chokidar";
 import {Client, Message} from "discord.js";
 import {BaseCommand} from "./commands/BaseCommand";
@@ -6,6 +5,7 @@ import {Global} from "./utils/Global";
 import * as fs from "fs";
 import * as path from "path";
 import {Sqlite} from "./classes/Sqlite";
+import {Logger} from "./utils/Logger";
 
 /* Rights */
 const allowedBots = [];
@@ -36,27 +36,27 @@ export class Bot {
 
         // BotOLD owner
         if (Global.botOwner.length === 0 || Global.botOwner.length[0] === "") {
-            logger.error("No owner set");
+            Logger.error("No owner set");
             process.exit(1);
         }
 
         // Prefix
         let prefix = Global.nodeEnv !== "dev" ? Global.prefix : Global.prefixDev;
         if (prefix === "") {
-            logger.error("No prefix set");
+            Logger.error("No prefix set");
             process.exit(1);
         }
 
         // Database directory
         if (!fs.existsSync(Global.dataBaseDir)) {
-            logger.log(`create '${Global.dataBaseDir}'`);
+            Logger.log(`create '${Global.dataBaseDir}'`);
             fs.mkdirSync(Global.dataBaseDir);
         }
 
         // Database creation
         this.sql = new Sqlite(`${Global.dataBaseDir}/${Global.dataBaseName}`, err => {
-            if (err) logger.error(err);
-            else logger.log(`Connected the the '${Global.dataBaseName}' database.`);
+            if (err) Logger.error(err);
+            else Logger.log(`Connected the the '${Global.dataBaseName}' database.`);
         });
     }
 
@@ -76,14 +76,14 @@ export class Bot {
                                 this.aliases.set(alias, command);
                             });
                         }
-                        logger.log(`Loading Command: ${command.config.name}. 👌`);
+                        Logger.log(`Loading Command: ${command.config.name}. 👌`);
                     }
                 }).catch(reason => {
-                    //logger.error(reason);
+                    //Logger.error(reason);
                 });
             }
         }
-        logger.log(`Loading a total of ${this.commands.size} commands.`, "success");
+        Logger.log(`Loading a total of ${this.commands.size} commands.`, "success");
 
         // Events
         const events = walkSync(Global.pathEventsDirectory);
@@ -91,12 +91,12 @@ export class Bot {
             if (path.extname(file) === ".js") {
                 const eventName = path.basename(file, path.extname(file));
                 const event = require(`./${file}`);
-                logger.log(`Loading Event: ${eventName}. 👌`);
+                Logger.log(`Loading Event: ${eventName}. 👌`);
                 this.client.on(eventName, event.bind(null, this));
                 delete require.cache[require.resolve(`./${file}`)];
             }
         });
-        logger.log(`Loading a total of ${events.length} events.`, "success");
+        Logger.log(`Loading a total of ${events.length} events.`, "success");
     }
 
     async watch() {
@@ -110,13 +110,13 @@ export class Bot {
             // TODO
             /*let className = path.basename(event, path.extname(event));
             if (reloadFile(event)) {
-                logger.log(`chokidar: class ${className} reloaded !`);
+                Logger.log(`chokidar: class ${className} reloaded !`);
             }*/
         });
         chokidar.watch(Global.pathCommandsDirectory, this.watchOptions).on("change", event => {
             let className = path.basename(event, path.extname(event));
             if (reloadFile(event)) {
-                logger.log(`chokidar: class ${className} reloaded !`);
+                Logger.log(`chokidar: class ${className} reloaded !`);
             }
         });
         chokidar.watch(Global.pathEventsDirectory, this.watchOptions).on("change", event => {
@@ -128,7 +128,7 @@ export class Bot {
 
         setInterval(() => {
             let used = process.memoryUsage().heapUsed / 1024 / 1024;
-            logger.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
+            Logger.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
         }, 1000 * 60 * 5);
     }
 
@@ -141,7 +141,7 @@ export class Bot {
 
         // guild allowed
         if (allowedGuilds.indexOf(newMessage.guild.id) === -1) {
-            logger.error("Bot is not allowed in " + newMessage.guild.name + " (" + newMessage.guild.id + ")");
+            Logger.error("Bot is not allowed in " + newMessage.guild.name + " (" + newMessage.guild.id + ")");
             return;
         }
 
@@ -158,18 +158,18 @@ export class Bot {
             if ((Global.nodeEnv !== "dev" && cmd.config.prefix.indexOf(prefix) !== -1) || (Global.nodeEnv === "dev" && Global.botOwner.indexOf(newMessage.author.id) !== -1)) {
                 if (cmd.config.timeout > 0) {
                     newMessage.delete(cmd.config.timeout).catch(reason => {
-                        logger.error(reason);
+                        Logger.error(reason);
                     });
                 }
                 else if (cmd.config.timeout === -1) {
                     newMessage.delete().catch(reason => {
-                        logger.error(reason);
+                        Logger.error(reason);
                     });
                 }
                 cmd.run(newMessage, args).then(() => {
-                    logger.cmd(`[CMD] ${newMessage.author.username} (${newMessage.author.id}) ran command ${cmd.config.name}`);
+                    Logger.cmd(`[CMD] ${newMessage.author.username} (${newMessage.author.id}) ran command ${cmd.config.name}`);
                 }).catch(reason => {
-                    logger.error(reason);
+                    Logger.error(reason);
                 });
             }
         }

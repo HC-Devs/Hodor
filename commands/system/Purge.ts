@@ -1,8 +1,8 @@
-import * as logger from "../../utils/Logger.js";
 import {Global} from "../../utils/Global";
 import {Bot} from "../../Bot";
 import {BaseCommand} from "../BaseCommand";
 import {Message} from "discord.js";
+import {Logger} from "../../utils/Logger";
 
 const allowedUsers = Global.botOwner;
 const allowedRoles = [];
@@ -33,11 +33,11 @@ export class Purge extends BaseCommand {
             message.channel.bulkDelete(messages);
         }).catch(reason => {
             message.reply(`Couldn't delete messages because of: ${reason}`).then(() => {
-                logger.error(reason);
+                Logger.error(reason);
             });
         }).then(() => {
             message.delete().catch(reason => {
-                logger.error(reason);
+                Logger.error(reason);
             });
         });
     }

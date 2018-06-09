@@ -1,8 +1,8 @@
-import * as logger from "../../utils/Logger.js";
 import {BaseCommand} from "../BaseCommand";
 import {Message, Snowflake} from "discord.js";
 import * as service from "../../core/service/UserService";
 import {Bot} from "../../Bot";
+import {Logger} from "../../utils/Logger";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -39,7 +39,7 @@ export abstract class BaseUserCommand extends BaseCommand {
             let helpMsg = this.getHelpMsg();
             message.channel.send(":x: KO\n" + helpMsg).then((msg: Message) => {
                 msg.delete(this.config.timeout).catch(reason => {
-                    logger.error(reason);
+                    Logger.error(reason);
                 });
             });
             return;
@@ -51,21 +51,21 @@ export abstract class BaseUserCommand extends BaseCommand {
         if (success) {
             message.channel.send(":white_check_mark: OK").then((msg: Message) => {
                 msg.delete(this.config.timeout).catch(reason => {
-                    logger.error(reason);
+                    Logger.error(reason);
                 });
             });
         } else {
-            logger.error("Erreur");
+            Logger.error("Erreur");
         }
         /*
                 this.runCommand(message, level, memberId).then(() => {
                     message.channel.send(":white_check_mark: OK").then((msg: Message) => {
                         msg.delete(this.config.timeout).catch(reason => {
-                            logger.error(reason);
+                            Logger.error(reason);
                         });
                     });
                 }).catch(reason => {
-                    logger.error(reason);
+                    Logger.error(reason);
                 });*/
     }
 

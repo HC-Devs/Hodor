@@ -1,4 +1,4 @@
-const logger = require("../utils/Logger.js");
+const logger = require("../utils/Logger.ts");
 
 module.exports = async bot => {
     logger.log(`[READY] ${bot.client.user.tag} (${bot.client.user.id}), ready to serve ${bot.client.users.size} users in ${bot.client.channels.size} channels of ${bot.client.guilds.size} guilds.`, "ready");
