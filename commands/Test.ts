@@ -1,8 +1,7 @@
 import {Bot} from "../Bot";
-import {BaseModuleCommand} from "./BaseModuleCommand";
-import {Message, Snowflake} from "discord.js";
+import {Message} from "discord.js";
 import * as service from "../core/service/UserService";
-import { BaseCommand } from "./BaseCommand";
+import {BaseCommand} from "./BaseCommand";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -15,6 +14,7 @@ export class Test extends BaseCommand {
         let config = {
             name: "test",
             prefix: ['!'],
+            aliases: ["toto", "titi"],
             timeout: 10000
         };
         super(bot, config);

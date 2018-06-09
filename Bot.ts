@@ -17,6 +17,7 @@ const allowedGuilds = [
 export class Bot {
     client: Client;
     commands: Map<string, BaseCommand> = new Map<string, BaseCommand>();
+    aliases: Map<string, BaseCommand> = new Map<string, BaseCommand>();
     crons: Array<any> = Array<any>();
     locks: Array<any> = Array<any>();
     functions: Array<any> = Array<any>();
@@ -70,6 +71,11 @@ export class Bot {
                     let command = new Command(this);
                     if (command.config) {
                         this.commands.set(command.config.name, command);
+                        if (command.config.aliases) {
+                            command.config.aliases.forEach(alias => {
+                                this.aliases.set(alias, command);
+                            });
+                        }
                         logger.log(`Loading Command: ${command.config.name}. 👌`);
                     }
                 }).catch(reason => {
@@ -135,7 +141,7 @@ export class Bot {
 
         // guild allowed
         if (allowedGuilds.indexOf(newMessage.guild.id) === -1) {
-            logger.error("BotOLD is not allowed in " + newMessage.guild.name + " (" + newMessage.guild.id + ")");
+            logger.error("Bot is not allowed in " + newMessage.guild.name + " (" + newMessage.guild.id + ")");
             return;
         }
 
@@ -147,8 +153,8 @@ export class Bot {
         const args = newMessage.content.slice(prefix.length).trim().split(/ +/g);
         const command = args.shift().toLowerCase();
 
-        if (typeof this.commands.get(command) !== "undefined") {
-            let cmd = this.commands.get(command);
+        const cmd = this.commands.get(command) || this.aliases.get(command);
+        if (cmd) {
             if ((process.env.NODE_ENV !== "dev" && cmd.config.prefix.indexOf(prefix) !== -1) || (process.env.NODE_ENV === "dev" && Config.botOwner.indexOf(newMessage.author.id) !== -1)) {
                 if (cmd.config.timeout > 0) {
                     newMessage.delete(cmd.config.timeout).catch(reason => {
