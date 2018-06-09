@@ -3,6 +3,7 @@ import {Bot} from "../../Bot";
 import {BaseCommand} from "../BaseCommand";
 import {Message} from "discord.js";
 import {Logger} from "../../utils/Logger";
+import {Config} from "../Config";
 
 const allowedUsers = Global.botOwner;
 const allowedRoles = [];
@@ -12,11 +13,7 @@ const allowedGuilds = [];
 export class Purge extends BaseCommand {
 
     constructor(bot: Bot) {
-        let config = {
-            name: "purge",
-            prefix: ['!'],
-            timeout: 5000
-        };
+        let config = new Config("purge");
         super(bot, config);
     }
 

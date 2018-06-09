@@ -2,6 +2,7 @@ import {Bot} from "../Bot";
 import {Message} from "discord.js";
 import * as service from "../core/service/UserService";
 import {BaseCommand} from "./BaseCommand";
+import {Config} from "./Config";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -11,12 +12,7 @@ const allowedGuilds = [];
 export class Test extends BaseCommand {
 
     constructor(bot: Bot) {
-        let config = {
-            name: "test",
-            prefix: ['!'],
-            aliases: ["toto", "titi"],
-            timeout: 10000
-        };
+        let config = new Config("test", ["toto", "titi"], ['!'], 10000);
         super(bot, config);
     }
 

@@ -3,6 +3,7 @@ import {Message, Snowflake} from "discord.js";
 import * as service from "../../core/service/UserService";
 import {Bot} from "../../Bot";
 import {Logger} from "../../utils/Logger";
+import {Config} from "../Config";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -12,13 +13,7 @@ const allowedGuilds = [];
 export abstract class BaseUserCommand extends BaseCommand {
 
     protected constructor(bot: Bot, commandName: string, aliases = [], prefix = ['!'], timeout = 5000, maxLevel = 10) {
-        let config = {
-            name: commandName,
-            aliases: aliases,
-            prefix: prefix,
-            timeout: timeout,
-            maxLevel: maxLevel
-        };
+        let config = new Config(commandName, aliases, prefix, timeout, maxLevel);
         super(bot, config);
     }
 
