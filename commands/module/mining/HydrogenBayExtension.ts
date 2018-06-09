@@ -10,11 +10,11 @@ const allowedGuilds = [];
 export class HydrogenBayExtension extends BaseModuleCommand {
 
     constructor(bot: Bot) {
-        super(bot, "hydrogenbayextension");
+        super(bot, "hydrogenbayextension", ["h2ext"]);
     }
 
     async runCommand(message: Message, level: number, user: Snowflake) {
-        //TODO 
+        //TODO
     }
 }
 

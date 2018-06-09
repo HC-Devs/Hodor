@@ -1,7 +1,7 @@
-import * as logger from "../utils/Logger.js";
-import {Config} from "../Config";
-import {Bot} from "../Bot";
-import {BaseCommand} from "./BaseCommand";
+import * as logger from "../../utils/Logger.js";
+import {Config} from "../../Config";
+import {Bot} from "../../Bot";
+import {BaseCommand} from "../BaseCommand";
 import {Message} from "discord.js";
 
 const allowedUsers = Config.botOwner;
