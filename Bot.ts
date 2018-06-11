@@ -183,6 +183,8 @@ export class Bot {
                 } catch (err) {
                     if (err instanceof FunctionnalError) {
                         newMessage.reply(err.message).then((msg: Message) => msg.delete(cmd.config.timeout));
+                    }else{
+                        newMessage.reply("Erreur inconnue rencontrée : " + err.msg );
                     }
                 }
             }

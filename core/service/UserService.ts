@@ -43,22 +43,22 @@ export async function AddOrUpdateUser(sqlConnector: Sqlite, userId: string, user
     try {
         user = await userDao.getById(userId);
     }
-    catch{}
+    catch{ }
 
     if (user) {
         user.name = userName;
         user.corpo = corpoName;
         return userDao.update(user);
     } else {
-        user = new User("0", userName, corpoName);
-        const newRowId = userDao.insert(user);
+        user = new User(userId, userName, corpoName);
+
+        let newRowId = await userDao.insert(user);
         if (newRowId)
             return true;
         else
-            return false;
+            throw new Error("Erreur maj BDD");
+
     }
-
-
 }
 
 export async function GetUserModule(sqlConnector: Sqlite, userId: string): Promise<string> {

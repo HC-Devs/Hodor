@@ -24,7 +24,16 @@ export abstract class BaseCommand {
             (allowedUsers.length > 0 && allowedUsers.indexOf(message.author.id) !== -1);
     }
 
-    
+    protected cleanArgs(message: Message, args: string[]) : [string [],string []] {
+        let mentions = message.mentions.users;
+        let userIdMention: string[] = [];
+        if(mentions && mentions.size > 0){
+            mentions.forEach((v,k) => userIdMention.push(v.id));
+        }
+        let newArgs = args.filter(elt => !(elt.startsWith('<@') && elt.endsWith('>') && userIdMention.indexOf(elt.substr(2, elt.length - 3))  != -1));
+      
+        return [userIdMention, newArgs];
+    }
 
     // Virtual method that could be overrided
     // Display usage of command

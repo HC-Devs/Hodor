@@ -13,10 +13,10 @@ const allowedRoles = [];
 const allowedChannels = ["421655362966650880", "413390615158718466"];
 const allowedGuilds = [];
 
-export class AddUserCommand extends BaseCommand {
+export class AddUser extends BaseCommand {
 
     protected constructor(bot: Bot, aliases = [], prefix = ["!"], timeout = 5000) {
-        let config = new Config('AddUser', aliases, prefix, timeout);
+        let config = new Config('adduser', aliases, prefix, timeout);
         super(bot, config);
     }
 
@@ -28,28 +28,27 @@ export class AddUserCommand extends BaseCommand {
 
     assertSyntax(args: string[]){
         // Check command as correct number of arguments
-        if (args.length < 2 && args.length > 2) {
+        if (args.length < 2 && args.length > 3) {
             throw new CommandError(this.getHelpMsg());
         }
     }
 
     async run(message: Message, args: string[]) {
-        let memberId: Snowflake = message.mentions.users.first() ? message.mentions.users.first().id : message.author.id;
+        
+        let [usersId, argsCleaned] = this.cleanArgs(message ,args);
+        let memberId: Snowflake =  usersId.length> 0?  usersId.pop() : message.author.id;
 
-        const ok = await AddOrUpdateUser(this.bot.sql, memberId, args[0], args[1]);
-        if(ok){
-            message.reply("Maj ok").then((msg: Message) => msg.delete(this.config.timeout));
-        }else{
-            throw new FunctionnalError("Erreur leur de la mise à jour de la base de données");
-        }
+        await AddOrUpdateUser(this.bot.sql, memberId, argsCleaned[0], argsCleaned[1]);
+        message.reply("Maj ok").then((msg: Message) => msg.delete(this.config.timeout));
+      
     }
 
  
     // Display usage of command
     getHelpMsg(): string {
-        return "Usage:\n\t```!" + this.config.name + " level````" +
-            "Exemple:\n\t```!" + this.config.name + " Aurel````";
+        return "Usage:\n\t```!" + this.config.name + " Nom Corpo````" +
+            "Exemple:\n\t```!" + this.config.name + " Aurel HadesCorpo````";
     }
-
-
 }
+
+module.exports = AddUser;
