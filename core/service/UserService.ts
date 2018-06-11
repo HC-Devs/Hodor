@@ -1,9 +1,9 @@
-﻿import {User} from '../model/User';
-import {UserDao} from '../dao/UserDao';
-import {Sqlite} from '../../classes/Sqlite';
-import {UserModule} from '../model/UserModule';
-import {UserModuleDao} from '../dao/UserModuleDao';
-import {ModuleDao} from '../dao/ModuleDao';
+﻿import { User } from '../model/User';
+import { UserDao } from '../dao/UserDao';
+import { Sqlite } from '../../classes/Sqlite';
+import { UserModule } from '../model/UserModule';
+import { UserModuleDao } from '../dao/UserModuleDao';
+import { ModuleDao } from '../dao/ModuleDao';
 import { UserModuleViewModel } from '../viewModel/UserModuleViewModel';
 
 const Table = require('markdown-table');
@@ -17,7 +17,7 @@ export async function AddModuleToUser(sqlConnector: Sqlite, userId: string, modu
 
     // 2. Check if new module or update of existing ong
     let userModuleDao = new UserModuleDao(sqlConnector);
-    let allUserModules =  await userModuleDao.getAll();
+    let allUserModules = await userModuleDao.getAll();
     let existingModule = allUserModules.find(m => m.moduleId === Number(mod.id) && m.userId === userId); //Todo specific db query?
     if (existingModule) {
         // 3.a update existing one
@@ -34,6 +34,33 @@ export async function AddModuleToUser(sqlConnector: Sqlite, userId: string, modu
     }
 }
 
+
+export async function AddOrUpdateUser(sqlConnector: Sqlite, userId: string, userName: string, corpoName: string): Promise<boolean> {
+    // 1. Check if new or existing user
+    let userDao = new UserDao(sqlConnector);
+
+    let user: User = null;
+    try {
+        user = await userDao.getById(userId);
+    }
+    catch{}
+
+    if (user) {
+        user.name = userName;
+        user.corpo = corpoName;
+        return userDao.update(user);
+    } else {
+        user = new User("0", userName, corpoName);
+        const newRowId = userDao.insert(user);
+        if (newRowId)
+            return true;
+        else
+            return false;
+    }
+
+
+}
+
 export async function GetUserModule(sqlConnector: Sqlite, userId: string): Promise<string> {
     // 1. Get all module ref
     let moduleDao = new ModuleDao(sqlConnector);
@@ -41,12 +68,12 @@ export async function GetUserModule(sqlConnector: Sqlite, userId: string): Promi
 
     // 2. Get all module of user
     let userModuleDao = new UserModuleDao(sqlConnector);
-    let allUserModules =  (await userModuleDao.getAll()).filter(f => f.userId === userId);
-  
+    let allUserModules = (await userModuleDao.getAll()).filter(f => f.userId === userId);
+
     // 3. Get list of view model
-    let datas : Array<UserModuleViewModel> = new Array();
-    allUserModules.forEach( elt => datas.push(new UserModuleViewModel(elt,allModules )));
-    
+    let datas: Array<UserModuleViewModel> = new Array();
+    allUserModules.forEach(elt => datas.push(new UserModuleViewModel(elt, allModules)));
+
 
     return generateDebugMarkdownTable(datas);
 }
@@ -98,13 +125,13 @@ function generateDebugMarkdownTable(data) {
 
     let array = [];
     array.push(Object.getOwnPropertyNames(data[0]));
-  
+
     data.forEach(function (d, index) {
         let currentRow = [];
         Object.getOwnPropertyNames(d).forEach(
-            function(val, idx, array) {
-               currentRow.push(d[val]);
-          });
+            function (val, idx, array) {
+                currentRow.push(d[val]);
+            });
         array.push(currentRow);
     });
     var tab = Table(array);
