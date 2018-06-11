@@ -10,6 +10,12 @@ const allowedChannels = [];
 const allowedGuilds = [];
 
 export class Test extends BaseCommand {
+    assertIsGranted(message: Message) {
+        // all ok
+    }
+    assertSyntax(args: string[]) {
+        // all ok
+    }
 
     constructor(bot: Bot) {
         let config = new Config("test", ["toto", "titi"], ['!'], 10000);

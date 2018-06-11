@@ -9,6 +9,12 @@ const allowedGuilds = [];
 
 /* Class */
 export class Help extends BaseCommand {
+    assertIsGranted(message: Message) {
+        //all ok
+    }
+    assertSyntax(args: string[]) {
+      //all ok
+    }
 
     constructor(bot) {
         let config = new Config("help", ["h"], ['!'], 10000);

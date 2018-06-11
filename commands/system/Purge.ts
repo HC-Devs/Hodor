@@ -4,6 +4,8 @@ import {BaseCommand} from "../BaseCommand";
 import {Message} from "discord.js";
 import {Logger} from "../../utils/Logger";
 import {Config} from "../Config";
+import { UnauthorizedAccessError } from "../../exceptions/UnauthorizedAccessError";
+import { CommandError } from "../../exceptions/CommandError";
 
 const allowedUsers = Global.botOwner;
 const allowedRoles = [];
@@ -11,6 +13,18 @@ const allowedChannels = [];
 const allowedGuilds = [];
 
 export class Purge extends BaseCommand {
+    assertIsGranted(message: Message){
+        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
+            throw new UnauthorizedAccessError();
+        }
+    }
+
+    assertSyntax(args: string[]){
+        // Check command as correct number of arguments
+        if (args.length < 1 && args.length > 1) {
+            throw new CommandError(this.getHelpMsg());
+        }
+    }
 
     constructor(bot: Bot) {
         let config = new Config("purge");

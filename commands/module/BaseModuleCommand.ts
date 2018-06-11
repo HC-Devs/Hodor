@@ -3,6 +3,8 @@ import {Message, Snowflake} from "discord.js";
 import {Bot} from "../../Bot";
 import {Logger} from "../../utils/Logger";
 import {Config} from "../Config";
+import { UnauthorizedAccessError } from "../../exceptions/UnauthorizedAccessError";
+import { CommandError } from "../../exceptions/CommandError";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -15,17 +17,23 @@ export abstract class BaseModuleCommand extends BaseCommand {
         let config = new Config(commandName, aliases, prefix, timeout, maxLevel);
         super(bot, config);
     }
+    
+    assertIsGranted(message: Message){
+        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
+            throw new UnauthorizedAccessError();
+        }
+    }
+
+    assertSyntax(args: string[]){
+        // Check command as correct number of arguments
+        if (args.length < 1 && args.length > 1) {
+            throw new CommandError(this.getHelpMsg());
+        }
+    }
 
     async run(message: Message, args: string[]) {
-        // check command permissions
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
-            return;
-        }
+              // TODO maybe do a GET if no argument?
 
-        // TODO maybe do a GET if no argument?
-
-        // check arguments count
-        if (args.length !== 1) return;
 
         // check command level
         const level = args[0] && !isNaN(parseInt(args[0])) ? parseInt(args[0]) : -1;
