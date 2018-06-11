@@ -9,6 +9,7 @@ import { UserModuleViewModel } from '../viewModel/UserModuleViewModel';
 const Table = require('markdown-table');
 
 
+
 export async function AddModuleToUser(sqlConnector: Sqlite, userId: string, moduleName: string, level: number): Promise<boolean> {
     // 1. Get module id from db from name
     let moduleDao = new ModuleDao(sqlConnector);
@@ -61,6 +62,20 @@ export async function AddOrUpdateUser(sqlConnector: Sqlite, userId: string, user
     }
 }
 
+export async function ListUser(sqlConnector: Sqlite, corpoName: String = null): Promise<string> {
+    let userdao = new UserDao(sqlConnector);
+    let users = (await userdao.getAll()).filter(u => !corpoName || u.corpo == corpoName);
+
+    return generateDebugMarkdownTable(users);
+}
+
+export async function DeleteUser(sqlConnector: Sqlite, userId: string): Promise<Boolean> {
+    let userdao = new UserDao(sqlConnector);
+    return userdao.deleteFromId(userId);
+}
+
+
+
 export async function GetUserModule(sqlConnector: Sqlite, userId: string): Promise<string> {
     // 1. Get all module ref
     let moduleDao = new ModuleDao(sqlConnector);
@@ -101,11 +116,6 @@ export async function TestUser(sqlConnector: Sqlite): Promise<string> {
     return tabResult;
 }
 
-export async function ListUser(sqlConnector: Sqlite): Promise<string> {
-    let userdao = new UserDao(sqlConnector);
-    let users = await userdao.getAll();
-    return generateMarkdownTable(users);
-}
 
 function generateMarkdownTable(data) {
     const header = '```Markdown\n';
