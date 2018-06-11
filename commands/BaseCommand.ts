@@ -1,18 +1,19 @@
-import { Bot } from "../Bot";
-import { Message } from "discord.js";
-import { CommandError } from "../exceptions/CommandError";
+import {Bot} from "../Bot";
+import {Message} from "discord.js";
+import {Config} from "./Config";
 
 export abstract class BaseCommand {
 
     bot: Bot;
-    config: any;
+    config: Config;
 
-    protected constructor(bot: Bot, config: any) {
+    protected constructor(bot: Bot, config: Config) {
         this.bot = bot;
         this.config = config;
     }
 
-    abstract assertIsGranted(message: Message) ;
+    abstract assertIsGranted(message: Message);
+
     abstract assertSyntax(args: string[]);
 
     abstract async run(message: Message, args: any);
@@ -24,14 +25,14 @@ export abstract class BaseCommand {
             (allowedUsers.length > 0 && allowedUsers.indexOf(message.author.id) !== -1);
     }
 
-    protected cleanArgs(message: Message, args: string[]) : [string [],string []] {
+    protected cleanArgs(message: Message, args: string[]): [string [], string []] {
         let mentions = message.mentions.users;
         let userIdMention: string[] = [];
-        if(mentions && mentions.size > 0){
-            mentions.forEach((v,k) => userIdMention.push(v.id));
+        if (mentions && mentions.size > 0) {
+            mentions.forEach((v, k) => userIdMention.push(v.id));
         }
-        let newArgs = args.filter(elt => !(elt.startsWith('<@') && elt.endsWith('>') && userIdMention.indexOf(elt.substr(2, elt.length - 3))  != -1));
-      
+        let newArgs = args.filter(elt => !(elt.startsWith('<@') && elt.endsWith('>') && userIdMention.indexOf(elt.substr(2, elt.length - 3)) != -1));
+
         return [userIdMention, newArgs];
     }
 
