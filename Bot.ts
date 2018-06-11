@@ -1,12 +1,12 @@
 import * as chokidar from "chokidar";
-import { Client, Message } from "discord.js";
-import { BaseCommand } from "./commands/BaseCommand";
-import { Global } from "./utils/Global";
+import {Client, Message} from "discord.js";
+import {BaseCommand} from "./commands/BaseCommand";
+import {Global} from "./utils/Global";
 import * as fs from "fs";
 import * as path from "path";
-import { Sqlite } from "./classes/Sqlite";
-import { Logger } from "./utils/Logger";
-import { FunctionnalError } from "./exceptions/FonctionnalError";
+import {Sqlite} from "./classes/Sqlite";
+import {Logger} from "./utils/Logger";
+import {FunctionnalError} from "./exceptions/FonctionnalError";
 
 /* Rights */
 const allowedBots = [];
@@ -29,7 +29,7 @@ export class Bot {
         recursive: true,
         ignored: /(^|[\/\\])\../,
         alwaysStat: false,
-        awaitWriteFinish: { stabilityThreshold: 2000, pollInterval: 100 }
+        awaitWriteFinish: {stabilityThreshold: 2000, pollInterval: 100}
     };
 
     constructor(client: Client) {
@@ -170,7 +170,7 @@ export class Bot {
 
                 try {
                     cmd.assertIsGranted(newMessage);
-                    cmd.assertSyntax(args);
+                    cmd.assertSyntax(newMessage, args);
 
                     cmd.run(newMessage, args).then(() => {
                         Logger.cmd(`[CMD] ${newMessage.author.username} (${newMessage.author.id}) ran command ${cmd.config.name}`);
@@ -183,8 +183,8 @@ export class Bot {
                 } catch (err) {
                     if (err instanceof FunctionnalError) {
                         newMessage.reply(err.message).then((msg: Message) => msg.delete(cmd.config.timeout));
-                    }else{
-                        newMessage.reply("Erreur inconnue rencontrée : " + err.msg );
+                    } else {
+                        newMessage.reply("Erreur inconnue rencontrée : " + err.msg);
                     }
                 }
             }

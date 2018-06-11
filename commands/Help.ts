@@ -12,7 +12,8 @@ export class Help extends BaseCommand {
     assertIsGranted(message: Message) {
         //all ok
     }
-    assertSyntax(args: string[]) {
+
+    assertSyntax(message: Message, args: string[]) {
       //all ok
     }
 

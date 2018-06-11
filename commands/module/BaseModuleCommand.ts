@@ -3,8 +3,8 @@ import {Message, Snowflake} from "discord.js";
 import {Bot} from "../../Bot";
 import {Logger} from "../../utils/Logger";
 import {Config} from "../Config";
-import { UnauthorizedAccessError } from "../../exceptions/UnauthorizedAccessError";
-import { CommandError } from "../../exceptions/CommandError";
+import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
+import {CommandError} from "../../exceptions/CommandError";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -24,7 +24,7 @@ export abstract class BaseModuleCommand extends BaseCommand {
         }
     }
 
-    assertSyntax(args: string[]){
+    assertSyntax(message: Message, args: string[]) {
         // Check command as correct number of arguments
         if (args.length < 1 && args.length > 1) {
             throw new CommandError(this.getHelpMsg());

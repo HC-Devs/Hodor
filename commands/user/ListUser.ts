@@ -1,48 +1,35 @@
-import {BaseCommand} from "../BaseCommand";
-import {Message, Snowflake} from "discord.js";
+import {Message} from "discord.js";
 import {Bot} from "../../Bot";
-import {Logger} from "../../utils/Logger";
-import {Config} from "../Config";
-import { UnauthorizedAccessError } from "../../exceptions/UnauthorizedAccessError";
-import { CommandError } from "../../exceptions/CommandError";
-import { AddOrUpdateUser, ListUser } from "../../core/service/UserService";
-import { FunctionnalError } from "../../exceptions/FonctionnalError";
+import {CommandError} from "../../exceptions/CommandError";
+import {ListUser} from "../../core/service/UserService";
+import {BaseUserCommand} from "./BaseUserCommand";
 
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = ["421655362966650880", "413390615158718466"];
 const allowedGuilds = [];
 
-export class ListUserCommand extends BaseCommand {
+export class ListUserCommand extends BaseUserCommand {
 
-    protected constructor(bot: Bot, aliases = ['lu'], prefix = ["!"], timeout = 25000) {
-        let config = new Config('listuser', aliases, prefix, timeout);
-        super(bot, config);
+    protected constructor(bot: Bot) {
+        super(bot, "listuser", ['lu']);
     }
 
-    assertIsGranted(message: Message){
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
-            throw new UnauthorizedAccessError();
-        }
-    }
-
-    assertSyntax(args: string[]){
+    assertSyntax(message: Message, args: string[]) {
         // Check command as correct number of arguments
         if (args.length > 1) {
             throw new CommandError(this.getHelpMsg());
         }
     }
 
-    async run(message: Message, args: string[]) {
+    async runCommand(message: Message, args: string[]) {
 
-        let corpoName =  args.length> 0?  args.pop() : null;
+        let corpoName = args.length > 0 ? args.pop() : null;
 
         let tab = await ListUser(this.bot.sql, corpoName);
         message.reply(tab).then((msg: Message) => msg.delete(this.config.timeout));
-      
     }
 
- 
     // Display usage of command
     getHelpMsg(): string {
         return "Usage:\n\t```!" + this.config.name + " [Corpo]````" +

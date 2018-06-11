@@ -4,8 +4,8 @@ import {BaseCommand} from "../BaseCommand";
 import {Message} from "discord.js";
 import {Logger} from "../../utils/Logger";
 import {Config} from "../Config";
-import { UnauthorizedAccessError } from "../../exceptions/UnauthorizedAccessError";
-import { CommandError } from "../../exceptions/CommandError";
+import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
+import {CommandError} from "../../exceptions/CommandError";
 
 const allowedUsers = Global.botOwner;
 const allowedRoles = [];
@@ -19,7 +19,7 @@ export class Purge extends BaseCommand {
         }
     }
 
-    assertSyntax(args: string[]){
+    assertSyntax(message: Message, args: string[]) {
         // Check command as correct number of arguments
         if (args.length < 1 && args.length > 1) {
             throw new CommandError(this.getHelpMsg());

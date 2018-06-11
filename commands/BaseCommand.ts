@@ -14,7 +14,7 @@ export abstract class BaseCommand {
 
     abstract assertIsGranted(message: Message);
 
-    abstract assertSyntax(args: string[]);
+    abstract assertSyntax(message: Message, args: string[]);
 
     abstract async run(message: Message, args: any);
 
