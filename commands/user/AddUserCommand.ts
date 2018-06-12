@@ -1,53 +1,48 @@
-import {BaseCommand} from "../BaseCommand";
-import {Message, Snowflake} from "discord.js";
+import {Message} from "discord.js";
 import {Bot} from "../../Bot";
-import {Logger} from "../../utils/Logger";
-import {Config} from "../Config";
-import { UnauthorizedAccessError } from "../../exceptions/UnauthorizedAccessError";
-import { CommandError } from "../../exceptions/CommandError";
-import { AddOrUpdateUser } from "../../core/service/UserService";
-import { FunctionnalError } from "../../exceptions/FonctionnalError";
+import {CommandError} from "../../exceptions/CommandError";
+import {AddOrUpdateUser} from "../../core/service/UserService";
+import {BaseUserCommand} from "./BaseUserCommand";
 
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = ["421655362966650880", "413390615158718466"];
 const allowedGuilds = [];
 
-export class AddUserCommand extends BaseCommand {
+export class AddUserCommand extends BaseUserCommand {
 
-    protected constructor(bot: Bot, aliases = ['au'], prefix = ["!"], timeout = 5000) {
-        let config = new Config('adduser', aliases, prefix, timeout);
-        super(bot, config);
+    protected constructor(bot: Bot) {
+        super(bot, "adduser", ['au'], ['!'], 25000);
     }
 
-    assertIsGranted(message: Message){
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
-            throw new UnauthorizedAccessError();
-        }
-    }
-
-    assertSyntax(args: string[]){
-        // Check command as correct number of arguments
-        if (args.length < 2 && args.length > 3) {
+    assertSyntax(message: Message, args: string[]) {
+        // Check if we have only 1 valid argument (except user mention)
+        let count = message.mentions.members.size === 0 ? 2: 1;
+        if (count != args.length) {
             throw new CommandError(this.getHelpMsg());
         }
     }
 
-    async run(message: Message, args: string[]) {
-        
-        let [usersId, argsCleaned] = this.cleanArgs(message ,args);
-        let memberId =  usersId.length> 0?  usersId.pop() : message.author.id;
+    async runCommand(message: Message, args: string[]) {
 
-        await AddOrUpdateUser(this.bot.sql, memberId, argsCleaned[0], argsCleaned[1]);
-        message.reply("Maj ok").then((msg: Message) => msg.delete(this.config.timeout));
-      
+        //let [usersId, argsCleaned] = this.cleanArgs(message, args);
+
+        if(message.mentions.members.size > 0){
+            // Si on a mentionné qq'un: on extrait son nom et sa guild
+            const user= message.mentions.members.first();
+            await AddOrUpdateUser(this.bot.sql, user.id, user.displayName,user.guild.name);
+        }else{
+            // Sinon on prend les param de la commande
+            const uid = args[1] + "_" + args[0];
+            await AddOrUpdateUser(this.bot.sql, uid , args[0], args[1]);
+        }
     }
 
- 
     // Display usage of command
     getHelpMsg(): string {
-        return "Usage:\n\t```!" + this.config.name + " Nom Corpo````" +
-            "Exemple:\n\t```!" + this.config.name + " Aurel HadesCorpo````";
+        return "\n__Usage 1__:\n\n\t`!" + this.config.name + " Nom Corpo`\t\t *Ajouter un joueur exterieur à la corpo*" +
+               "\n\n__Usage 2__:\n\n\t`!" + this.config.name + " @mention`\t\t *Ajouter un joueur de HC (peu utile)*" +
+            "\n\n__Exemple__:\n\t```!" + this.config.name + " DarkAurel DarkHadesCorpo```";
     }
 }
 

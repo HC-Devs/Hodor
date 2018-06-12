@@ -1,55 +1,44 @@
-import {BaseCommand} from "../BaseCommand";
-import {Message, Snowflake} from "discord.js";
+import {Message} from "discord.js";
 import {Bot} from "../../Bot";
-import {Logger} from "../../utils/Logger";
-import {Config} from "../Config";
-import { UnauthorizedAccessError } from "../../exceptions/UnauthorizedAccessError";
-import { CommandError } from "../../exceptions/CommandError";
-import { AddOrUpdateUser, ListUser, DeleteUser } from "../../core/service/UserService";
-import { FunctionnalError } from "../../exceptions/FonctionnalError";
+import {CommandError} from "../../exceptions/CommandError";
+import {DeleteUser} from "../../core/service/UserService";
+import {BaseUserCommand} from "./BaseUserCommand";
 
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = ["421655362966650880", "413390615158718466"];
 const allowedGuilds = [];
 
-export class DeleteUserCommand extends BaseCommand {
+export class DeleteUserCommand extends BaseUserCommand {
 
-    protected constructor(bot: Bot, aliases = ['du'], prefix = ["!"], timeout = 25000) {
-        let config = new Config('deleteuser', aliases, prefix, timeout);
-        super(bot, config);
+    protected constructor(bot: Bot) {
+        super(bot, "deleteuser", ['du']);
     }
 
-    assertIsGranted(message: Message){
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
-            throw new UnauthorizedAccessError();
-        }
-    }
-
-    assertSyntax(args: string[]){
+    assertSyntax(message: Message, args: string[]) {
         // Check command as correct number of arguments
         if (args.length > 1) {
             throw new CommandError(this.getHelpMsg());
         }
     }
 
-    async run(message: Message, args: string[]) {
+    async runCommand(message: Message, args: string[]) {
 
-        let [usersId, argsCleaned] = this.cleanArgs(message ,args);
-        let memberId =  usersId.length> 0?  usersId.pop() : message.author.id;
-
-
-        let tab = await DeleteUser(this.bot.sql, memberId);
-        message.reply("Suppression ok").then((msg: Message) => msg.delete(this.config.timeout));
-
-      
+        if(message.mentions.members.size > 0){
+            // Si on a mentionné qq'un: on extrait son nom et sa guild
+            const user= message.mentions.members.first();
+            await DeleteUser(this.bot.sql, user.id);
+        }else{
+            // Sinon on prend les param de la commande
+            await DeleteUser(this.bot.sql, args[0]);
+        }
     }
 
- 
     // Display usage of command
     getHelpMsg(): string {
-        return "Usage:\n\t```!" + this.config.name + " [Corpo]````" +
-            "Exemple:\n\t```!" + this.config.name + " HadesCorpo````";
+        return "__Usage 1__:\n\n\t`!" + this.config.name + "Id`\t\t *Supprimer un joueur exterieur à la corpo*" +
+        "\n\n__Usage 2__:\n\n\t`!" + this.config.name + " @mention`\t\t *Supprimer un joueur de HC*" +
+     "\n\n__Exemple__:\n\t```!" + this.config.name + " DarkHadesCorpo_DarkAurel ```";
     }
 }
 

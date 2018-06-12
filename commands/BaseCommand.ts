@@ -14,7 +14,7 @@ export abstract class BaseCommand {
 
     abstract assertIsGranted(message: Message);
 
-    abstract assertSyntax(args: string[]);
+    abstract assertSyntax(message: Message, args: string[]);
 
     abstract async run(message: Message, args: any);
 
@@ -38,7 +38,7 @@ export abstract class BaseCommand {
 
     // Virtual method that could be overrided
     // Display usage of command
-    protected getHelpMsg(): string {
+    public getHelpMsg(): string {
         return "Usage:\n\t```!" + this.config.name + " argument````" +
             "Exemple:\n\t```!" + this.config.name + " argument````";
     }
