@@ -32,8 +32,8 @@ export class ListUserCommand extends BaseUserCommand {
 
     // Display usage of command
     getHelpMsg(): string {
-        return "Usage:\n\t```!" + this.config.name + " [Corpo]````" +
-            "Exemple:\n\t```!" + this.config.name + " HadesCorpo````";
+        return "__Usage__:\n\n\t`!" + this.config.name + " [Corpo]` \t\t *Liste les utilisateurs connus. Possibilité d'ajouter le nom de la corpo pour filtrer*" +
+            "\n\n__Exemple__:\n\t```!" + this.config.name + " HadesCorpo```";
     }
 }
 

@@ -29,7 +29,6 @@ export abstract class BaseUserCommand extends BaseCommand {
             return;
         }
 
-        let memberId: Snowflake = message.mentions.users.first() ? message.mentions.users.first().id : message.author.id;
 
         this.runCommand(message, args).then(() => {
             message.channel.send(":white_check_mark: OK").then((msg: Message) => {
@@ -42,12 +41,6 @@ export abstract class BaseUserCommand extends BaseCommand {
         });
     }
 
-    // Virtual method that could be overrided
-    // Display usage of command
-    getHelpMsg(): string {
-        return "Usage:\n\t```!" + this.config.name + " level````" +
-            "Exemple:\n\t```!" + this.config.name + " 5````";
-    }
 
     // Execute current module update command
     async abstract runCommand(message: Message, args: string[]);

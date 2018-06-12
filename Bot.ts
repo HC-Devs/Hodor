@@ -1,12 +1,12 @@
 import * as chokidar from "chokidar";
-import {Client, Message} from "discord.js";
-import {BaseCommand} from "./commands/BaseCommand";
-import {Global} from "./utils/Global";
+import { Client, Message } from "discord.js";
+import { BaseCommand } from "./commands/BaseCommand";
+import { Global } from "./utils/Global";
 import * as fs from "fs";
 import * as path from "path";
-import {Sqlite} from "./classes/Sqlite";
-import {Logger} from "./utils/Logger";
-import {FunctionnalError} from "./exceptions/FonctionnalError";
+import { Sqlite } from "./classes/Sqlite";
+import { Logger } from "./utils/Logger";
+import { FunctionnalError } from "./exceptions/FonctionnalError";
 
 /* Rights */
 const allowedBots = [];
@@ -29,7 +29,7 @@ export class Bot {
         recursive: true,
         ignored: /(^|[\/\\])\../,
         alwaysStat: false,
-        awaitWriteFinish: {stabilityThreshold: 2000, pollInterval: 100}
+        awaitWriteFinish: { stabilityThreshold: 2000, pollInterval: 100 }
     };
 
     constructor(client: Client) {
@@ -134,41 +134,55 @@ export class Bot {
     }
 
     async parseMessage(oldMessage: Message, newMessage: Message) {
-        // dm message not allowed
-        if (newMessage.channel.type === "dm") return;
+        try {
+            // dm message not allowed
+            if (newMessage.channel.type === "dm") return;
 
-        // message from bot, is bot allowed ?
-        if (newMessage.author.bot && allowedBots.indexOf(newMessage.author.id) === -1) return;
+            // message from bot, is bot allowed ?
+            if (newMessage.author.bot && allowedBots.indexOf(newMessage.author.id) === -1) return;
 
-        // guild allowed
-        if (allowedGuilds.indexOf(newMessage.guild.id) === -1) {
-            Logger.error("Bot is not allowed in " + newMessage.guild.name + " (" + newMessage.guild.id + ")");
-            return;
-        }
+            // guild allowed
+            if (allowedGuilds.indexOf(newMessage.guild.id) === -1) {
+                Logger.error("Bot is not allowed in " + newMessage.guild.name + " (" + newMessage.guild.id + ")");
+                return;
+            }
 
-        // check prefix
-        let prefix = Global.nodeEnv !== "dev" ? Global.prefix : Global.prefixDev;
-        if (newMessage.content.indexOf(prefix) !== 0) return;
-
-        // retrieve command & args
-        const args = newMessage.content.slice(prefix.length).trim().split(/ +/g);
-        const command = args.shift().toLowerCase();
-
-        const cmd = this.commands.get(command) || this.aliases.get(command);
-        if (cmd) {
-            if ((Global.nodeEnv !== "dev" && cmd.config.prefix.indexOf(prefix) !== -1) || (Global.nodeEnv === "dev" && Global.botOwner.indexOf(newMessage.author.id) !== -1)) {
-                if (cmd.config.timeout > 0) {
-                    newMessage.delete(cmd.config.timeout).catch(reason => {
-                        Logger.error(reason);
-                    });
+            // Display help ?
+            if (newMessage.content.indexOf(Global.helpPrefix) === 0) {
+                // retrieve command 
+                const command = newMessage.content.slice(Global.helpPrefix.length).trim().split(/ +/g).shift().toLowerCase();
+                const cmd = this.commands.get(command) || this.aliases.get(command);
+                if (cmd) {
+                    cmd.assertIsGranted(newMessage);
+                    newMessage.reply(cmd.getHelpMsg()).then((msg: Message) => msg.delete(cmd.config.timeout));
                 }
-                else if (cmd.config.timeout === -1) {
-                    newMessage.delete().catch(reason => {
-                        Logger.error(reason);
-                    });
-                }
+                newMessage.delete(Global.timeout);
+                return;
+            }
 
-                try {
+            // check prefix
+            let prefix = Global.nodeEnv !== "dev" ? Global.prefix : Global.prefixDev;
+            if (newMessage.content.indexOf(prefix) !== 0) return;
+
+            // retrieve command & args
+            const args = newMessage.content.slice(prefix.length).trim().split(/ +/g);
+            const command = args.shift().toLowerCase();
+
+            const cmd = this.commands.get(command) || this.aliases.get(command);
+            if (cmd) {
+                if ((Global.nodeEnv !== "dev" && cmd.config.prefix.indexOf(prefix) !== -1) || (Global.nodeEnv === "dev" && Global.botOwner.indexOf(newMessage.author.id) !== -1)) {
+                    if (cmd.config.timeout > 0) {
+                        newMessage.delete(cmd.config.timeout).catch(reason => {
+                            Logger.error(reason);
+                        });
+                    }
+                    else if (cmd.config.timeout === -1) {
+                        newMessage.delete().catch(reason => {
+                            Logger.error(reason);
+                        });
+                    }
+
+
                     cmd.assertIsGranted(newMessage);
                     cmd.assertSyntax(newMessage, args);
 
@@ -180,15 +194,17 @@ export class Bot {
                         }
                         Logger.error(reason);
                     });
-                } catch (err) {
-                    if (err instanceof FunctionnalError) {
-                        newMessage.reply(err.message).then((msg: Message) => msg.delete(cmd.config.timeout));
-                    } else {
-                        newMessage.reply("Erreur inconnue rencontrée : " + err.msg);
-                    }
+
                 }
             }
+        } catch (err) {
+            if (err instanceof FunctionnalError) {
+                newMessage.reply(err.message).then((msg: Message) => msg.delete(Global.timeout));
+            } else {
+                newMessage.reply("Erreur inconnue rencontrée : " + err.msg).then((msg: Message) => msg.delete(Global.timeout));
+            }
         }
+        newMessage.delete(Global.timeout);
     }
 }
 
