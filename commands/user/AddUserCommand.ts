@@ -17,25 +17,32 @@ export class AddUserCommand extends BaseUserCommand {
 
     assertSyntax(message: Message, args: string[]) {
         // Check if we have only 1 valid argument (except user mention)
-        let count = message.mentions.members.array().length == 0 ? args.length : (args.length - message.mentions.members.array().length);
-        if (count != 1) {
+        let count = message.mentions.members.size === 0 ? 2: 1;
+        if (count != args.length) {
             throw new CommandError(this.getHelpMsg());
         }
     }
 
     async runCommand(message: Message, args: string[]) {
 
-        let [usersId, argsCleaned] = this.cleanArgs(message, args);
-        let memberId = usersId.length > 0 ? usersId.pop() : message.author.id;
+        //let [usersId, argsCleaned] = this.cleanArgs(message, args);
 
-        await AddOrUpdateUser(this.bot.sql, memberId, argsCleaned[0], argsCleaned[1]);
-        message.reply("Maj ok").then((msg: Message) => msg.delete(this.config.timeout));
+        if(message.mentions.members.size > 0){
+            // Si on a mentionné qq'un: on extrait son nom et sa guild
+            const user= message.mentions.members.first();
+            await AddOrUpdateUser(this.bot.sql, user.id, user.displayName,user.guild.name);
+        }else{
+            // Sinon on prend les param de la commande
+            const uid = args[1] + "_" + args[0];
+            await AddOrUpdateUser(this.bot.sql, uid , args[0], args[1]);
+        }
     }
 
     // Display usage of command
     getHelpMsg(): string {
-        return "Usage:\n\t```!" + this.config.name + " Nom Corpo````" +
-            "Exemple:\n\t```!" + this.config.name + " Aurel HadesCorpo````";
+        return "\n__Usage 1__:\n\n\t`!" + this.config.name + " Nom Corpo`\t\t *Ajouter un joueur exterieur à la corpo*" +
+               "\n\n__Usage 2__:\n\n\t`!" + this.config.name + " @mention`\t\t *Ajouter un joueur de HC (peu utile)*" +
+            "\n\n__Exemple__:\n\t```!" + this.config.name + " DarkAurel DarkHadesCorpo```";
     }
 }
 
