@@ -7,6 +7,7 @@ import * as path from "path";
 import { Sqlite } from "./classes/Sqlite";
 import { Logger } from "./utils/Logger";
 import { FunctionnalError } from "./exceptions/FonctionnalError";
+import { Citation, Insulte } from "./commands/divers/CitationCommand";
 
 /* Rights */
 const allowedBots = [];
@@ -156,6 +157,28 @@ export class Bot {
                     cmd.assertIsGranted(newMessage);
                     newMessage.reply(cmd.getHelpMsg()).then((msg: Message) => msg.delete(cmd.config.timeout));
                 }
+                newMessage.delete(Global.timeout);
+                return;
+            }
+
+            // Display citation ?
+            if (newMessage.content.indexOf("'") === 0) {
+                // retrieve command 
+                const command = newMessage.content.slice(1).trim().split(/ +/g).shift().toLowerCase();
+
+                const cit = await Citation(command);
+                newMessage.reply(cit);
+
+                newMessage.delete(Global.timeout);
+                return;
+            }
+
+            // Display insulte ?
+            if (newMessage.content === "$*ù") {
+
+                const cit = await Insulte();
+                newMessage.reply(cit);
+
                 newMessage.delete(Global.timeout);
                 return;
             }
