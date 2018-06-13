@@ -5,6 +5,7 @@ import {Logger} from "../../utils/Logger";
 import {Config} from "../Config";
 import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
 import {CommandError} from "../../exceptions/CommandError";
+import { AddModuleToUser } from "../../core/service/UserService";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -25,8 +26,9 @@ export abstract class BaseModuleCommand extends BaseCommand {
     }
 
     assertSyntax(message: Message, args: string[]) {
+        let count = message.mentions.users.size +1;
         // Check command as correct number of arguments
-        if (args.length < 1 && args.length > 1) {
+        if (args.length < 1 && args.length > count) {
             throw new CommandError(this.getHelpMsg());
         }
     }
@@ -34,9 +36,10 @@ export abstract class BaseModuleCommand extends BaseCommand {
     async run(message: Message, args: string[]) {
               // TODO maybe do a GET if no argument?
 
+              let [ids, p] = this.cleanArgs(message, args);
 
         // check command level
-        const level = args[0] && !isNaN(parseInt(args[0])) ? parseInt(args[0]) : -1;
+        const level = p[0] && !isNaN(parseInt(p[0])) ? parseInt(p[0]) : -1;
         if (level < 1 || level > this.config.maxLevel) {   //Could we use 0 as value to delete module if use make an error ?
             let helpMsg = this.getHelpMsg();
             message.channel.send(":x: KO\n" + helpMsg).then((msg: Message) => {
@@ -47,9 +50,10 @@ export abstract class BaseModuleCommand extends BaseCommand {
             return;
         }
 
-        let memberId: Snowflake = message.mentions.users.first() ? message.mentions.users.first().id : message.author.id;
-
-        /*let success = await service.AddModuleToUser(this.bot.sql, memberId, this.config.name, level);
+       
+      
+        let memberId: Snowflake = ids.length>0 ? ids[0] : message.author.id;
+        let success = await AddModuleToUser(this.bot.sql, memberId, this.config.name, level);
         if (success) {
             message.channel.send(":white_check_mark: OK").then((msg: Message) => {
                 msg.delete(this.config.timeout).catch(reason => {
@@ -58,16 +62,16 @@ export abstract class BaseModuleCommand extends BaseCommand {
             });
         } else {
             Logger.error("Erreur");
-        }*/
-        this.runCommand(message, level, memberId).then(() => {
-            message.channel.send(":white_check_mark: OK").then((msg: Message) => {
-                msg.delete(this.config.timeout).catch(reason => {
-                    Logger.error(reason);
-                });
-            });
-        }).catch(reason => {
-            Logger.error(reason);
-        });
+        }
+        // this.runCommand(message, level, memberId).then(() => {
+        //     message.channel.send(":white_check_mark: OK").then((msg: Message) => {
+        //         msg.delete(this.config.timeout).catch(reason => {
+        //             Logger.error(reason);
+        //         });
+        //     });
+        // }).catch(reason => {
+        //     Logger.error(reason);
+        // });
     }
 
     // Virtual method that could be overrided
