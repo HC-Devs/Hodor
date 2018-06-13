@@ -5,6 +5,7 @@ import { UserModule } from '../model/UserModule';
 import { UserModuleDao } from '../dao/UserModuleDao';
 import { ModuleDao } from '../dao/ModuleDao';
 import { UserModuleViewModel } from '../viewModel/UserModuleViewModel';
+import { ModuleType } from '../model/ModuleType';
 
 const Table = require('markdown-table');
 
@@ -76,7 +77,7 @@ export async function DeleteUser(sqlConnector: Sqlite, userId: string): Promise<
 
 
 
-export async function GetUserModule(sqlConnector: Sqlite, userId: string): Promise<string> {
+export async function GetUserModule(sqlConnector: Sqlite, userId: string, moduleTypeFilter: string = null): Promise<string> {
     // 1. Get all module ref
     let moduleDao = new ModuleDao(sqlConnector);
     let allModules = await moduleDao.getAll();
@@ -89,6 +90,11 @@ export async function GetUserModule(sqlConnector: Sqlite, userId: string): Promi
     let datas: Array<UserModuleViewModel> = new Array();
     allUserModules.forEach(elt => datas.push(new UserModuleViewModel(elt, allModules)));
 
+    // 4. Filter by moduletype
+    if (moduleTypeFilter) {
+        let filter: number = ModuleType[moduleTypeFilter];
+        datas = datas.filter(um => um.moduleTypeId === filter);
+    }
 
     return generateDebugMarkdownTable(datas);
 }
