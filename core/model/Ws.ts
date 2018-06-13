@@ -4,9 +4,9 @@ export class Ws extends BaseModel {
 
  
     public startDate: Date;
-    public status: string;
+    public status: Number;
 
-    constructor(id: number, startDate: Date, status: string) {
+    constructor(id: number, startDate: Date, status: Number) {
         super(id.toString());
 
         this.startDate = startDate;

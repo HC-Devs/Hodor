@@ -30,7 +30,7 @@ export async function Citation(word: string):Promise<string> {
         cit += ` *(${author})*`;
         return cit;
     }
-    return "Il vaut mieux se taire et passer pour un con plutôt que de parler et de ne laisser aucun doute sur le sujet `*`Pierre Desproges*";
+    return "Il vaut mieux se taire et passer pour un con plutôt que de parler et de ne laisser aucun doute sur le sujet `*Pierre Desproges*`";
 }
 
 function replaceAll(str, find, replace) {

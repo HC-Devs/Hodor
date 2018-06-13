@@ -72,9 +72,13 @@ export class Bot {
                 await import(`./${path.dirname(file)}/${className}`).then(Command => {
                     let command = new Command(this);
                     if (command.config) {
+                        if (this.commands.has(command.config.name))
+                            throw new Error("Une commande avec le meme nom existe déjà: " + command.config.name);
                         this.commands.set(command.config.name, command);
                         if (command.config.aliases) {
                             command.config.aliases.forEach(alias => {
+                                if (this.aliases.has(alias))
+                                    throw new Error("Une commande avec le meme alias existe déjà: " + alias);
                                 this.aliases.set(alias, command);
                             });
                         }
@@ -157,7 +161,7 @@ export class Bot {
                     cmd.assertIsGranted(newMessage);
                     newMessage.reply(cmd.getHelpMsg()).then((msg: Message) => msg.delete(cmd.config.timeout));
                 }
-                newMessage.delete(Global.timeout);
+                newMessage.delete();
                 return;
             }
 
@@ -169,7 +173,7 @@ export class Bot {
                 const cit = await Citation(command);
                 newMessage.reply(cit);
 
-                newMessage.delete(Global.timeout);
+                newMessage.delete();
                 return;
             }
 
@@ -179,7 +183,7 @@ export class Bot {
                 const cit = await Insulte();
                 newMessage.reply(cit);
 
-                newMessage.delete(Global.timeout);
+                newMessage.delete();
                 return;
             }
 

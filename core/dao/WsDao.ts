@@ -9,7 +9,8 @@ const statusField: string = "ws_status";
 
 const idField: string = tableName + "_id"; 
 
-export class ModuleDao extends BaseDao<Ws> {
+
+export class WsDao extends BaseDao<Ws> {
     constructor(sqlConnector: Sqlite) {
         super(tableName, idField, sqlConnector);
     }
