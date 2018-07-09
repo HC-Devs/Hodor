@@ -21,7 +21,6 @@ export class Bot {
     commands: Map<string, BaseCommand> = new Map<string, BaseCommand>();
     aliases: Map<string, BaseCommand> = new Map<string, BaseCommand>();
     crons: Array<any> = Array<any>();
-    locks: Array<any> = Array<any>();
     functions: Array<any> = Array<any>();
     helpers: Array<any> = Array<any>();
     sql: Sqlite;
@@ -36,7 +35,7 @@ export class Bot {
     constructor(client: Client) {
         this.client = client;
 
-        // BotOLD owner
+        // Bot owner
         if (Global.botOwner.length === 0 || Global.botOwner.length[0] === "") {
             Logger.error("No owner set");
             process.exit(1);
@@ -106,12 +105,6 @@ export class Bot {
     }
 
     async watch() {
-        /*let watchOptions = {
-            recursive: true,
-            ignored: /(^|[\/\\])\../,
-            alwaysStat: false,
-            awaitWriteFinish: {stabilityThreshold: 2000, pollInterval: 100}
-        };*/
         chokidar.watch(Global.pathClassesDirectory, this.watchOptions).on("change", event => {
             // TODO
             /*let className = path.basename(event, path.extname(event));
@@ -161,7 +154,9 @@ export class Bot {
                     cmd.assertIsGranted(newMessage);
                     newMessage.reply(cmd.getHelpMsg()).then((msg: Message) => msg.delete(cmd.config.timeout));
                 }
-                newMessage.delete();
+                newMessage.delete().catch(reason => {
+                    Logger.error(reason);
+                });
                 return;
             }
 
@@ -171,9 +166,11 @@ export class Bot {
                 const command = newMessage.content.slice(1).trim().split(/ +/g).shift().toLowerCase();
 
                 const cit = await Citation(command);
-                newMessage.reply(cit);
+                newMessage.reply(cit)
 
-                newMessage.delete();
+                newMessage.delete().catch(reason => {
+                    Logger.error(reason);
+                });
                 return;
             }
 
