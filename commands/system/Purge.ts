@@ -32,11 +32,6 @@ export class Purge extends BaseCommand {
     }
 
     async run(message: Message, args: string[]) {
-        // check command permissions
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
-            return;
-        }
-
         const limit = (args[0] && !isNaN(parseInt(args[0]))) ? parseInt(args[0]) : -1;
         const options = limit === -1 ? {} : {limit: limit, before: message.id};
 

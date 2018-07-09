@@ -22,7 +22,7 @@ export class Help extends BaseCommand {
         super(bot, config);
     }
 
-    async run(message: Message, args: any): Promise<any> {
+    async run(message: Message, args: string[]): Promise<any> {
         //TODO
     }
 }

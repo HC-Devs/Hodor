@@ -23,7 +23,7 @@ export class Test extends BaseCommand {
         super(bot, config);
     }
 
-    async run(message: Message, args: any): Promise<any> {
+    async run(message: Message, args: string[]): Promise<any> {
         //TODO
         // 1. get userservice or commandservice
         // 2. check if module exist and update or insert value in UserModule table

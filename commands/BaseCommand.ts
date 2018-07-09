@@ -16,7 +16,7 @@ export abstract class BaseCommand {
 
     abstract assertSyntax(message: Message, args: string[]);
 
-    abstract async run(message: Message, args: any);
+    abstract async run(message: Message, args: string[]);
 
     protected isGranted(message: Message, allowedGuilds: Array<string>, allowedChannels: Array<string>, allowedRoles: Array<string>, allowedUsers: Array<string>): boolean {
         return (allowedGuilds.length > 0 && allowedGuilds.indexOf(message.guild.id) !== -1) ||

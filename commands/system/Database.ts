@@ -30,8 +30,28 @@ export class Database extends BaseCommand {
         }
     }
 
-    async run(message: Message, args: any) {
+    async run(message: Message, args: string[]) {
+        switch (args[0]) {
+            case "init":
+                break;
+            case "drop":
+                break;
+            default:
+                await message.reply(this.getHelpMsg());
+                break;
+        }
+    }
 
+    private init() {
+        // TODO initialize database from sql file
+    }
+
+    private drop() {
+        // TODO drop current database
+    }
+
+    getHelpMsg(): string {
+        return "show database manipulation help";
     }
 }
 
