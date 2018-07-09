@@ -1,4 +1,4 @@
-import {Sqlite} from '../../classes/Sqlite';
+import {Sqlite} from '../../sql/Sqlite';
 import {BaseModel} from '../model/BaseModel';
 
 /*

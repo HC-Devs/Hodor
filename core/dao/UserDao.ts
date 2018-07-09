@@ -1,5 +1,5 @@
 import {User} from '../model/User';
-import {Sqlite} from '../../classes/Sqlite';
+import {Sqlite} from '../../sql/Sqlite';
 import {BaseDao} from './BaseDao';
 
 const userDbTable: string = 'user';

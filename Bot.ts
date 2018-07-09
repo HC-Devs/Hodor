@@ -1,13 +1,13 @@
 import * as chokidar from "chokidar";
-import { Client, Message } from "discord.js";
-import { BaseCommand } from "./commands/BaseCommand";
-import { Global } from "./utils/Global";
+import {Client, Message} from "discord.js";
+import {BaseCommand} from "./commands/BaseCommand";
+import {Global} from "./utils/Global";
 import * as fs from "fs";
 import * as path from "path";
-import { Sqlite } from "./classes/Sqlite";
-import { Logger } from "./utils/Logger";
-import { FunctionnalError } from "./exceptions/FonctionnalError";
-import { Citation, Insulte } from "./commands/divers/CitationCommand";
+import {Sqlite} from "./sql/Sqlite";
+import {Logger} from "./utils/Logger";
+import {FunctionnalError} from "./exceptions/FonctionnalError";
+import {Citation, Insulte} from "./commands/divers/CitationCommand";
 
 /* Rights */
 const allowedBots = [];
@@ -30,7 +30,7 @@ export class Bot {
         recursive: true,
         ignored: /(^|[\/\\])\../,
         alwaysStat: false,
-        awaitWriteFinish: { stabilityThreshold: 2000, pollInterval: 100 }
+        awaitWriteFinish: {stabilityThreshold: 2000, pollInterval: 100}
     };
 
     constructor(client: Client) {

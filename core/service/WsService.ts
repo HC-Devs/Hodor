@@ -1,8 +1,8 @@
-import { Sqlite } from "../../classes/Sqlite";
-import { WsDao } from "../dao/WsDao";
-import { WsStatus } from "../model/WsStatus";
-import { FunctionnalError } from "../../exceptions/FonctionnalError";
-import { Ws } from "../model/Ws";
+import {Sqlite} from "../../sql/Sqlite";
+import {WsDao} from "../dao/WsDao";
+import {WsStatus} from "../model/WsStatus";
+import {FunctionnalError} from "../../exceptions/FonctionnalError";
+import {Ws} from "../model/Ws";
 
 
 /**

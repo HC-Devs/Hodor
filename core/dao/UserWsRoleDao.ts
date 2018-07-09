@@ -1,6 +1,6 @@
 import {BaseDao} from "./BaseDao";
 import {UserWsRole} from "../model/UserWsRole";
-import {Sqlite} from "../../classes/Sqlite";
+import {Sqlite} from "../../sql/Sqlite";
 
 const tableName: string = "user_ws_role";
 

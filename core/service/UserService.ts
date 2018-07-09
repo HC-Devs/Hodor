@@ -1,11 +1,11 @@
-﻿import { User } from '../model/User';
-import { UserDao } from '../dao/UserDao';
-import { Sqlite } from '../../classes/Sqlite';
-import { UserModule } from '../model/UserModule';
-import { UserModuleDao } from '../dao/UserModuleDao';
-import { ModuleDao } from '../dao/ModuleDao';
-import { UserModuleViewModel } from '../viewModel/UserModuleViewModel';
-import { ModuleType } from '../model/ModuleType';
+﻿import {User} from '../model/User';
+import {UserDao} from '../dao/UserDao';
+import {Sqlite} from '../../sql/Sqlite';
+import {UserModule} from '../model/UserModule';
+import {UserModuleDao} from '../dao/UserModuleDao';
+import {ModuleDao} from '../dao/ModuleDao';
+import {UserModuleViewModel} from '../viewModel/UserModuleViewModel';
+import {ModuleType} from '../model/ModuleType';
 
 const Table = require('markdown-table');
 
