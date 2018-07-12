@@ -5,6 +5,7 @@ import {Bot} from "../../Bot";
 import {Config} from "../Config";
 import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
 import {CommandError} from "../../exceptions/CommandError";
+import {Logger} from "../../utils/Logger";
 
 const allowedUsers = Global.botOwner;
 const allowedRoles = [];
@@ -33,8 +34,10 @@ export class Database extends BaseCommand {
     async run(message: Message, args: string[]) {
         switch (args[0]) {
             case "init":
+                await this.init(message);
                 break;
             case "drop":
+                await this.drop(message);
                 break;
             default:
                 await message.reply(this.getHelpMsg());
@@ -42,12 +45,20 @@ export class Database extends BaseCommand {
         }
     }
 
-    private init() {
-        // TODO initialize database from sql file
+    private async init(message: Message) {
+        this.bot.sql.init().then(() => {
+            // TODO
+        }).catch(reason => {
+            Logger.error(reason);
+        });
     }
 
-    private drop() {
-        // TODO drop current database
+    private async drop(message: Message) {
+        this.bot.sql.drop().then(() => {
+            // TODO
+        }).catch(reason => {
+            Logger.error(reason);
+        });
     }
 
     getHelpMsg(): string {
