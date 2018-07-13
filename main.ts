@@ -1,7 +1,6 @@
 import {Client, ClientOptions} from "discord.js";
 import {Bot} from "./Bot";
 import {Global} from "./utils/Global";
-import {Logger} from "./utils/Logger";
 
 if (Global.nodeVersion < 8) {
     throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
@@ -22,15 +21,11 @@ const client: Client = new Client(discordOptions);
 const bot: Bot = new Bot(client);
 
 bot.init().then(async () => {
-    if (Global.nodeEnv === "dev") {
-        bot.watch().then(() => {
-            Logger.log("Chokidar initialized", "success")
-        });
-    }
     if (!Global.token) {
         throw new Error("Missing 'BOT_TOKEN' environment variable");
     }
     setInterval(() => {
+        //TODO execute cron jobs here
         /*Object.keys(bot.crons).forEach(function (key) {
             let cron = bot.crons[key];
             cron.run();

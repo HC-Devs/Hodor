@@ -1,4 +1,3 @@
-import * as chokidar from "chokidar";
 import {Client, Message} from "discord.js";
 import {BaseCommand} from "./commands/BaseCommand";
 import {Global} from "./utils/Global";
@@ -24,13 +23,6 @@ export class Bot {
     functions: Array<any> = Array<any>();
     helpers: Array<any> = Array<any>();
     sql: Sqlite;
-
-    watchOptions = {
-        recursive: true,
-        ignored: /(^|[\/\\])\../,
-        alwaysStat: false,
-        awaitWriteFinish: {stabilityThreshold: 2000, pollInterval: 100}
-    };
 
     constructor(client: Client) {
         this.client = client;
@@ -102,33 +94,13 @@ export class Bot {
             }
         });
         Logger.log(`Loading a total of ${events.length} events.`, "success");
-    }
 
-    async watch() {
-        chokidar.watch(Global.pathClassesDirectory, this.watchOptions).on("change", event => {
-            // TODO
-            /*let className = path.basename(event, path.extname(event));
-            if (reloadFile(event)) {
-                Logger.log(`chokidar: class ${className} reloaded !`);
-            }*/
+        const jobs = walkSync(Global.pathJobsDirectory);
+        jobs.forEach(file => {
+            //TODO load the job
+            Logger.log(`Loading Job: ${file}. 👌`);
         });
-        chokidar.watch(Global.pathCommandsDirectory, this.watchOptions).on("change", event => {
-            let className = path.basename(event, path.extname(event));
-            if (reloadFile(event)) {
-                Logger.log(`chokidar: class ${className} reloaded !`);
-            }
-        });
-        chokidar.watch(Global.pathEventsDirectory, this.watchOptions).on("change", event => {
-            // TODO
-        });
-        chokidar.watch(Global.pathCronsDirectory, this.watchOptions).on("change", event => {
-            // TODO
-        });
-
-        setInterval(() => {
-            let used = process.memoryUsage().heapUsed / 1024 / 1024;
-            Logger.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
-        }, 1000 * 60 * 5);
+        Logger.log(`Loading a total of ${jobs.length} cron jobs.`, "success");
     }
 
     async parseMessage(oldMessage: Message, newMessage: Message) {

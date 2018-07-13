@@ -15,6 +15,5 @@ export class Global {
 
     static pathCommandsDirectory: string = "./commands/";
     static pathEventsDirectory: string = "./events/";
-    static pathClassesDirectory: string = "./classes/";
-    static pathCronsDirectory: string = "./crons/";
+    static pathJobsDirectory: string = "./jobs/";
 }
