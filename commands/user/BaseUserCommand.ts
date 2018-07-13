@@ -1,5 +1,5 @@
 import {BaseCommand} from "../BaseCommand";
-import {Message, Snowflake} from "discord.js";
+import {Message} from "discord.js";
 import {Bot} from "../../Bot";
 import {Logger} from "../../utils/Logger";
 import {Config} from "../Config";
@@ -41,7 +41,5 @@ export abstract class BaseUserCommand extends BaseCommand {
         });
     }
 
-
-    // Execute current module update command
     async abstract runCommand(message: Message, args: string[]);
 }

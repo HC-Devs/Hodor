@@ -10,12 +10,10 @@ import {ModuleType} from '../model/ModuleType';
 const Table = require('markdown-table');
 
 
-
 export async function AddModuleToUser(sqlConnector: Sqlite, userId: string, moduleName: string, level: number): Promise<boolean> {
     // 1. Get module id from db from name
     let moduleDao = new ModuleDao(sqlConnector);
     let mod = await moduleDao.getModuleByName(moduleName);
-
 
     // 2. Check if new module or update of existing ong
     let userModuleDao = new UserModuleDao(sqlConnector);
@@ -28,11 +26,7 @@ export async function AddModuleToUser(sqlConnector: Sqlite, userId: string, modu
     } else {
         // 3.b insert new one
         let userModule = new UserModule(-1, userId, Number(mod.id), level);
-        let newRowId = await userModuleDao.insert(userModule);
-        if (newRowId)
-            return true;
-        else
-            return false;
+        return await userModuleDao.insert(userModule) != null;
     }
 }
 
@@ -45,7 +39,8 @@ export async function AddOrUpdateUser(sqlConnector: Sqlite, userId: string, user
     try {
         user = await userDao.getById(userId);
     }
-    catch{ }
+    catch {
+    }
 
     if (user) {
         user.name = userName;
@@ -74,7 +69,6 @@ export async function DeleteUser(sqlConnector: Sqlite, userId: string): Promise<
     let userdao = new UserDao(sqlConnector);
     return userdao.deleteFromId(userId);
 }
-
 
 
 export async function GetUserModule(sqlConnector: Sqlite, userId: string, moduleTypeFilter: string = null): Promise<string> {

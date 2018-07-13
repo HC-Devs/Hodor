@@ -10,7 +10,7 @@ const allowedGuilds = [];
 export class DeltaShield extends BaseModuleCommand {
 
     constructor(bot: Bot) {
-        super(bot, "deltashield");
+        super(bot, "deltashield", ["ds"]);
     }
 
     async runCommand(message: Message, level: number, user: Snowflake) {

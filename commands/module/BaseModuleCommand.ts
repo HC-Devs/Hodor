@@ -5,7 +5,7 @@ import {Logger} from "../../utils/Logger";
 import {Config} from "../Config";
 import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
 import {CommandError} from "../../exceptions/CommandError";
-import { AddModuleToUser } from "../../core/service/UserService";
+import {AddModuleToUser, GetUserModule} from "../../core/service/UserService";
 
 const allowedUsers = [];
 const allowedRoles = [];
@@ -18,25 +18,31 @@ export abstract class BaseModuleCommand extends BaseCommand {
         let config = new Config(commandName, aliases, prefix, timeout, maxLevel);
         super(bot, config);
     }
-    
-    assertIsGranted(message: Message){
+
+    assertIsGranted(message: Message) {
         if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
             throw new UnauthorizedAccessError();
         }
     }
 
     assertSyntax(message: Message, args: string[]) {
-        let count = message.mentions.users.size +1;
-        // Check command as correct number of arguments
-        if (args.length < 1 && args.length > count) {
+        // If there is more than 1 mention and more than 2 arguments (mention included)
+        if (message.mentions.users.array().length > 1 || args.length > 2) {
             throw new CommandError(this.getHelpMsg());
         }
     }
 
     async run(message: Message, args: string[]) {
-              // TODO maybe do a GET if no argument?
+        let [ids, p] = this.cleanArgs(message, args);
+        let memberId: Snowflake = ids.length > 0 ? ids[0] : message.author.id;
 
-              let [ids, p] = this.cleanArgs(message, args);
+        if (p.length == 0) {
+            GetUserModule(this.bot.sql, memberId, "Bouclier").then(value => {
+                Logger.log(value);
+            }).catch(reason => {
+                Logger.error(reason);
+            });
+        }
 
         // check command level
         const level = p[0] && !isNaN(parseInt(p[0])) ? parseInt(p[0]) : -1;
@@ -49,20 +55,17 @@ export abstract class BaseModuleCommand extends BaseCommand {
             });
             return;
         }
-
-       
-      
-        let memberId: Snowflake = ids.length>0 ? ids[0] : message.author.id;
-        let success = await AddModuleToUser(this.bot.sql, memberId, this.config.name, level);
-        if (success) {
-            message.channel.send(":white_check_mark: OK").then((msg: Message) => {
-                msg.delete(this.config.timeout).catch(reason => {
-                    Logger.error(reason);
+        AddModuleToUser(this.bot.sql, memberId, this.config.name, level).then(success => {
+            if (success) {
+                message.channel.send(":white_check_mark: OK").then((msg: Message) => {
+                    msg.delete(this.config.timeout).catch(reason => {
+                        Logger.error(reason);
+                    });
                 });
-            });
-        } else {
-            Logger.error("Erreur");
-        }
+            } else {
+                Logger.error("Erreur");
+            }
+        });
         // this.runCommand(message, level, memberId).then(() => {
         //     message.channel.send(":white_check_mark: OK").then((msg: Message) => {
         //         msg.delete(this.config.timeout).catch(reason => {

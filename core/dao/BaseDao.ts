@@ -48,7 +48,7 @@ export abstract class BaseDao<T extends BaseModel> {
         //     models.push(data);
         // }
         r.forEach(function (row, index) {
-            console.log(row.name);
+            console.log(row.module_name);
             let data = this.getModelFromRow(row);
             models.push(data);
         }.bind(this));
