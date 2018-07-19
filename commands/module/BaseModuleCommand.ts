@@ -55,6 +55,7 @@ export abstract class BaseModuleCommand extends BaseCommand {
             });
             return;
         }
+
         AddModuleToUser(this.bot.sql, memberId, this.config.name, level).then(success => {
             if (success) {
                 message.channel.send(":white_check_mark: OK").then((msg: Message) => {
@@ -66,15 +67,6 @@ export abstract class BaseModuleCommand extends BaseCommand {
                 Logger.error("Erreur");
             }
         });
-        // this.runCommand(message, level, memberId).then(() => {
-        //     message.channel.send(":white_check_mark: OK").then((msg: Message) => {
-        //         msg.delete(this.config.timeout).catch(reason => {
-        //             Logger.error(reason);
-        //         });
-        //     });
-        // }).catch(reason => {
-        //     Logger.error(reason);
-        // });
     }
 
     // Virtual method that could be overrided

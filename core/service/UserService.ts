@@ -9,7 +9,6 @@ import {ModuleType} from '../model/ModuleType';
 
 const Table = require('markdown-table');
 
-
 export async function AddModuleToUser(sqlConnector: Sqlite, userId: string, moduleName: string, level: number): Promise<boolean> {
     // 1. Get module id from db from name
     let moduleDao = new ModuleDao(sqlConnector);
@@ -29,7 +28,6 @@ export async function AddModuleToUser(sqlConnector: Sqlite, userId: string, modu
         return await userModuleDao.insert(userModule) != null;
     }
 }
-
 
 export async function AddOrUpdateUser(sqlConnector: Sqlite, userId: string, userName: string, corpoName: string): Promise<boolean> {
     // 1. Check if new or existing user
@@ -69,7 +67,6 @@ export async function DeleteUser(sqlConnector: Sqlite, userId: string): Promise<
     let userdao = new UserDao(sqlConnector);
     return userdao.deleteFromId(userId);
 }
-
 
 export async function GetUserModule(sqlConnector: Sqlite, userId: string, moduleTypeFilter: string = null): Promise<string> {
     // 1. Get all module ref
@@ -115,7 +112,6 @@ export async function TestUser(sqlConnector: Sqlite): Promise<string> {
 
     return tabResult;
 }
-
 
 function generateMarkdownTable(data) {
     const header = '```Markdown\n';
