@@ -205,6 +205,9 @@ export class Bot {
 }
 
 function walkSync(dir: string, fileList: string[] = []) {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+    }
     fs.readdirSync(dir).forEach(file => {
         fileList = fs.statSync(path.join(dir, file)).isDirectory()
             ? walkSync(path.join(dir, file), fileList)
