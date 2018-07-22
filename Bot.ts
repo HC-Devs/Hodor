@@ -11,6 +11,7 @@ import {Citation, Insulte} from "./commands/divers/CitationCommand";
 /* Rights */
 const allowedBots = [];
 const allowedGuilds = [
+    "390625052959309826", // Hadès Corpo
     "413390615158718464",
     "420194593167114250"  // Test
 ];
