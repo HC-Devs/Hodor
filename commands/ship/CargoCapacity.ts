@@ -1,18 +1,18 @@
-import {BaseModuleCommand} from "../module/BaseModuleCommand";
-import {Message, Snowflake} from "discord.js";
+import {Message} from "discord.js";
 import {Bot} from "../../Bot";
+import {BaseShipCommand} from "./BaseShipCommand";
 
-const allowedUsers = [];
-const allowedRoles = [];
-const allowedChannels = ["421655362966650880"];
-
-export class CargoCapacity extends BaseModuleCommand {
+export class CargoCapacity extends BaseShipCommand {
 
     constructor(bot: Bot) {
-        super(bot, "cargocapacity");
+        super(bot, "cargocapacity", ['cargo']);
     }
 
-    async runCommand(message: Message, level: number, user: Snowflake) {
+    assertSyntax(message: Message, args: string[]) {
+        // TODO
+    }
+
+    async runCommand(message: Message, args: string[]) {
         //TODO 
     }
 }

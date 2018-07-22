@@ -2,10 +2,6 @@ import {BaseCommand} from "./BaseCommand";
 import {Message} from "discord.js";
 import {Config} from "./Config";
 
-const allowedUsers = [];
-const allowedRoles = [];
-const allowedChannels = [];
-
 /* Class */
 export class Help extends BaseCommand {
 

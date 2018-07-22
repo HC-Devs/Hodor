@@ -118,10 +118,12 @@ function generateMarkdownTable(data) {
     const footer = '\n```';
 
     let array = [];
-    data.forEach(function (d, index) {
-        array.push(d.getArray());
-    });
-    var tab = Table(array);
+    if (data.length > 0) {
+        data.forEach(function (d, index) {
+            array.push(d.getArray());
+        });
+    }
+    const tab = Table(array);
     return header + tab + footer;
 }
 
@@ -130,16 +132,18 @@ function generateDebugMarkdownTable(data) {
     const footer = '\n```';
 
     let array = [];
-    array.push(Object.getOwnPropertyNames(data[0]));
+    if (data.length > 0) {
+        array.push(Object.getOwnPropertyNames(data[0]));
 
-    data.forEach(function (d, index) {
-        let currentRow = [];
-        Object.getOwnPropertyNames(d).forEach(
-            function (val, idx, array) {
-                currentRow.push(d[val]);
-            });
-        array.push(currentRow);
-    });
-    var tab = Table(array);
+        data.forEach(function (d, index) {
+            let currentRow = [];
+            Object.getOwnPropertyNames(d).forEach(
+                function (val, idx, array) {
+                    currentRow.push(d[val]);
+                });
+            array.push(currentRow);
+        });
+    }
+    const tab = Table(array);
     return header + tab + footer;
 }

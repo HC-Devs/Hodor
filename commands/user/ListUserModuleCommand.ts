@@ -4,10 +4,6 @@ import {CommandError} from "../../exceptions/CommandError";
 import {GetUserModule} from "../../core/service/UserService";
 import {BaseUserCommand} from "./BaseUserCommand";
 
-const allowedUsers = [];
-const allowedRoles = [];
-const allowedChannels = ["421655362966650880", "413390615158718466"];
-
 export class ListUserModuleCommand extends BaseUserCommand {
 
     protected constructor(bot: Bot) {

@@ -4,10 +4,6 @@ import * as service from "../core/service/UserService";
 import {BaseCommand} from "./BaseCommand";
 import {Config} from "./Config";
 
-const allowedUsers = [];
-const allowedRoles = [];
-const allowedChannels = [];
-
 export class Test extends BaseCommand {
     assertIsGranted(message: Message) {
         // all ok

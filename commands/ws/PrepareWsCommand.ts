@@ -1,37 +1,14 @@
 import {Message} from "discord.js";
 import {Bot} from "../../Bot";
 import {CommandError} from "../../exceptions/CommandError";
-import {BaseCommand} from "../BaseCommand";
-import {Config} from "../Config";
-import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
 import {PrepareWs} from "../../core/service/WsService";
 import {Logger} from "../../utils/Logger";
-import {Global} from "../../utils/Global";
+import {BaseWsCommand} from "./BaseWsCommand";
 
-const allowedUsers = [];
-const allowedRoles = [];
-const allowedChannels = ["421655362966650880", "413390615158718466"];
+export class PrepareWsCommand extends BaseWsCommand {
 
-export class PrepareWsCommand extends BaseCommand {
     protected constructor(bot: Bot) {
-        let config = new Config("preparews", ['pws'], ['!'], 25000);
-        super(bot, config);
-    }
-
-    assertIsGranted(message: Message) {
-        if (!this.isGranted(message, Global.allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
-            throw new UnauthorizedAccessError();
-        }
-    }
-
-    async run(message: Message, args: string[]) {
-        await PrepareWs(this.bot.sql);
-
-        message.channel.send(":white_check_mark: OK bonne préparation").then((msg: Message) => {
-            msg.delete(this.config.timeout).catch(reason => {
-                Logger.error(reason);
-            });
-        });
+        super(bot, "preparews", ['pws'], ['!'], 25000);
     }
 
     assertSyntax(message: Message, args: string[]) {
@@ -40,6 +17,15 @@ export class PrepareWsCommand extends BaseCommand {
         }
     }
 
+    async runCommand(message: Message, args: string[]) {
+        await PrepareWs(this.bot.sql);
+
+        message.channel.send(":white_check_mark: OK bonne préparation").then((msg: Message) => {
+            msg.delete(this.config.timeout).catch(reason => {
+                Logger.error(reason);
+            });
+        });
+    }
 
     // Display usage of command
     getHelpMsg(): string {

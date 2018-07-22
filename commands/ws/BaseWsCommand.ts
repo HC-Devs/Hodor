@@ -1,15 +1,16 @@
 import {BaseCommand} from "../BaseCommand";
 import {Message} from "discord.js";
 import {Bot} from "../../Bot";
+import {Logger} from "../../utils/Logger";
 import {Config} from "../Config";
-import {Global} from "../../utils/Global";
 import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
+import {Global} from "../../utils/Global";
 
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = ["421655362966650880", "413390615158718466"];
 
-export abstract class BaseShipCommand extends BaseCommand {
+export abstract class BaseWsCommand extends BaseCommand {
 
     protected constructor(bot: Bot, commandName: string, aliases = [], prefix = ['!'], timeout = 5000, maxLevel = 10) {
         let config = new Config(commandName, aliases, prefix, timeout, maxLevel);
@@ -23,7 +24,15 @@ export abstract class BaseShipCommand extends BaseCommand {
     }
 
     async run(message: Message, args: string[]) {
-        // TODO
+        this.runCommand(message, args).then(() => {
+            message.channel.send(":white_check_mark: OK").then((msg: Message) => {
+                msg.delete(this.config.timeout).catch(reason => {
+                    Logger.error(reason);
+                });
+            });
+        }).catch(reason => {
+            Logger.error(reason);
+        });
     }
 
     async abstract runCommand(message: Message, args: string[]);

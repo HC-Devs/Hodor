@@ -1,37 +1,14 @@
 import {Message} from "discord.js";
 import {Bot} from "../../Bot";
 import {CommandError} from "../../exceptions/CommandError";
-import {BaseCommand} from "../BaseCommand";
-import {Config} from "../Config";
-import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
 import {ListWs} from "../../core/service/WsService";
 import {Logger} from "../../utils/Logger";
-import {Global} from "../../utils/Global";
+import {BaseWsCommand} from "./BaseWsCommand";
 
-const allowedUsers = [];
-const allowedRoles = [];
-const allowedChannels = ["421655362966650880", "413390615158718466"];
+export class ListWsCommand extends BaseWsCommand {
 
-export class ListWsCommand extends BaseCommand {
     protected constructor(bot: Bot) {
-        let config = new Config("listws", ['lws'], ['!'], 25000);
-        super(bot, config);
-    }
-
-    assertIsGranted(message: Message) {
-        if (!this.isGranted(message, Global.allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
-            throw new UnauthorizedAccessError();
-        }
-    }
-
-    async run(message: Message, args: string[]) {
-        let r = await ListWs(this.bot.sql);
-
-        message.reply(r).then((msg: Message) => {
-            msg.delete(this.config.timeout).catch(reason => {
-                Logger.error(reason);
-            });
-        });
+        super(bot, "listws", ['lws'], ['!'], 25000);
     }
 
     assertSyntax(message: Message, args: string[]) {
@@ -40,6 +17,15 @@ export class ListWsCommand extends BaseCommand {
         }
     }
 
+    async runCommand(message: Message, args: string[]) {
+        let r = await ListWs(this.bot.sql);
+
+        message.reply(r).then((msg: Message) => {
+            msg.delete(this.config.timeout).catch(reason => {
+                Logger.error(reason);
+            });
+        });
+    }
 
     // Display usage of command
     getHelpMsg(): string {

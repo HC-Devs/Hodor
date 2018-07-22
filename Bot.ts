@@ -172,7 +172,6 @@ export class Bot {
                         });
                     }
 
-
                     cmd.assertIsGranted(newMessage);
                     cmd.assertSyntax(newMessage, args);
 
@@ -184,7 +183,6 @@ export class Bot {
                         }
                         Logger.error(reason);
                     });
-
                 }
             }
         } catch (err) {
@@ -194,7 +192,6 @@ export class Bot {
                 newMessage.reply("Erreur inconnue rencontrée : " + err.msg).then((msg: Message) => msg.delete(Global.timeout));
             }
         }
-        newMessage.delete(Global.timeout);
     }
 }
 

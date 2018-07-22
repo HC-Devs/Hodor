@@ -1,31 +1,24 @@
 import {Message} from "discord.js";
 import {Bot} from "../../Bot";
 import {CommandError} from "../../exceptions/CommandError";
-import {BaseCommand} from "../BaseCommand";
-import {Config} from "../Config";
-import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
 import {StartWs} from "../../core/service/WsService";
 import {Logger} from "../../utils/Logger";
 import {FunctionnalError} from "../../exceptions/FonctionnalError";
-import {Global} from "../../utils/Global";
+import {BaseWsCommand} from "./BaseWsCommand";
 
-const allowedUsers = [];
-const allowedRoles = [];
-const allowedChannels = ["421655362966650880", "413390615158718466"];
+export class AddWsCommand extends BaseWsCommand {
 
-export class AddWsCommand extends BaseCommand {
     protected constructor(bot: Bot) {
-        let config = new Config("startws", ['sws'], ['!'], 25000);
-        super(bot, config);
+        super(bot, "startws", ['sws'], ['!'], 25000);
     }
 
-    assertIsGranted(message: Message) {
-        if (!this.isGranted(message, Global.allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
-            throw new UnauthorizedAccessError();
+    assertSyntax(message: Message, args: string[]) {
+        if (1 < args.length) {
+            throw new CommandError(this.getHelpMsg());
         }
     }
 
-    async run(message: Message, args: string[]) {
+    async runCommand(message: Message, args: string[]) {
         // Get current date
         let cd = new Date();
 
@@ -53,13 +46,6 @@ export class AddWsCommand extends BaseCommand {
             });
         });
     }
-
-    assertSyntax(message: Message, args: string[]) {
-        if (1 < args.length) {
-            throw new CommandError(this.getHelpMsg());
-        }
-    }
-
 
     // Display usage of command
     getHelpMsg(): string {
