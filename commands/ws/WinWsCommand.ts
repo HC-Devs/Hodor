@@ -1,18 +1,16 @@
-import { Message } from "discord.js";
-import { Bot } from "../../Bot";
-import { CommandError } from "../../exceptions/CommandError";
-import { BaseCommand } from "../BaseCommand";
-import { Config } from "../Config";
-import { UnauthorizedAccessError } from "../../exceptions/UnauthorizedAccessError";
-import { AddWs, EndWs } from "../../core/service/WsService";
-import { Logger } from "../../utils/Logger";
-
-
+import {Message} from "discord.js";
+import {Bot} from "../../Bot";
+import {CommandError} from "../../exceptions/CommandError";
+import {BaseCommand} from "../BaseCommand";
+import {Config} from "../Config";
+import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
+import {EndWs} from "../../core/service/WsService";
+import {Logger} from "../../utils/Logger";
+import {Global} from "../../utils/Global";
 
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = ["421655362966650880", "413390615158718466"];
-const allowedGuilds = [];
 
 export class WinWsCommand extends BaseCommand {
     protected constructor(bot: Bot) {
@@ -21,7 +19,7 @@ export class WinWsCommand extends BaseCommand {
     }
 
     assertIsGranted(message: Message) {
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
+        if (!this.isGranted(message, Global.allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
             throw new UnauthorizedAccessError();
         }
     }

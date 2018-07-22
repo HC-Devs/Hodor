@@ -5,7 +5,6 @@ import {Config} from "./Config";
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = [];
-const allowedGuilds = [];
 
 /* Class */
 export class Help extends BaseCommand {

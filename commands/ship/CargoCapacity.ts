@@ -5,7 +5,6 @@ import {Bot} from "../../Bot";
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = ["421655362966650880"];
-const allowedGuilds = [];
 
 export class CargoCapacity extends BaseModuleCommand {
 

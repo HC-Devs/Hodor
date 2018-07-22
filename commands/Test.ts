@@ -7,7 +7,6 @@ import {Config} from "./Config";
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = [];
-const allowedGuilds = [];
 
 export class Test extends BaseCommand {
     assertIsGranted(message: Message) {

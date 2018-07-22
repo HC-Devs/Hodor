@@ -7,6 +7,12 @@ export class Global {
     static dataBaseDir: string = "./.data";
     static dataBaseName: string = "hc.sqlite3";
     static botOwner: string[] = process.env.BOT_OWNER.split(",") || [];
+    static allowedGuilds: string[] = [
+        "390625052959309826", // Hadès Corpo
+        "413390615158718464",
+        "420194593167114250" // Test
+    ];
+    static allowedBots: string[] = [];
     static helpPrefix: string = '?';
     static prefix: string = process.env.BOT_PREFIX;
     static prefixDev: string = process.env.BOT_PREFIX_DEV;

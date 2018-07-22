@@ -1,19 +1,17 @@
-import { Message } from "discord.js";
-import { Bot } from "../../Bot";
-import { CommandError } from "../../exceptions/CommandError";
-import { BaseCommand } from "../BaseCommand";
-import { Config } from "../Config";
-import { UnauthorizedAccessError } from "../../exceptions/UnauthorizedAccessError";
-import { StartWs } from "../../core/service/WsService";
-import { Logger } from "../../utils/Logger";
-import { FunctionnalError } from "../../exceptions/FonctionnalError";
-
-
+import {Message} from "discord.js";
+import {Bot} from "../../Bot";
+import {CommandError} from "../../exceptions/CommandError";
+import {BaseCommand} from "../BaseCommand";
+import {Config} from "../Config";
+import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
+import {StartWs} from "../../core/service/WsService";
+import {Logger} from "../../utils/Logger";
+import {FunctionnalError} from "../../exceptions/FonctionnalError";
+import {Global} from "../../utils/Global";
 
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = ["421655362966650880", "413390615158718466"];
-const allowedGuilds = [];
 
 export class AddWsCommand extends BaseCommand {
     protected constructor(bot: Bot) {
@@ -22,7 +20,7 @@ export class AddWsCommand extends BaseCommand {
     }
 
     assertIsGranted(message: Message) {
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
+        if (!this.isGranted(message, Global.allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
             throw new UnauthorizedAccessError();
         }
     }
@@ -40,14 +38,14 @@ export class AddWsCommand extends BaseCommand {
             try {
                 h = Number(args[0].split(':')[0]);
                 m = Number(args[0].split(':')[1]);
-            } catch{
+            } catch {
                 throw new FunctionnalError("L'heure de début doit être de la forme HH:mm. Exemple 15:38");
             }
         }
 
         // Construct real start date
         let startDate = new Date(cd.getFullYear(), cd.getMonth(), cd.getDate(), h, m);
-        await StartWs(this.bot.sql,startDate);
+        await StartWs(this.bot.sql, startDate);
 
         message.channel.send(":white_check_mark: OK que la force soit avec vous").then((msg: Message) => {
             msg.delete(this.config.timeout).catch(reason => {

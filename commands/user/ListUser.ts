@@ -7,7 +7,6 @@ import {BaseUserCommand} from "./BaseUserCommand";
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = ["421655362966650880", "413390615158718466"];
-const allowedGuilds = [];
 
 export class ListUserCommand extends BaseUserCommand {
 

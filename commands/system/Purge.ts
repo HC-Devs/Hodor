@@ -10,11 +10,10 @@ import {CommandError} from "../../exceptions/CommandError";
 const allowedUsers = Global.botOwner;
 const allowedRoles = [];
 const allowedChannels = [];
-const allowedGuilds = [];
 
 export class Purge extends BaseCommand {
-    assertIsGranted(message: Message){
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
+    assertIsGranted(message: Message) {
+        if (!this.isGranted(message, Global.allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
             throw new UnauthorizedAccessError();
         }
     }

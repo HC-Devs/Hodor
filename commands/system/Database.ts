@@ -10,7 +10,6 @@ import {Logger} from "../../utils/Logger";
 const allowedUsers = Global.botOwner;
 const allowedRoles = [];
 const allowedChannels = [];
-const allowedGuilds = [];
 
 export class Database extends BaseCommand {
 
@@ -20,7 +19,7 @@ export class Database extends BaseCommand {
     }
 
     assertIsGranted(message: Message) {
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
+        if (!this.isGranted(message, Global.allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
             throw new UnauthorizedAccessError();
         }
     }

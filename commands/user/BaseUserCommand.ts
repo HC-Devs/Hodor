@@ -4,11 +4,11 @@ import {Bot} from "../../Bot";
 import {Logger} from "../../utils/Logger";
 import {Config} from "../Config";
 import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
+import {Global} from "../../utils/Global";
 
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = ["421655362966650880", "413390615158718466"];
-const allowedGuilds = [];
 
 export abstract class BaseUserCommand extends BaseCommand {
 
@@ -18,18 +18,12 @@ export abstract class BaseUserCommand extends BaseCommand {
     }
 
     assertIsGranted(message: Message) {
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
+        if (!this.isGranted(message, Global.allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
             throw new UnauthorizedAccessError();
         }
     }
 
     async run(message: Message, args: string[]) {
-        // check command permissions
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
-            return;
-        }
-
-
         this.runCommand(message, args).then(() => {
             message.channel.send(":white_check_mark: OK").then((msg: Message) => {
                 msg.delete(this.config.timeout).catch(reason => {

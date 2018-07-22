@@ -8,14 +8,6 @@ import {Logger} from "./utils/Logger";
 import {FunctionnalError} from "./exceptions/FonctionnalError";
 import {Citation, Insulte} from "./commands/divers/CitationCommand";
 
-/* Rights */
-const allowedBots = [];
-const allowedGuilds = [
-    "390625052959309826", // Hadès Corpo
-    "413390615158718464",
-    "420194593167114250"  // Test
-];
-
 export class Bot {
     client: Client;
     commands: Map<string, BaseCommand> = new Map<string, BaseCommand>();
@@ -96,6 +88,7 @@ export class Bot {
         });
         Logger.log(`Loading a total of ${events.length} events.`, "success");
 
+        // Jobs
         const jobs = walkSync(Global.pathJobsDirectory);
         jobs.forEach(file => {
             //TODO load the job
@@ -110,10 +103,10 @@ export class Bot {
             if (newMessage.channel.type === "dm") return;
 
             // message from bot, is bot allowed ?
-            if (newMessage.author.bot && allowedBots.indexOf(newMessage.author.id) === -1) return;
+            if (newMessage.author.bot && Global.allowedBots.indexOf(newMessage.author.id) === -1) return;
 
             // guild allowed
-            if (allowedGuilds.indexOf(newMessage.guild.id) === -1) {
+            if (Global.allowedGuilds.indexOf(newMessage.guild.id) === -1) {
                 Logger.error("Bot is not allowed in " + newMessage.guild.name + " (" + newMessage.guild.id + ")");
                 return;
             }

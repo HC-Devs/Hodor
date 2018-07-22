@@ -6,11 +6,11 @@ import {Config} from "../Config";
 import {UnauthorizedAccessError} from "../../exceptions/UnauthorizedAccessError";
 import {CommandError} from "../../exceptions/CommandError";
 import {AddModuleToUser, GetUserModule} from "../../core/service/UserService";
+import {Global} from "../../utils/Global";
 
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = ["421655362966650880", "413390615158718466"];
-const allowedGuilds = [];
 
 export abstract class BaseModuleCommand extends BaseCommand {
 
@@ -20,7 +20,7 @@ export abstract class BaseModuleCommand extends BaseCommand {
     }
 
     assertIsGranted(message: Message) {
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
+        if (!this.isGranted(message, Global.allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
             throw new UnauthorizedAccessError();
         }
     }

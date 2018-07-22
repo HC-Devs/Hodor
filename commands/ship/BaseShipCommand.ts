@@ -4,11 +4,11 @@ import * as service from "../../core/service/UserService";
 import {Bot} from "../../Bot";
 import {Logger} from "../../utils/Logger";
 import {Config} from "../Config";
+import {Global} from "../../utils/Global";
 
 const allowedUsers = [];
 const allowedRoles = [];
 const allowedChannels = ["421655362966650880", "413390615158718466"];
-const allowedGuilds = [];
 
 export abstract class BaseShipCommand extends BaseCommand {
 
@@ -19,7 +19,7 @@ export abstract class BaseShipCommand extends BaseCommand {
 
     async run(message: Message, args: string[]) {
         // check command permissions
-        if (!this.isGranted(message, allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
+        if (!this.isGranted(message, Global.allowedGuilds, allowedChannels, allowedRoles, allowedUsers)) {
             return;
         }
 
