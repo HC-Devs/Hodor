@@ -1,8 +1,8 @@
-import {Bot} from "../Bot";
+import {Bot} from "../../Bot";
 import {Message} from "discord.js";
-import * as service from "../core/service/UserService";
-import {BaseCommand} from "./BaseCommand";
-import {Config} from "./Config";
+import * as service from "../../core/service/UserService";
+import {BaseCommand} from "../BaseCommand";
+import {Config} from "../Config";
 
 export class Test extends BaseCommand {
     assertIsGranted(message: Message) {

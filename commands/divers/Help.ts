@@ -1,6 +1,6 @@
-import {BaseCommand} from "./BaseCommand";
+import {BaseCommand} from "../BaseCommand";
 import {Message} from "discord.js";
-import {Config} from "./Config";
+import {Config} from "../Config";
 
 /* Class */
 export class Help extends BaseCommand {
